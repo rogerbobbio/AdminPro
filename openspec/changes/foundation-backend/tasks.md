@@ -48,7 +48,7 @@
 
 ## 5. Backend API (TDD)
 
-- [ ] 5.1 Add MediatR, Serilog (+ Console/File sinks), and Swagger NuGet packages to `AdminPro.Api`
+- [x] 5.1 Add MediatR, Serilog (+ Console/File sinks), and Swagger NuGet packages to `AdminPro.Api`. MediatR's `ISender` is already available transitively via the `AdminPro.Application` project reference (SDK-style projects flow PackageReferences transitively). Added `Serilog.AspNetCore`, `Serilog.Sinks.Console`, `Serilog.Sinks.File`. For OpenAPI/Swagger: kept the webapi template's built-in `Microsoft.AspNetCore.OpenApi` (`AddOpenApi()`/`MapOpenApi()`, already present) instead of adding Swashbuckle — it's .NET's native OpenAPI generator and avoids a redundant package. Added `Microsoft.AspNetCore.Mvc.Testing` + FluentAssertions (pinned 7.2.2) to `AdminPro.Api.Tests`. Verified: `dotnet build AdminPro.slnx` succeeds with 0 errors.
 - [ ] 5.2 Implement the abstract `ApiController` base class (`docs/design/DESIGN.md` §2.6)
 - [ ] 5.3 TDD: write a failing `WebApplicationFactory` test proving a `ValidationException` thrown by a test endpoint returns `400` with body `{ "error": "ValidationError", ... }`; implement `ExceptionHandlerMiddleware` for this case (rule XCUT-ERR-001)
 - [ ] 5.4 TDD: write a failing test proving an unhandled exception returns `500` with a structured error body and is logged at `Error` level; extend `ExceptionHandlerMiddleware`
