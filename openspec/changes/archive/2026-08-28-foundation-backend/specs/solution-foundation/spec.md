@@ -1,7 +1,7 @@
 ## ADDED Requirements
 
 ### Requirement: Solution structure
-The backend SHALL be organized as a .NET 10 solution `AdminPro.sln` with four DDD layers — `AdminPro.Domain`, `AdminPro.Application`, `AdminPro.Infrastructure`, `AdminPro.Api` — plus `AdminPro.Application.Tests` and `AdminPro.Api.Tests`, matching `docs/design/DESIGN.md` §2.1. Dependencies SHALL only point inward (API → Application/Infrastructure → Domain; Domain depends on nothing).
+The backend SHALL be organized as a .NET 10 solution `AdminPro.sln` with four DDD layers — `AdminPro.Domain`, `AdminPro.Application`, `AdminPro.Infrastructure`, `AdminPro.Api` — plus `AdminPro.Application.Tests` and `AdminPro.Api.Tests`, matching `docs/design/DESIGN.md` §2.1. Project references: `Domain` has none; `Infrastructure` references `Domain`; `Application` references `Domain` and `Infrastructure` (per the project's no-repository decision — handlers and pipeline behaviors use `AppDbContext` directly, per `docs/design/DESIGN.md` §1.2/§2.4); `Api` references `Application` and `Infrastructure`.
 
 #### Scenario: Solution builds
 - **WHEN** `dotnet build AdminPro.sln` is run from `backend/`

@@ -1,6 +1,6 @@
 # Generated backends / frontends
-backend/bin/
-backend/obj/
+backend/**/bin/
+backend/**/obj/
 frontend/node_modules/
 frontend/dist/
 frontend/.angular/
