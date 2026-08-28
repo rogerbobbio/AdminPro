@@ -2,6 +2,7 @@ using AdminPro.Api.Middleware;
 using AdminPro.Application;
 using AdminPro.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 using Serilog;
 using Serilog.Extensions.Logging;
 
@@ -39,6 +40,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
