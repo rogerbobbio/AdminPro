@@ -12,7 +12,7 @@ public class TransactionBehavior<TRequest, TResponse>(AppDbContext dbContext)
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        if (request is not ICommand)
+        if (request is not ICommandMarker)
         {
             return await next(cancellationToken);
         }

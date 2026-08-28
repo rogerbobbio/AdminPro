@@ -3,17 +3,24 @@ using AdminPro.Application;
 using AdminPro.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Serilog.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Routes Serilog events to any ILoggerProvider registered via the normal DI/ILoggingBuilder
+// pipeline too (not just Serilog's own sinks) - otherwise UseSerilog() replaces the provider
+// chain outright and providers like a test log-capture provider never see anything.
+var loggerProviders = new LoggerProviderCollection();
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
     .WriteTo.Console()
     .WriteTo.File("logs/adminpro-.log", rollingInterval: RollingInterval.Day)
+    .WriteTo.Providers(loggerProviders)
     .CreateLogger();
 
-builder.Host.UseSerilog();
+builder.Host.UseSerilog(dispose: true, providers: loggerProviders);
 
 // Add services to the container.
 
