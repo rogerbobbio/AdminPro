@@ -11,7 +11,7 @@
 
 ## 2. Backend Domain (TDD)
 
-- [ ] 2.1 Create `AdminPro.sln` and the 6 projects (`AdminPro.Domain`, `AdminPro.Application`, `AdminPro.Infrastructure`, `AdminPro.Api`, `AdminPro.Application.Tests`, `AdminPro.Api.Tests`) under `backend/src/` and `backend/tests/`, wired per `docs/design/DESIGN.md` §2.1 (API → Application/Infrastructure → Domain; Domain has no project references)
+- [x] 2.1 Create `AdminPro.slnx` (the .NET 10 SDK's new default solution format, replacing `.sln`) and the 6 projects (`AdminPro.Domain`, `AdminPro.Application`, `AdminPro.Infrastructure`, `AdminPro.Api`, `AdminPro.Application.Tests`, `AdminPro.Api.Tests`) under `backend/src/` and `backend/tests/`, wired per the corrected reference graph in `specs/solution-foundation/spec.md` (Domain: none; Infrastructure → Domain; Application → Domain, Infrastructure; Api → Application, Infrastructure). Verified: `dotnet build AdminPro.slnx` succeeds with 0 errors; `AdminPro.Domain.csproj` has no `ProjectReference`/package beyond the SDK.
 - [ ] 2.2 TDD: write a failing test in `AdminPro.Application.Tests` asserting `IAuditableEntity` exposes `Id`, `Activo`, `CreatedAt`, `UpdatedAt`; implement `IAuditableEntity` in `AdminPro.Domain/Interfaces/`
 - [ ] 2.3 TDD: write a failing test instantiating `Modulo` and asserting it satisfies `IAuditableEntity` plus its own properties (`Nombre`, `Icono`, `RutaBase`, `Color`, `Orden`) from `docs/business-rules.md` §2.2.1; implement `Modulo`
 - [ ] 2.4 TDD: repeat 2.3 for `Project` (`docs/business-rules.md` §2.2.2)
