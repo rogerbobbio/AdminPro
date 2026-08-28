@@ -38,7 +38,7 @@
 
 ## 4. Backend Infrastructure
 
-- [ ] 4.1 Add EF Core + SQL Server provider NuGet packages to `AdminPro.Infrastructure`
+- [x] 4.1 Add EF Core + SQL Server provider NuGet packages to `AdminPro.Infrastructure` (Microsoft.EntityFrameworkCore.SqlServer, Microsoft.EntityFrameworkCore.Design for migrations tooling) and Microsoft.EntityFrameworkCore.InMemory to `AdminPro.Application.Tests` (for the soft-delete filter test, which doesn't need real transactions unlike section 3's SQLite-based tests). Verified: `dotnet build AdminPro.slnx` succeeds with 0 errors.
 - [ ] 4.2 Implement `AppDbContext` with a `DbSet<T>` for all 11 entities and `ApplyConfigurationsFromAssembly` in `OnModelCreating` (`docs/design/DESIGN.md` §2.3)
 - [ ] 4.3 TDD: write a failing test (EF Core InMemory provider) proving a row with `Activo = false` is excluded from a default query but returned with `IgnoreQueryFilters()`; implement the global soft-delete query filter for every entity (rule INF-EF-002)
 - [ ] 4.4 Add the `IEntityTypeConfiguration<T>` classes for all 11 entities under `Persistence/Configurations/`, including the indexes from rule INF-EF-005 and the cascade-delete rules from rule INF-EF-003
