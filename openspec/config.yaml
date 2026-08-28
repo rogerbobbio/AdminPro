@@ -1,0 +1,25 @@
+schema: spec-driven
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+context: |
+  Project: AdminPro — project-agnostic catalog of projects/applications/environments/reports/databases/services/notes.
+  Domain rules: docs/business-rules.md (full entity model, validation rules, CQRS commands/queries, implementation phases).
+  Technical design: docs/design/DESIGN.md (solution structure, entity classes, DTOs, API contracts, frontend design).
+  Backend stack: .NET 10, C# 14, ASP.NET Core 10, EF Core 10, SQL Server, MediatR (CQRS), FluentValidation, Serilog.
+  Frontend stack: Angular 22, TypeScript 5.6, Standalone Components, Signals, OnPush, Bootstrap 5, Cypress.
+  Architecture: Clean Architecture, 4 DDD layers (Domain <- Application <- Infrastructure <- API), no Repository pattern (use DbContext directly), no AutoMapper (manual mapping).
+  Auth: none — single-user, local-only app.
+  Database: SQL Server LocalDB, instance "(localdb)\MSSQLLocalDB", Windows Authentication (Trusted_Connection). Database name: AdminPro.
+  Every change set should reference the relevant sections of docs/business-rules.md and docs/design/DESIGN.md explicitly, since they are not read automatically.
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours

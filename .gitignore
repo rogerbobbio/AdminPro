@@ -1,0 +1,27 @@
+# Generated backends / frontends
+backend/bin/
+backend/obj/
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# Secrets and env
+.env
+.env.local
+appsettings.Development.json
+
+# Logs
+logs/
+*.log
+
+# IDEs
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# OpenSpec: specs ARE committed
+# (do not exclude openspec/)
