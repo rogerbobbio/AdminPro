@@ -34,7 +34,7 @@
 - [ ] 3.4 TDD: write a failing test proving `LoggingBehavior` logs at `Information` level on entry and exit with the request type name; implement `LoggingBehavior` (rule INF-LOG-001)
 - [ ] 3.5 TDD: write a failing test proving `TransactionBehavior` opens/commits an EF Core transaction for `ICommand` requests and rolls back on exception, and passes through untouched for non-command (query) requests; implement `TransactionBehavior`
 - [ ] 3.6 Register the three behaviors in order (Validation → Logging → Transaction) via an `AddApplicationServices` DI extension method
-- [ ] 3.7 Add the Application-layer `ValidationException` (`Common/Exceptions/ValidationException.cs`) carrying FluentValidation failures
+- [x] 3.7 Add the Application-layer `ValidationException` (`Common/Exceptions/ValidationException.cs`) carrying FluentValidation failures. Done ahead of 3.3-3.5 since `ValidationBehavior` needs it to compile. Verified red (CS0234) then green (16/16 passed).
 
 ## 4. Backend Infrastructure
 
