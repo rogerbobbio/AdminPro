@@ -1,4 +1,5 @@
 using AdminPro.Domain.Entities;
+using AdminPro.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdminPro.Infrastructure.Persistence;
@@ -21,5 +22,18 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        foreach (var entry in ChangeTracker.Entries<IAuditableEntity>())
+        {
+            if (entry.State == EntityState.Modified)
+            {
+                entry.Entity.UpdatedAt = DateTime.UtcNow;
+            }
+        }
+
+        return base.SaveChangesAsync(cancellationToken);
     }
 }
