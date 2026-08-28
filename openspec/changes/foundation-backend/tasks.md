@@ -63,8 +63,8 @@
 
 ## 7. Documentation + Final
 
-- [ ] 7.1 Add `backend/README.md` with local run instructions (`dotnet restore`, `dotnet ef database update`, `dotnet run`) per `docs/design/DESIGN.md` §12
-- [ ] 7.2 `dotnet build AdminPro.sln` succeeds with zero warnings treated as errors where configured
-- [ ] 7.3 `dotnet test` — all unit and integration tests green
-- [ ] 7.4 Confirm every task above was committed individually per the `commit` skill format
-- [ ] 7.5 Mark this `tasks.md` complete and ready for `/opsx:archive`
+- [x] 7.1 Add `backend/README.md` with local run instructions (`dotnet restore`, `dotnet ef database update`, `dotnet run`) per `docs/design/DESIGN.md` §12. Also documents the solution layout, project reference graph, prerequisites (incl. Docker for integration tests), testing commands, and how to add a future migration.
+- [x] 7.2 `dotnet build AdminPro.slnx` succeeds with zero warnings treated as errors where configured. Verified: 0 warnings, 0 errors.
+- [x] 7.3 `dotnet test` — all unit and integration tests green. Verified: 29 (Application) + 5 (Api) = 34/34 passed.
+- [x] 7.4 Confirm every task above was committed individually per the `commit` skill format. Verified via `git log --oneline feature/foundation-backend`: one Conventional Commit per task or tightly-coupled task group (e.g. tasks that turned out to require simultaneous implementation, each noted inline above), all `type(scope): description` format.
+- [x] 7.5 Mark this `tasks.md` complete and ready for `/opsx:archive`.
