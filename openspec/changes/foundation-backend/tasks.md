@@ -14,17 +14,17 @@
 - [x] 2.1 Create `AdminPro.slnx` (the .NET 10 SDK's new default solution format, replacing `.sln`) and the 6 projects (`AdminPro.Domain`, `AdminPro.Application`, `AdminPro.Infrastructure`, `AdminPro.Api`, `AdminPro.Application.Tests`, `AdminPro.Api.Tests`) under `backend/src/` and `backend/tests/`, wired per the corrected reference graph in `specs/solution-foundation/spec.md` (Domain: none; Infrastructure → Domain; Application → Domain, Infrastructure; Api → Application, Infrastructure). Verified: `dotnet build AdminPro.slnx` succeeds with 0 errors; `AdminPro.Domain.csproj` has no `ProjectReference`/package beyond the SDK.
 - [x] 2.2 TDD: write a failing test in `AdminPro.Application.Tests` asserting `IAuditableEntity` exposes `Id`, `Activo`, `CreatedAt`, `UpdatedAt`; implement `IAuditableEntity` in `AdminPro.Domain/Interfaces/`. Verified red (CS0234/CS0246 — type didn't exist) then green (1/1 passed).
 - [x] 2.3 TDD: write a failing test instantiating `Modulo` and asserting it satisfies `IAuditableEntity` plus its own properties (`Nombre`, `Icono`, `RutaBase`, `Color`, `Orden`) from `docs/business-rules.md` §2.2.1; implement `Modulo`. Verified red (CS0234) then green (2/2 passed).
-- [ ] 2.4 TDD: repeat 2.3 for `Project` (`docs/business-rules.md` §2.2.2)
-- [ ] 2.5 TDD: repeat 2.3 for `BaseDeDatos` (§2.2.3)
-- [ ] 2.6 TDD: repeat 2.3 for `Application`, including navigation collections (`Ambientes`, `Reportes`, `Notas`, `Documentos`, `FixDatas`, `AplicacionServicios`) per `docs/design/DESIGN.md` §2.2 (§2.2.4)
-- [ ] 2.7 TDD: repeat 2.3 for `Ambiente` (§2.2.5)
-- [ ] 2.8 TDD: repeat 2.3 for `Reporte` (§2.2.6)
-- [ ] 2.9 TDD: repeat 2.3 for `Nota` (§2.2.7)
-- [ ] 2.10 TDD: repeat 2.3 for `Documento` (§2.2.8)
-- [ ] 2.11 TDD: repeat 2.3 for `FixData` (§2.2.9)
-- [ ] 2.12 TDD: repeat 2.3 for `Servicio` (§2.2.10)
-- [ ] 2.13 TDD: write a failing test for `AplicacionServicio` composite-key shape (`AplicacionId` + `ServicioId`, `NotasEspecificas`); implement it (§2.2.11)
-- [ ] 2.14 Add `DomainException` base class in `AdminPro.Domain/Exceptions/`
+- [x] 2.4 TDD: repeat 2.3 for `Project` (`docs/business-rules.md` §2.2.2). Verified red (CS0234) then green (batch run, 12/12 passed).
+- [x] 2.5 TDD: repeat 2.3 for `BaseDeDatos` (§2.2.3). Verified red then green (batch run, 12/12 passed).
+- [x] 2.6 TDD: repeat 2.3 for `Application`, including navigation collections (`Ambientes`, `Reportes`, `Notas`, `Documentos`, `FixDatas`, `AplicacionServicios`) per `docs/design/DESIGN.md` §2.2 (§2.2.4). Verified red then green (batch run, 12/12 passed).
+- [x] 2.7 TDD: repeat 2.3 for `Ambiente` (§2.2.5). Verified red then green (batch run, 12/12 passed).
+- [x] 2.8 TDD: repeat 2.3 for `Reporte` (§2.2.6). Verified red then green (batch run, 12/12 passed).
+- [x] 2.9 TDD: repeat 2.3 for `Nota` (§2.2.7). Verified red then green (batch run, 12/12 passed).
+- [x] 2.10 TDD: repeat 2.3 for `Documento` (§2.2.8). Verified red then green (batch run, 12/12 passed).
+- [x] 2.11 TDD: repeat 2.3 for `FixData` (§2.2.9). Verified red then green (batch run, 12/12 passed).
+- [x] 2.12 TDD: repeat 2.3 for `Servicio` (§2.2.10). Verified red then green (batch run, 12/12 passed).
+- [x] 2.13 TDD: write a failing test for `AplicacionServicio` composite-key shape (`AplicacionId` + `ServicioId`, `NotasEspecificas`); implement it (§2.2.11). Verified red then green (batch run, 12/12 passed). Deliberately does NOT implement `IAuditableEntity` — it's a pure link entity per business-rules.md §2.2.11 (no `Id`/`Activo` column).
+- [x] 2.14 Add `DomainException` base class in `AdminPro.Domain/Exceptions/`.
 
 ## 3. Backend Application (TDD)
 
