@@ -24,8 +24,8 @@
 
 ## 4. Backend API (TDD)
 
-- [ ] 4.1 TDD: write a failing `WebApplicationFactory` test for `GET /api/modulos` asserting the seeded 2 modules are returned in order; implement `ModulosController`.
-- [ ] 4.2 TDD: write a failing `WebApplicationFactory` test for `GET /api/dashboard/summary` against an empty DB asserting the all-zero shape from `specs/dashboard-api/spec.md`; implement `DashboardController`.
+- [x] 4.1 TDD: write a failing `WebApplicationFactory` test for `GET /api/modulos` asserting the seeded 2 modules are returned in order; implement `ModulosController`. Added a new `InMemoryApiFactory` test fixture (swaps `AppDbContext` to an isolated InMemory database per test run via `UseInternalServiceProvider`, since Program.cs's real SqlServer registration and an added InMemory registration otherwise conflict) rather than reusing `TestingWebApplicationFactory`/`ContainerizedApiFactory`, keeping controller tests fast and DB-isolated; full SQL Server behavior is covered by the Testcontainers test in 4.3. Verified red (CS0234 - controller didn't exist) then green (2/2 passed).
+- [x] 4.2 TDD: write a failing `WebApplicationFactory` test for `GET /api/dashboard/summary` against an empty DB asserting the all-zero shape from `specs/dashboard-api/spec.md`; implement `DashboardController`. Same `InMemoryApiFactory` fixture as 4.1. Verified red then green (2/2 passed).
 - [ ] 4.3 Backend integration test (Testcontainers, matching the pattern from `foundation-backend` task 6.1): boot against a containerized SQL Server, run migrations (confirming the `SeedModulos` migration applies), call both endpoints, assert real seeded/aggregate data.
 
 ## 5. Frontend Scaffold
