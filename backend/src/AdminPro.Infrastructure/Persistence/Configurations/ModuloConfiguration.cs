@@ -19,5 +19,32 @@ public class ModuloConfiguration : IEntityTypeConfiguration<Modulo>
         builder.HasIndex(m => m.RutaBase).IsUnique().HasFilter("[Activo] = 1").HasDatabaseName("IX_Modulos_RutaBase");
 
         builder.HasQueryFilter(m => m.Activo);
+
+        var seedTimestamp = new DateTime(2026, 8, 28, 0, 0, 0, DateTimeKind.Utc);
+        builder.HasData(
+            new Modulo
+            {
+                Id = 1,
+                Nombre = "Gestión de Proyectos",
+                Icono = "bi-kanban",
+                RutaBase = "proyectos",
+                Color = "primary",
+                Orden = 0,
+                Activo = true,
+                CreatedAt = seedTimestamp,
+                UpdatedAt = seedTimestamp,
+            },
+            new Modulo
+            {
+                Id = 2,
+                Nombre = "Catálogo de Servicios",
+                Icono = "bi-hdd-network",
+                RutaBase = "servicios",
+                Color = "success",
+                Orden = 1,
+                Activo = true,
+                CreatedAt = seedTimestamp,
+                UpdatedAt = seedTimestamp,
+            });
     }
 }

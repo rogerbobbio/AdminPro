@@ -1,18 +1,18 @@
 ## 0. Setup (MANDATORY FIRST)
 
-- [ ] 0.1 Create branch `feature/frontend-dashboard`
-- [ ] 0.2 Open Draft PR against `main`
+- [x] 0.1 Create branch `feature/frontend-dashboard`
+- [ ] 0.2 Open Draft PR against `main` (`gh` CLI unavailable in this environment — branch pushed to `origin/feature/frontend-dashboard`; open manually at https://github.com/rogerbobbio/AdminPro/pull/new/feature/frontend-dashboard)
 
 ## 1. Specs & Design
 
-- [ ] 1.1 `proposal.md` reviewed
-- [ ] 1.2 `design.md` with technical decisions
-- [ ] 1.3 `specs/frontend-shell/spec.md`, `specs/dashboard-api/spec.md`, `specs/dashboard/spec.md` with Given/When/Then scenarios
+- [x] 1.1 `proposal.md` reviewed
+- [x] 1.2 `design.md` with technical decisions
+- [x] 1.3 `specs/frontend-shell/spec.md`, `specs/dashboard-api/spec.md`, `specs/dashboard/spec.md` with Given/When/Then scenarios
 
 ## 2. Backend Application — Modulos query (TDD)
 
-- [ ] 2.1 TDD: write a failing test for `GetModulosQuery`/`GetModulosQueryHandler` proving it returns only `Activo = true` modules ordered by `Orden` ascending (rule APP-QRY-001); implement the query + handler under `AdminPro.Application/Modulos/Queries/GetModulos/`, returning a `ModuloDto` (Id, Nombre, Icono, RutaBase, Color, Orden).
-- [ ] 2.2 Add `SeedModulos` EF Core migration (`Persistence/Migrations/`) with `HasData` for the two real modules (`Gestión de Proyectos` orden 0, `Catálogo de Servicios` orden 1) per `specs/dashboard-api/spec.md` "Seed default modules". Apply locally with `dotnet ef database update`; verify via `sqlcmd` that `Modulos` has exactly 2 rows.
+- [x] 2.1 TDD: write a failing test for `GetModulosQuery`/`GetModulosQueryHandler` proving it returns only `Activo = true` modules ordered by `Orden` ascending (rule APP-QRY-001); implement the query + handler under `AdminPro.Application/Modulos/Queries/GetModulos/`, returning a `ModuloDto` (Id, Nombre, Icono, RutaBase, Color, Orden).
+- [x] 2.2 Add `SeedModulos` EF Core migration (`Persistence/Migrations/`) with `HasData` for the two real modules (`Gestión de Proyectos` orden 0, `Catálogo de Servicios` orden 1) per `specs/dashboard-api/spec.md` "Seed default modules". Apply locally with `dotnet ef database update`; verify via `sqlcmd` that `Modulos` has exactly 2 rows.
 
 ## 3. Backend Application — Dashboard summary query (TDD)
 
