@@ -24,7 +24,9 @@ public class ContainerizedSmokeTests : IClassFixture<ContainerizedApiFactory>
 
         (await db.Database.CanConnectAsync()).Should().BeTrue();
 
-        (await db.Modulos.IgnoreQueryFilters().CountAsync()).Should().Be(0);
+        // Modulos is no longer empty post-migration: the SeedModulos migration
+        // (frontend-dashboard change) inserts the 2 real modules per rule MOD-004.
+        (await db.Modulos.IgnoreQueryFilters().CountAsync()).Should().Be(2);
         (await db.Projects.IgnoreQueryFilters().CountAsync()).Should().Be(0);
         (await db.Applications.IgnoreQueryFilters().CountAsync()).Should().Be(0);
     }
