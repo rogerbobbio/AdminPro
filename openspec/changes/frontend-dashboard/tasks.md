@@ -16,11 +16,11 @@
 
 ## 3. Backend Application — Dashboard summary query (TDD)
 
-- [ ] 3.1 TDD: write a failing test proving `GetDashboardSummaryQuery` returns all-zero counts and empty lists against an empty database; implement `DashboardSummaryDto`/`RecentApplicationDto`/`ApplicationStatusBreakdownDto` and the handler skeleton (counts only) under `AdminPro.Application/Dashboard/Queries/GetDashboardSummary/`.
-- [ ] 3.2 TDD: write a failing test seeding 2 active Projects + 3 active Applications (1 inactive) and asserting `totalProjects`/`totalApplications` reflect only active rows; extend the handler to compute `TotalProjects`, `TotalApplications`, `TotalAmbientes`, `TotalServiciosVinculados` via `AppDbContext` (no repository).
-- [ ] 3.3 TDD: write a failing test asserting `ApplicationsCreatedLast7Days` has 7 entries, oldest first, with today's entry reflecting an Application created "now"; implement the day-bucketed aggregation.
-- [ ] 3.4 TDD: write a failing test asserting `RecentApplications` returns at most 5 rows ordered by `CreatedAt` descending with project name/stack/status populated; implement, including the placeholder status rule (every active Application → `Activo`, per design.md Decision 4).
-- [ ] 3.5 TDD: write a failing test asserting `StatusBreakdown` reports all active applications under `activo` and `0` for `enProgreso`/`pendiente`; implement.
+- [x] 3.1 TDD: write a failing test proving `GetDashboardSummaryQuery` returns all-zero counts and empty lists against an empty database; implement `DashboardSummaryDto`/`RecentApplicationDto`/`ApplicationStatusBreakdownDto` and the handler skeleton (counts only) under `AdminPro.Application/Dashboard/Queries/GetDashboardSummary/`. Combined with 3.2-3.5 below: all 5 scenarios were written as one test file up front (they exercise the same handler and would otherwise force repeated red states on unrelated assertions), then the full handler implemented to turn all 5 green together. Verified red (CS0234 - namespace didn't exist) then green (5/5 passed).
+- [x] 3.2 TDD: write a failing test seeding 2 active Projects + 3 active Applications (1 inactive) and asserting `totalProjects`/`totalApplications` reflect only active rows; extend the handler to compute `TotalProjects`, `TotalApplications`, `TotalAmbientes`, `TotalServiciosVinculados` via `AppDbContext` (no repository). See 3.1 note — implemented together.
+- [x] 3.3 TDD: write a failing test asserting `ApplicationsCreatedLast7Days` has 7 entries, oldest first, with today's entry reflecting an Application created "now"; implement the day-bucketed aggregation. See 3.1 note — implemented together.
+- [x] 3.4 TDD: write a failing test asserting `RecentApplications` returns at most 5 rows ordered by `CreatedAt` descending with project name/stack/status populated; implement, including the placeholder status rule (every active Application → `Activo`, per design.md Decision 4). See 3.1 note — implemented together.
+- [x] 3.5 TDD: write a failing test asserting `StatusBreakdown` reports all active applications under `activo` and `0` for `enProgreso`/`pendiente`; implement. See 3.1 note — implemented together.
 
 ## 4. Backend API (TDD)
 
