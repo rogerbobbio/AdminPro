@@ -1,7 +1,7 @@
 ## ADDED Requirements
 
 ### Requirement: Dashboard route and layout
-The root route (`/`) SHALL render `DashboardComponent` inside `AppShellComponent` with the "Dashboard" nav item active, reproducing the approved Claude Design mockup layout: page header with title/subtitle and "Nuevo Proyecto"/"Importar Datos" actions, a 4-column stat-card grid, a 3-column row (weekly chart, reminder card, module list), and a 2-column row (recent-applications table, status donut).
+The root route (`/`) SHALL render `DashboardComponent` inside `AppShellComponent` with the "Dashboard" nav item active, reproducing the approved Claude Design mockup layout: page header with title/subtitle and a "Nuevo Proyecto" action (the mockup's "Importar Datos" button was dropped at the user's request — not needed), a 4-column stat-card grid, a 3-column row (weekly chart, reminder card, module list), and a 2-column row (recent-applications table, status donut).
 
 #### Scenario: Dashboard is the default route
 - **WHEN** the user navigates to `/`
