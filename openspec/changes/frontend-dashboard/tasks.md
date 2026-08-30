@@ -56,8 +56,8 @@
 
 ## 9. Frontend E2E
 
-- [ ] 9.1 Cypress test: dashboard loads at `/`, all 4 stat cards are visible, the "Gestión de Proyectos" and "Catálogo de Servicios" module entries are visible.
-- [ ] 9.2 Cypress test: clicking the "Gestión de Proyectos" module card navigates to `/proyectos` and the placeholder page renders.
+- [x] 9.1 Cypress test: dashboard loads at `/`, all 4 stat cards are visible, the "Gestión de Proyectos" and "Catálogo de Servicios" module entries are visible.
+- [x] 9.2 Cypress test: clicking the "Gestión de Proyectos" module card navigates to `/proyectos` and the placeholder page renders. Installed Cypress + `cypress.config.ts` + `cypress/e2e/dashboard.cy.ts` covering both scenarios. Could NOT execute in this dev environment: the Cypress Electron binary fails to launch here (`Cypress.exe: bad option: --smoke-test`, reproduced after a full cache-clear + clean reinstall) — an environment-level restriction on this machine blocking the packaged Electron app, unrelated to the test code itself. Same category of gap as task 4.3's Docker unavailability. The exact user flows these specs assert (dashboard renders with real stat cards/modules; clicking "Gestión de Proyectos" navigates to `/proyectos` and shows the placeholder) were independently verified manually via Playwright + screenshots in task 8.7 against the real running app, so the behavior itself is confirmed — only the Cypress runner couldn't be exercised here. Needs a run in an environment where Cypress's Electron binary can launch before merge.
 
 ## 10. Documentation + Final
 
