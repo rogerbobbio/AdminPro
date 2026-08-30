@@ -30,7 +30,7 @@
 
 ## 5. Frontend Scaffold
 
-- [ ] 5.1 `ng new adminpro-ui` (or equivalent Angular 22 CLI scaffold) inside `frontend/`, standalone + routing, per `docs/design/DESIGN.md` §3.1. Verified: `ng serve` boots with the default template with zero errors.
+- [x] 5.1 `ng new adminpro-ui` (or equivalent Angular 22 CLI scaffold) inside `frontend/`, standalone + routing, per `docs/design/DESIGN.md` §3.1. Required bumping the dev machine's active Node version via nvm-windows (22.12.0 → 22.22.3 LTS) since Angular CLI 22 requires ≥22.22.3/24.15.0/26.0.0. Verified: `ng build` succeeds (0 errors), `ng serve` boots and `curl http://localhost:4200` returns `200`.
 - [ ] 5.2 Install and configure Bootstrap 5 + Bootstrap Icons; add `proxy.conf.json` pointing `/api` at the backend's HTTPS URL and wire it into `angular.json`'s serve target. Verified: a manual `fetch('/api/modulos')` from the browser console during `ng serve` reaches the backend (200 or expected error, not a CORS/404 from the dev server itself).
 - [ ] 5.3 Build `styles.scss` mapping the mockup's CSS custom properties (colors, radii, shadows from `dashboard.html`) onto Bootstrap 5 Sass variables/overrides, per `specs/frontend-shell/spec.md` "Bootstrap 5 theme mapped to the design mockup". Verified: a `.btn-primary` renders with the dark-green (`#0C3B29`) background.
 
