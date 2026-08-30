@@ -41,8 +41,8 @@
 
 ## 7. Frontend Dashboard Service (TDD)
 
-- [ ] 7.1 TDD: write a failing test asserting `ModuloService.loadModulos()` populates a `modulos` signal from `GET /api/modulos`; implement the service (`HttpClient` + `firstValueFrom`, per `docs/design/DESIGN.md` §3.2 pattern).
-- [ ] 7.2 TDD: write a failing test asserting `DashboardService.loadSummary()` populates a `summary` signal (typed to the `DashboardSummaryDto` shape) from `GET /api/dashboard/summary`, including a `loading`/`error` signal pair; implement the service.
+- [x] 7.1 TDD: write a failing test asserting `ModuloService.loadModulos()` populates a `modulos` signal from `GET /api/modulos`; implement the service (`HttpClient` + `firstValueFrom`, per `docs/design/DESIGN.md` §3.2 pattern). Added `Modulo`/`DashboardSummary` TS interfaces under `shared/models/` matching the backend DTOs' camelCase JSON shape (ASP.NET Core's default `System.Text.Json` naming policy). Verified red (TS2307) then green (1/1 passed).
+- [x] 7.2 TDD: write a failing test asserting `DashboardService.loadSummary()` populates a `summary` signal (typed to the `DashboardSummaryDto` shape) from `GET /api/dashboard/summary`, including a `loading`/`error` signal pair; implement the service. Added a second test for the error path (`req.error(...)` → `error` signal set, `loading` reset to `false`). Verified red then green (2/2 passed, 7/7 total across all specs).
 
 ## 8. Frontend Dashboard Component (TDD)
 
