@@ -1,0 +1,21 @@
+<div class="mod-list">
+  @for (modulo of modulos(); track modulo.id) {
+    <div class="mod-item" data-testid="modulo-card" (click)="onModuleClick(modulo)">
+      <div class="mod-ico" [class.blue]="modulo.color === 'primary'" [class.green]="modulo.color === 'success'">
+        <i class="bi" [class]="modulo.icono ?? 'bi-app'"></i>
+      </div>
+      <div>
+        <p class="mod-name">{{ modulo.nombre }}</p>
+        <p class="mod-sub">Activo</p>
+      </div>
+    </div>
+  }
+
+  <div class="mod-item">
+    <div class="mod-ico amber"><i class="bi bi-cash-stack"></i></div>
+    <div>
+      <p class="mod-name">Presupuesto</p>
+      <p class="mod-sub">Próximamente</p>
+    </div>
+  </div>
+</div>

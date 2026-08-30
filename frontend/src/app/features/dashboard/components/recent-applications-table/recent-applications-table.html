@@ -1,0 +1,32 @@
+@if (applications().length === 0) {
+  <p class="text-secondary text-center py-4 mb-0">No hay aplicaciones recientes todavía.</p>
+} @else {
+  <table>
+    <thead>
+      <tr>
+        <th>Aplicación</th>
+        <th>Stack</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (app of applications(); track app.id) {
+        <tr>
+          <td>
+            <div class="app-name">{{ app.nombre }}</div>
+            <div class="app-sub">Proyecto {{ app.projectName }}</div>
+          </td>
+          <td>
+            @if (app.tecnologiaFront) {
+              <span class="stack-pill">{{ app.tecnologiaFront }}</span>
+            }
+            @if (app.tecnologiaBack) {
+              <span class="stack-pill">{{ app.tecnologiaBack }}</span>
+            }
+          </td>
+          <td><span class="status activo">{{ app.status }}</span></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

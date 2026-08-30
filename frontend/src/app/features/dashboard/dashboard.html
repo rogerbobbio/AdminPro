@@ -1,6 +1,64 @@
 <app-shell activeNav="dashboard">
   <div class="page-head">
-    <h1>Dashboard</h1>
-    <p>Administra proyectos, aplicaciones y servicios del catálogo DOLE.</p>
+    <div>
+      <h1>Dashboard</h1>
+      <p>Administra proyectos, aplicaciones y servicios del catálogo DOLE.</p>
+    </div>
+    <div class="head-actions">
+      <button type="button" class="btn btn-primary rounded-pill">
+        <i class="bi bi-plus-lg"></i> Nuevo Proyecto
+      </button>
+      <button type="button" class="btn btn-outline-secondary rounded-pill">
+        <i class="bi bi-upload"></i> Importar Datos
+      </button>
+    </div>
+  </div>
+
+  @if (dashboardService.error(); as error) {
+    <p class="text-danger">{{ error }}</p>
+  } @else if (dashboardService.summary(); as summary) {
+    <app-stat-cards [summary]="summary" />
+  } @else {
+    <p class="text-secondary">Cargando dashboard...</p>
+  }
+
+  <div class="row2">
+    <div class="card">
+      <div class="card-head">
+        <h3>Aplicaciones creadas</h3>
+        <span class="link-btn">Ver todo</span>
+      </div>
+      <app-weekly-chart [values]="dashboardService.summary()?.applicationsCreatedLast7Days ?? [0, 0, 0, 0, 0, 0, 0]" />
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Recordatorio</h3></div>
+      <app-reminder-card />
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>Módulos</h3>
+        <div class="chip-add"><i class="bi bi-plus"></i></div>
+      </div>
+      <app-module-list [modulos]="moduloService.modulos()" />
+    </div>
+  </div>
+
+  <div class="row3">
+    <div class="card table-wrap">
+      <div class="card-head">
+        <h3>Aplicaciones recientes</h3>
+        <span class="link-btn">Ver todas</span>
+      </div>
+      <app-recent-applications-table [applications]="dashboardService.summary()?.recentApplications ?? []" />
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Estado de Aplicaciones</h3></div>
+      <app-status-donut
+        [breakdown]="dashboardService.summary()?.statusBreakdown ?? { activo: 0, enProgreso: 0, pendiente: 0 }"
+      />
+    </div>
   </div>
 </app-shell>
