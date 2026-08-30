@@ -1,59 +1,54 @@
-# AdminproUi
+# AdminPro Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.6.
+Angular 22 frontend for AdminPro (standalone components, Signals, OnPush, Bootstrap 5). See `openspec/changes/frontend-dashboard/` for the proposal/design/specs behind this scaffold and the Dashboard screen, and `docs/design/DESIGN.md` at the repo root for the overall frontend architecture.
+
+## Prerequisites
+
+- Node.js ≥ 22.22.3 (Angular CLI 22 requirement) — if you're on nvm-windows, `nvm install 22.22.3 && nvm use 22.22.3` (the latter needs an elevated/Administrator shell)
+- The backend running locally (see `backend/README.md`) — the dev server proxies `/api/*` to it
 
 ## Development server
 
-To start a local development server, run:
-
 ```bash
-ng serve
+npm install
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
+This runs `ng serve`, which uses `proxy.conf.json` to forward `/api/*` requests to the backend at `https://localhost:7293` (the port from `backend/src/AdminPro.Api/Properties/launchSettings.json`'s `https` profile — update the proxy target if you run the backend on a different port). Open `http://localhost:4200`.
 
 ## Building
 
-To build the project run:
-
 ```bash
-ng build
+npm run build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Unit tests
 
 ```bash
-ng test
+npm test
 ```
 
-## Running end-to-end tests
+Runs the Vitest-based unit tests (`@angular/build:unit-test`).
 
-For end-to-end (e2e) testing, run:
+## End-to-end tests (Cypress)
 
 ```bash
-ng e2e
+npm run e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Requires both the backend and `ng serve` (`npm start`) running first — Cypress drives the real app at `http://localhost:4200`. See `cypress/e2e/dashboard.cy.ts`.
 
-## Additional Resources
+## Structure
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```
+src/app/
+├── app.routes.ts                  # Root routes (Dashboard at "/", placeholders for not-yet-built modules)
+├── features/
+│   └── dashboard/                 # Dashboard screen + its widgets (stat cards, weekly chart, ...)
+└── shared/
+    ├── components/
+    │   ├── app-shell/             # Sidebar + topbar, reused by every screen
+    │   └── coming-soon/           # Generic "under construction" placeholder page
+    ├── models/                    # TS interfaces mirroring backend DTOs
+    └── services/                  # Signal-based services (ModuloService, DashboardService)
+```

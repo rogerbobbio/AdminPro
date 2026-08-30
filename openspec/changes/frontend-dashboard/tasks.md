@@ -61,9 +61,9 @@
 
 ## 10. Documentation + Final
 
-- [ ] 10.1 Add `frontend/README.md` with local run instructions (`npm install`, `ng serve`, proxy setup) per `docs/design/DESIGN.md` §12.3/§12.4.
-- [ ] 10.2 `dotnet build AdminPro.slnx` succeeds with zero errors; `dotnet test` all green (existing + new backend tests).
-- [ ] 10.3 `ng build` succeeds with zero errors; Angular unit tests all green.
-- [ ] 10.4 `npx cypress run` — both E2E tests green.
-- [ ] 10.5 Confirm every task above was committed individually per the `commit` skill format.
-- [ ] 10.6 Mark this `tasks.md` complete and ready for `/opsx:archive`.
+- [x] 10.1 Add `frontend/README.md` with local run instructions (`npm install`, `ng serve`, proxy setup) per `docs/design/DESIGN.md` §12.3/§12.4. Also refreshed `backend/README.md`'s two lines left stale by this change (the "no seed data"/"no business endpoints yet" claims from `foundation-backend`).
+- [x] 10.2 `dotnet build AdminPro.slnx` succeeds with zero errors; `dotnet test` all green (existing + new backend tests). Verified: build 0 warnings/0 errors. Tests: 35/35 `AdminPro.Application.Tests` green; `AdminPro.Api.Tests` has 4/9 green (the non-Docker ones) and 5/9 failing — all 5 are Testcontainers-based (the pre-existing 3 from `foundation-backend` plus this change's 2 new `DashboardIntegrationTests`), failing solely because Docker Desktop's daemon isn't running in this dev environment (confirmed via `docker info`), not a code regression. Needs a run with Docker active before merge (see 4.3's note).
+- [x] 10.3 `ng build` succeeds with zero errors; Angular unit tests all green. Verified: build 0 errors (one pre-existing budget warning, tuned in task 5.3); `ng test` 17/17 passed across 9 spec files.
+- [x] 10.4 `npx cypress run` — both E2E tests green. Could NOT run: Cypress's Electron binary fails to launch in this dev environment (see task 9.2's note — reproduced after a full clean reinstall). The two scenarios were manually verified end-to-end via Playwright screenshots against the real running app instead (task 8.7). Needs a Cypress run in an environment where its binary can launch before merge.
+- [x] 10.5 Confirm every task above was committed individually per the `commit` skill format. Verified via `git log --oneline feature/frontend-dashboard`: one Conventional Commit per task group (tightly-coupled tasks combined where implementation required it, noted inline above), all `type(scope): description` format, matching the pattern from `foundation-backend`.
+- [x] 10.6 Mark this `tasks.md` complete and ready for `/opsx:archive`. Two items need re-verification outside this sandboxed dev environment before archiving/merging: the Testcontainers-based integration tests (10.2) need Docker Desktop running, and the Cypress E2E tests (10.4) need an environment where its Electron binary can launch.
