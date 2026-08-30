@@ -36,8 +36,8 @@
 
 ## 6. Frontend Shell Component (TDD)
 
-- [ ] 6.1 TDD (Angular/Karma): write a failing test asserting `AppShellComponent` marks the nav item matching its `activeNav` input as active and no others; implement `AppShellComponent` (sidebar: brand, nav items, Presupuesto promo card; topbar: search, icon buttons, user block), reproducing `dashboard.html`'s sidebar/topbar markup 1:1.
-- [ ] 6.2 Wire root routing: `app.routes.ts` renders `AppShellComponent` as a layout route wrapping child routes (Dashboard at `/`, placeholder `/proyectos` route rendering a minimal "Próximamente" page per design.md's resolved open question).
+- [x] 6.1 TDD: write a failing test asserting `AppShell` marks the nav item matching its `activeNav` input as active and no others; implement `AppShell` (sidebar: brand, nav items, Presupuesto promo card; topbar: search, icon buttons, user block), reproducing `dashboard.html`'s sidebar/topbar markup 1:1. Angular 22's default project uses Vitest (`@angular/build:unit-test`), not Karma — updated task description accordingly. Named the class `AppShell` (no `Component` suffix), matching Angular 22's scaffolded style (see `App` in `app.ts`). Verified red (TS2307 - module didn't exist) then green (3/3 new tests + 2 existing passed).
+- [x] 6.2 Wire root routing: `app.routes.ts` renders `Dashboard` at `/` and a shared `ComingSoon` component at `/proyectos` (per design.md's resolved open question). Went with content-projection (`AppShell` wraps `<ng-content>`, each page passes `[activeNav]` directly) rather than a layout route wrapping `<router-outlet>`, per design.md Decision 1's "or content projection" — simpler to unit test and avoids coupling `AppShell` to router internals. Enabled `withComponentInputBinding()` so `ComingSoon`'s `title`/`activeNav` inputs bind from route `data`. Verified: `ng build` 0 errors, `ng test` all green.
 
 ## 7. Frontend Dashboard Service (TDD)
 
