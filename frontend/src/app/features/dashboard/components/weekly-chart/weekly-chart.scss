@@ -1,0 +1,36 @@
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 150px;
+}
+
+.bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.bar {
+  width: 26px;
+  border-radius: 9px;
+  background: repeating-linear-gradient(-45deg, var(--ap-g-100) 0 5px, transparent 5px 10px);
+
+  &.filled {
+    background: var(--ap-g-500);
+  }
+
+  &.filled.strong {
+    background: var(--ap-g-900);
+  }
+}
+
+.bar-label {
+  margin-top: 8px;
+  font-size: 11.5px;
+  color: var(--ap-ink-soft);
+  font-weight: 700;
+}

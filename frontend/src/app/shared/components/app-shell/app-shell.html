@@ -1,0 +1,60 @@
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark"><i class="bi bi-diagram-3-fill"></i></div>
+      <div class="brand-name">DOLE Catalog</div>
+    </div>
+
+    <div class="nav-label">Menú</div>
+    <a class="nav-item" [class.active]="activeNav() === 'dashboard'" routerLink="/">
+      <i class="bi bi-grid-fill"></i> Dashboard
+    </a>
+    <a class="nav-item" [class.active]="activeNav() === 'proyectos'" routerLink="/proyectos">
+      <i class="bi bi-folder2-open"></i> Proyectos
+    </a>
+    <a class="nav-item" [class.active]="activeNav() === 'servicios'" routerLink="/servicios">
+      <i class="bi bi-hdd-network"></i> Servicios
+    </a>
+    <a class="nav-item" [class.active]="activeNav() === 'buscar'" routerLink="/buscar">
+      <i class="bi bi-search"></i> Buscar
+    </a>
+
+    <div class="nav-label">General</div>
+    <div class="nav-item"><i class="bi bi-gear"></i> Configuración</div>
+    <div class="nav-item"><i class="bi bi-question-circle"></i> Ayuda</div>
+    <div class="nav-item"><i class="bi bi-box-arrow-right"></i> Salir</div>
+
+    <div class="sidebar-spacer"></div>
+    <div class="promo-card">
+      <i class="bi bi-cash-coin bg-icon"></i>
+      <h4>Módulo Presupuesto</h4>
+      <p>Próximamente: control de costos y licencias por proyecto.</p>
+      <div class="promo-btn">Próximamente</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">
+        <i class="bi bi-search"></i>
+        <input placeholder="Buscar proyecto, aplicación, servicio..." />
+        <kbd>⌘F</kbd>
+      </div>
+      <div class="topbar-right">
+        <div class="icon-btn"><i class="bi bi-envelope"></i></div>
+        <div class="icon-btn"><i class="bi bi-bell"></i><span class="dot"></span></div>
+        <div class="user">
+          <div class="avatar">RD</div>
+          <div>
+            <div class="user-name">Roger Dole</div>
+            <div class="user-mail">roger&#64;dole.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="shell-content">
+      <ng-content></ng-content>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,13 @@
+<div class="donut-wrap">
+  <div class="donut" [style.background]="gradient()">
+    <div class="donut-inner">
+      <strong>{{ activoPercent() }}%</strong>
+      <span>Activas</span>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><span class="legend-dot" style="background: var(--ap-g-900)"></span>Activas</div>
+    <div class="legend-item"><span class="legend-dot" style="background: var(--ap-g-500)"></span>En progreso</div>
+    <div class="legend-item"><span class="legend-dot" style="background: #E9EDEB"></span>Pendientes</div>
+  </div>
+</div>

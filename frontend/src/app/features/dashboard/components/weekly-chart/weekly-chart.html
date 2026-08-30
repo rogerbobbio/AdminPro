@@ -1,0 +1,13 @@
+<div class="bars">
+  @for (bar of bars(); track $index) {
+    <div class="bar-col">
+      <div
+        class="bar"
+        [class.filled]="bar.filled"
+        [class.strong]="bar.strong"
+        [style.height.%]="bar.height"
+      ></div>
+      <div class="bar-label">{{ bar.label }}</div>
+    </div>
+  }
+</div>

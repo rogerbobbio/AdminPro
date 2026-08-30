@@ -1,0 +1,90 @@
+:host {
+  display: block;
+}
+
+.page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  h1 {
+    font-size: 26px;
+    margin: 0 0 4px;
+    letter-spacing: -0.4px;
+  }
+
+  p {
+    margin: 0;
+    color: var(--ap-ink-soft);
+    font-size: 14px;
+  }
+}
+
+.head-actions {
+  display: flex;
+  gap: 10px;
+}
+
+::ng-deep .card,
+.card {
+  background: #fff;
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius-xl);
+  padding: 20px;
+  box-shadow: var(--bs-box-shadow-lg);
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+
+  h3 {
+    font-size: 15.5px;
+    margin: 0;
+    font-weight: 800;
+  }
+
+  .link-btn {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ap-g-700);
+  }
+}
+
+.chip-add {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--bs-border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ap-g-700);
+  font-size: 14px;
+}
+
+.row2 {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 18px;
+  align-items: stretch;
+}
+
+.row3 {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 18px;
+}
+
+@media (max-width: 992px) {
+  .row2,
+  .row3 {
+    grid-template-columns: 1fr;
+  }
+}

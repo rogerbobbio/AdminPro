@@ -40,7 +40,7 @@ Project references: `Domain` has none; `Infrastructure` → `Domain`; `Applicati
    ```bash
    dotnet ef database update --project src/AdminPro.Infrastructure --startup-project src/AdminPro.Api
    ```
-   This creates the `AdminPro` database with all 11 domain tables. **No seed data is inserted** — this is intentional (see `openspec/changes/archive/2026-08-28-foundation-backend/design.md`).
+   This creates the `AdminPro` database with all 11 domain tables. The `InitialCreate` migration itself inserts no rows (intentional — see `openspec/changes/archive/2026-08-28-foundation-backend/design.md`); a later `SeedModulos` migration adds the 2 real navigation modules (see `openspec/changes/frontend-dashboard/`).
 
 ## Running
 
@@ -49,7 +49,7 @@ cd src/AdminPro.Api
 dotnet run
 ```
 
-The API boots with Serilog logging to console and `logs/adminpro-*.log`. There are no business endpoints yet in this Foundation phase — controllers with real actions arrive in Phase 2 onward.
+The API boots with Serilog logging to console and `logs/adminpro-*.log`. `GET /api/modulos` and `GET /api/dashboard/summary` are live (Phase 2 — Dashboard); further Projects/Applications/Services endpoints arrive screen by screen.
 
 With `ASPNETCORE_ENVIRONMENT=Development` (the default via `launchSettings.json`), you get:
 - **Scalar UI** (API explorer): `https://localhost:7293/scalar/v1`
