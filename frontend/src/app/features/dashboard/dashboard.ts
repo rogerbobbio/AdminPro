@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { AppShell } from '../../shared/components/app-shell/app-shell';
 import { ModuloService } from '../../shared/services/modulo.service';
 import { DashboardService } from '../../shared/services/dashboard.service';
@@ -14,6 +15,7 @@ import { StatusDonut } from './components/status-donut/status-donut';
   standalone: true,
   imports: [
     AppShell,
+    RouterLink,
     StatCards,
     WeeklyChart,
     ReminderCard,

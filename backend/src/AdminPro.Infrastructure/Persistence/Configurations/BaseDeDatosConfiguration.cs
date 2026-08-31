@@ -13,6 +13,7 @@ public class BaseDeDatosConfiguration : IEntityTypeConfiguration<BaseDeDatos>
         builder.Property(d => d.Nombre).HasMaxLength(100).IsRequired();
         builder.Property(d => d.Servidor).HasMaxLength(200);
         builder.Property(d => d.LoginName).HasMaxLength(100);
+        builder.Property(d => d.Password).HasMaxLength(200);
         builder.Property(d => d.Ambiente).HasMaxLength(50);
 
         builder.HasQueryFilter(d => d.Activo);

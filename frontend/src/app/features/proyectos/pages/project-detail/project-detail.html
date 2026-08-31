@@ -1,0 +1,137 @@
+@if (projectService.selectedProject(); as project) {
+  <div class="breadcrumb mb-3">
+    <a routerLink="/proyectos">Proyectos</a>
+    <span class="sep">/</span>
+    <span class="current">{{ project.nombre }}</span>
+  </div>
+
+  <div class="page-head">
+    <div>
+      <h1>{{ project.nombre }}</h1>
+      <p>{{ project.descripcion }}</p>
+    </div>
+    <a class="btn btn-outline-secondary rounded-pill" [routerLink]="['/proyectos', project.id, 'editar']">
+      <i class="bi bi-pencil"></i> Editar
+    </a>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-head">
+      <h3>Bases de Datos ({{ project.basesDeDatos.length }})</h3>
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-primary"
+        data-testid="btn-agregar-bd"
+        (click)="openAddDatabaseModal()"
+      >
+        <i class="bi bi-plus"></i> Agregar
+      </button>
+    </div>
+    @if (project.basesDeDatos.length === 0) {
+      <p class="text-secondary mb-0">No hay bases de datos todavía.</p>
+    } @else {
+      <table class="w-100">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Ambiente</th>
+            <th>Servidor</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (db of project.basesDeDatos; track db.id) {
+            <tr>
+              <td>{{ db.nombre }}</td>
+              <td>{{ db.ambiente }}</td>
+              <td>{{ db.servidor }}</td>
+              <td class="text-end">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                  data-testid="btn-editar-bd"
+                  (click)="openEditDatabaseModal(db)"
+                >
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  data-testid="btn-eliminar-bd"
+                  (click)="onDeleteDatabase(db.id)"
+                >
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <h3>Aplicaciones ({{ project.applications.length }})</h3>
+    </div>
+    <p class="text-secondary mb-0">No hay aplicaciones todavía.</p>
+  </div>
+}
+
+@if (showModal()) {
+  <div class="modal-backdrop-custom">
+    <div class="modal-dialog-custom">
+      <h4>{{ editingDatabaseId === null ? 'Agregar Base de Datos' : 'Editar Base de Datos' }}</h4>
+      <form [formGroup]="databaseForm" (ngSubmit)="onSaveDatabase()">
+        <div class="mb-3">
+          <label class="form-label">Nombre *</label>
+          <input type="text" class="form-control" formControlName="nombre" data-testid="modal-input-nombre" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Ambiente</label>
+          <input type="text" class="form-control" formControlName="ambiente" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Servidor</label>
+          <input type="text" class="form-control" formControlName="servidor" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Database Id</label>
+          <input type="number" class="form-control" formControlName="databaseId" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Usuario</label>
+          <input type="text" class="form-control" formControlName="loginName" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <div class="password-field">
+            <input
+              [type]="showPassword() ? 'text' : 'password'"
+              class="form-control"
+              formControlName="password"
+              data-testid="modal-input-password"
+            />
+            <button
+              type="button"
+              class="password-toggle"
+              data-testid="btn-toggle-password"
+              [attr.aria-label]="showPassword() ? 'Ocultar password' : 'Mostrar password'"
+              (click)="togglePasswordVisibility()"
+            >
+              <i class="bi" [class.bi-eye]="!showPassword()" [class.bi-eye-slash]="showPassword()"></i>
+            </button>
+          </div>
+        </div>
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar">
+            Guardar
+          </button>
+          <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeModal()">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

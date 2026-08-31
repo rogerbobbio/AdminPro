@@ -200,6 +200,10 @@ namespace AdminPro.Infrastructure.Persistence.Migrations
                     b.Property<string>("Notas")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<int>("ProyectoId")
                         .HasColumnType("int");
 

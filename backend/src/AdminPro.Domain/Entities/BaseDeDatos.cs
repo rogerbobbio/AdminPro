@@ -10,6 +10,7 @@ public class BaseDeDatos : IAuditableEntity
     public string? Servidor { get; set; }
     public int? DatabaseId { get; set; }
     public string? LoginName { get; set; }
+    public string? Password { get; set; }
     public string? Ambiente { get; set; }
     public string? Notas { get; set; }
     public bool Activo { get; set; } = true;

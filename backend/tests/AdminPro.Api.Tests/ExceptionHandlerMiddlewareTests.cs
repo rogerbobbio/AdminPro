@@ -38,4 +38,26 @@ public class ExceptionHandlerMiddlewareTests : IClassFixture<TestingWebApplicati
         var json = await response.Content.ReadFromJsonAsync<JsonElement>();
         json.GetProperty("error").GetString().Should().Be("InternalServerError");
     }
+
+    [Fact]
+    public async Task NotFoundException_MapsTo404WithStructuredBody()
+    {
+        var response = await _client.GetAsync("/api/testonly/not-found-error");
+
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+
+        var json = await response.Content.ReadFromJsonAsync<JsonElement>();
+        json.GetProperty("error").GetString().Should().Be("NotFoundError");
+    }
+
+    [Fact]
+    public async Task DomainException_MapsTo409WithStructuredBody()
+    {
+        var response = await _client.GetAsync("/api/testonly/domain-error");
+
+        response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+
+        var json = await response.Content.ReadFromJsonAsync<JsonElement>();
+        json.GetProperty("error").GetString().Should().Be("DomainError");
+    }
 }

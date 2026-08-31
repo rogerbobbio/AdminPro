@@ -49,7 +49,11 @@ cd src/AdminPro.Api
 dotnet run
 ```
 
-The API boots with Serilog logging to console and `logs/adminpro-*.log`. `GET /api/modulos` and `GET /api/dashboard/summary` are live (Phase 2 — Dashboard); further Projects/Applications/Services endpoints arrive screen by screen.
+The API boots with Serilog logging to console and `logs/adminpro-*.log`. Live endpoints so far:
+- `GET /api/modulos`, `GET /api/dashboard/summary` (Phase 2 — Dashboard)
+- `GET/POST/PUT/DELETE /api/projects`, `POST /api/projects/{id}/basesdedatos`, `PUT/DELETE /api/basesdedatos/{id}` (Phase 3 — Projects & Databases)
+
+Application/Services endpoints arrive in later phases, screen by screen.
 
 With `ASPNETCORE_ENVIRONMENT=Development` (the default via `launchSettings.json`), you get:
 - **Scalar UI** (API explorer): `https://localhost:7293/scalar/v1`

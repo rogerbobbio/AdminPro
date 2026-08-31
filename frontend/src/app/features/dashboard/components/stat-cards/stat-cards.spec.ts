@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { StatCards } from './stat-cards';
 import { DashboardSummary } from '../../../../shared/models/dashboard-summary.model';
 
@@ -13,6 +14,12 @@ const emptySummary: DashboardSummary = {
 };
 
 describe('StatCards', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideRouter([])],
+    });
+  });
+
   it('renders zero for every stat when summary is all-zero', () => {
     const fixture = TestBed.createComponent(StatCards);
     fixture.componentRef.setInput('summary', emptySummary);
@@ -41,5 +48,17 @@ describe('StatCards', () => {
     expect(text).toContain('28');
     expect(text).toContain('54');
     expect(text).toContain('9');
+  });
+
+  it('links each arrow to its destination screen', () => {
+    const fixture = TestBed.createComponent(StatCards);
+    fixture.componentRef.setInput('summary', emptySummary);
+    fixture.detectChanges();
+
+    const arrows = Array.from(
+      (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLAnchorElement>('.stat-arrow'),
+    ).map((a) => a.getAttribute('href'));
+
+    expect(arrows).toEqual(['/proyectos', '/proyectos', '/proyectos', '/servicios']);
   });
 });

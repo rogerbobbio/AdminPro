@@ -1,0 +1,32 @@
+<div class="page-head">
+  <div>
+    <h1>Proyectos</h1>
+    <p>Gestioná los proyectos del catálogo.</p>
+  </div>
+  <a class="btn btn-primary rounded-pill" routerLink="/proyectos/nuevo">
+    <i class="bi bi-plus-lg"></i> Nuevo Proyecto
+  </a>
+</div>
+
+<div class="search mb-4">
+  <i class="bi bi-search"></i>
+  <input
+    type="text"
+    data-testid="search-input"
+    placeholder="Buscar proyecto..."
+    (input)="onSearchInput($event)"
+  />
+</div>
+
+@if (filteredProjects().length === 0) {
+  <p class="text-secondary">No se encontraron proyectos.</p>
+} @else {
+  <div class="project-grid">
+    @for (project of filteredProjects(); track project.id) {
+      <a class="card project-card" data-testid="project-card" [routerLink]="['/proyectos', project.id]">
+        <h3>{{ project.nombre }}</h3>
+        <p>{{ project.descripcion }}</p>
+      </a>
+    }
+  </div>
+}
