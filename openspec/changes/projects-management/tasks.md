@@ -49,7 +49,7 @@
 
 ## 8. Frontend — Pages (TDD)
 
-- [ ] 8.1 TDD: write a failing test asserting `ProjectList` renders project cards from `ProjectService.projects()` and that typing in the search box filters them client-side; implement.
+- [x] 8.1 TDD: write a failing test asserting `ProjectList` renders project cards from `ProjectService.projects()` and that typing in the search box filters them client-side; implement. Fixed a real gap: the component's `ngOnInit` fires a real HTTP request, so the test module needed `provideHttpClient()`/`provideHttpClientTesting()` (not just DI defaults), plus a `setTimeout(0)` tick after `flush()` for the same microtask-boundary reason as the service tests (7.1). Verified red (stub had 0 cards) then green (2/2 passed, 29/29 total, zero unhandled rejections).
 - [ ] 8.2 TDD: write a failing test asserting `ProjectForm` shows an inline error when the backend returns a `400` validation error on `nombre`, and navigates to the detail page on success; implement the reactive form.
 - [ ] 8.3 TDD: write a failing test asserting `ProjectDetail` renders the databases list from `selectedProject().basesDeDatos` and an empty-state "Aplicaciones" section with no create action; implement.
 - [ ] 8.4 TDD: write a failing test asserting the "add database" modal calls `DatabaseService.create()` and the databases list updates without a full page reload; implement the modal form (Bootstrap modal) and delete/edit actions.
