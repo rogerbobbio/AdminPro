@@ -39,8 +39,8 @@
 
 ## 6. Frontend — Proyectos module shell
 
-- [ ] 6.1 TDD: write a failing test asserting `ProyectosLayout` renders `AppShell` with `activeNav="proyectos"` and a `<router-outlet>` for its children; implement.
-- [ ] 6.2 Replace the `/proyectos` route registration in `app.routes.ts`: `ProyectosLayout` as a layout route with children `''` (`ProjectList`), `nuevo` (`ProjectForm`), `:id` (`ProjectDetail`), `:id/editar` (`ProjectForm`). Remove the now-unused `ComingSoon` registration for this path (keep the component itself — still usable for future not-yet-built modules like `servicios`).
+- [x] 6.1 TDD: write a failing test asserting `ProyectosLayout` renders `AppShell` with `activeNav="proyectos"` and a `<router-outlet>` for its children; implement. Verified red (TS2307) then green (2/2 new + 17 existing passed).
+- [x] 6.2 Replace the `/proyectos` route registration in `app.routes.ts`: `ProyectosLayout` as a layout route with children `''` (`ProjectList`), `nuevo` (`ProjectForm`), `:id` (`ProjectDetail`), `:id/editar` (`ProjectForm`). Removed the `ComingSoon` registration for this path (kept the component itself — still usable for future not-yet-built modules like `servicios`, per the design's own note). Created minimal stub `ProjectList`/`ProjectDetail`/`ProjectForm` components now (fleshed out fully in section 8) so the route tree compiles. Verified: `ng build` 0 errors, `ng test` all green (19/19).
 
 ## 7. Frontend — Services (TDD)
 
