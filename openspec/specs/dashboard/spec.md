@@ -33,7 +33,7 @@ The Dashboard SHALL display the modules returned by `GET /api/modulos` in the "M
 #### Scenario: Clicking an active module navigates
 - **GIVEN** the "Gestión de Proyectos" module is listed
 - **WHEN** the user clicks its card/row
-- **THEN** the app navigates to `/proyectos`, which renders a placeholder "Próximamente" page (the real `proyectos` module screens are added by later changes)
+- **THEN** the app navigates to `/proyectos`, which renders the project list (see `projects-screens`)
 
 ### Requirement: Recent applications table
 The Dashboard SHALL display up to 5 recently created applications (name, project name, stack pills, status pill) from `recentApplications` in the summary response.
