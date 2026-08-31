@@ -60,9 +60,9 @@
 
 ## 10. Documentation + Final
 
-- [ ] 10.1 Update `backend/README.md` if the API surface description needs it (new controllers).
-- [ ] 10.2 `dotnet build AdminPro.slnx` succeeds with zero errors; `dotnet test` all green.
-- [ ] 10.3 `ng build` succeeds with zero errors; Angular unit tests all green.
-- [ ] 10.4 `npx cypress run` — green (environment permitting, per the note in `frontend-dashboard`'s tasks.md).
-- [ ] 10.5 Confirm every task above was committed individually per the `commit` skill format.
-- [ ] 10.6 Mark this `tasks.md` complete and ready for `/opsx:archive`.
+- [x] 10.1 Update `backend/README.md` if the API surface description needs it (new controllers). Replaced the stale "no business endpoints" line (already outdated by `frontend-dashboard`) with a running list of live endpoints per phase.
+- [x] 10.2 `dotnet build AdminPro.slnx` succeeds with zero errors; `dotnet test` all green. Verified: 0 warnings/0 errors; 54/54 (`AdminPro.Application.Tests`) + 26/26 (`AdminPro.Api.Tests`, including all Testcontainers-based tests — Docker is running) = 80/80.
+- [x] 10.3 `ng build` succeeds with zero errors; Angular unit tests all green. Verified: build 0 errors (one pre-existing budget warning, bumped from 600kB→700kB same as `frontend-dashboard`'s precedent); `ng test` 33/33 passed across 15 spec files, zero unhandled errors.
+- [x] 10.4 `npx cypress run` — green (environment permitting, per the note in `frontend-dashboard`'s tasks.md). Could not run — same Cypress Electron launch failure as before, confirmed unrelated to Docker (see 9.1's note). Manually verified the equivalent flow via Playwright screenshots (create → detail → add database → list, real backend + frontend, zero console errors) instead.
+- [x] 10.5 Confirm every task above was committed individually per the `commit` skill format. Verified via `git log --oneline feature/projects-management`: one Conventional Commit per task or tightly-coupled task group (noted inline above where combined), all `type(scope): description` format.
+- [x] 10.6 Mark this `tasks.md` complete and ready for `/opsx:archive`. One process item remains outside my control: task 0.2's Draft PR still needs to be opened manually (no `gh` CLI in this environment) — branch `feature/projects-management` is pushed and ready.
