@@ -13,6 +13,7 @@ export interface BaseDeDatos {
   servidor: string | null;
   databaseId: number | null;
   loginName: string | null;
+  password: string | null;
   ambiente: string | null;
   notas: string | null;
   activo: boolean;
@@ -48,6 +49,7 @@ export interface CreateBaseDeDatosCommand {
   servidor?: string | null;
   databaseId?: number | null;
   loginName?: string | null;
+  password?: string | null;
   ambiente?: string | null;
   notas?: string | null;
 }
@@ -58,6 +60,7 @@ export interface UpdateBaseDeDatosCommand {
   servidor?: string | null;
   databaseId?: number | null;
   loginName?: string | null;
+  password?: string | null;
   ambiente?: string | null;
   notas?: string | null;
 }

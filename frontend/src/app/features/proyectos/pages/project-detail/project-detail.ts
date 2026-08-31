@@ -27,6 +27,9 @@ export class ProjectDetail implements OnInit {
     nombre: new FormControl('', { nonNullable: true }),
     ambiente: new FormControl<string | null>(null),
     servidor: new FormControl<string | null>(null),
+    databaseId: new FormControl<number | null>(null),
+    loginName: new FormControl<string | null>(null),
+    password: new FormControl<string | null>(null),
   });
 
   ngOnInit(): void {
@@ -46,6 +49,9 @@ export class ProjectDetail implements OnInit {
       nombre: database.nombre,
       ambiente: database.ambiente,
       servidor: database.servidor,
+      databaseId: database.databaseId,
+      loginName: database.loginName,
+      password: database.password,
     });
     this.showModal.set(true);
   }

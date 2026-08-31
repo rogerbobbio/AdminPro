@@ -16,7 +16,7 @@ describe('ProjectDetail', () => {
     createdAt: '',
     updatedAt: '',
     basesDeDatos: [
-      { id: 10, nombre: 'SalesDb', servidor: null, databaseId: null, loginName: null, ambiente: 'desarrollo', notas: null, activo: true },
+      { id: 10, nombre: 'SalesDb', servidor: null, databaseId: null, loginName: null, password: null, ambiente: 'desarrollo', notas: null, activo: true },
     ],
     applications: [],
   };
@@ -78,7 +78,7 @@ describe('ProjectDetail', () => {
 
     httpMock.expectOne('/api/projects/1').flush({
       ...detail,
-      basesDeDatos: [...detail.basesDeDatos, { id: 11, nombre: 'AuthDb', servidor: null, databaseId: null, loginName: null, ambiente: null, notas: null, activo: true }],
+      basesDeDatos: [...detail.basesDeDatos, { id: 11, nombre: 'AuthDb', servidor: null, databaseId: null, loginName: null, password: null, ambiente: null, notas: null, activo: true }],
     });
     await new Promise((resolve) => setTimeout(resolve, 0));
     fixture.detectChanges();
