@@ -1,19 +1,19 @@
 ## 0. Setup (MANDATORY FIRST)
 
-- [ ] 0.1 Create branch `feature/projects-management`
-- [ ] 0.2 Open Draft PR against `main`
+- [x] 0.1 Create branch `feature/projects-management`
+- [ ] 0.2 Open Draft PR against `main` (`gh` CLI unavailable in this environment — branch pushed to `origin/feature/projects-management`; open manually at https://github.com/rogerbobbio/AdminPro/pull/new/feature/projects-management)
 
 ## 1. Specs & Design
 
-- [ ] 1.1 `proposal.md` reviewed
-- [ ] 1.2 `design.md` with technical decisions
-- [ ] 1.3 `specs/projects-api/spec.md`, `specs/projects-screens/spec.md` with Given/When/Then scenarios
+- [x] 1.1 `proposal.md` reviewed
+- [x] 1.2 `design.md` with technical decisions
+- [x] 1.3 `specs/projects-api/spec.md`, `specs/projects-screens/spec.md` with Given/When/Then scenarios
 
 ## 2. Backend Application — Exception mappings (TDD)
 
-- [ ] 2.1 Add `NotFoundException` under `AdminPro.Application/Common/Exceptions/`.
-- [ ] 2.2 TDD: write a failing `WebApplicationFactory` test (extend `TestOnlyController`/`TestingWebApplicationFactory`) proving a thrown `NotFoundException` maps to `404` with `{ error: "NotFoundError" }`; implement the mapping in `ExceptionHandlerMiddleware`.
-- [ ] 2.3 TDD: write a failing test proving a thrown `DomainException` (already declared in `AdminPro.Domain.Exceptions`) maps to `409` with `{ error: "DomainError" }`; implement the mapping.
+- [x] 2.1 Add `NotFoundException` under `AdminPro.Application/Common/Exceptions/`.
+- [x] 2.2 TDD: write a failing `WebApplicationFactory` test (extend `TestOnlyController`/`TestingWebApplicationFactory`) proving a thrown `NotFoundException` maps to `404` with `{ error: "NotFoundError" }`; implement the mapping in `ExceptionHandlerMiddleware`. Combined with 2.3 (same test file, same middleware edit). Verified red (500 instead of 404/409) then green (4/4 passed).
+- [x] 2.3 TDD: write a failing test proving a thrown `DomainException` (already declared in `AdminPro.Domain.Exceptions`) maps to `409` with `{ error: "DomainError" }`; implement the mapping. See 2.2.
 
 ## 3. Backend Application — Project CQRS (TDD)
 

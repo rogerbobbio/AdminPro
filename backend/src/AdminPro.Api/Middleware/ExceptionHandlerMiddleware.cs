@@ -1,4 +1,6 @@
 using System.Text.Json;
+using AdminPro.Application.Common.Exceptions;
+using AdminPro.Domain.Exceptions;
 using ValidationException = AdminPro.Application.Common.Exceptions.ValidationException;
 
 namespace AdminPro.Api.Middleware;
@@ -33,6 +35,28 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
                 message = exception.Message,
                 details = validationException.Errors
                     .SelectMany(e => e.Value.Select(message => new { field = e.Key, error = message }))
+            };
+        }
+        else if (exception is NotFoundException)
+        {
+            logger.LogWarning(exception, "Not found");
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+            body = new
+            {
+                error = "NotFoundError",
+                message = exception.Message,
+                details = Array.Empty<object>()
+            };
+        }
+        else if (exception is DomainException)
+        {
+            logger.LogWarning(exception, "Domain error");
+            context.Response.StatusCode = StatusCodes.Status409Conflict;
+            body = new
+            {
+                error = "DomainError",
+                message = exception.Message,
+                details = Array.Empty<object>()
             };
         }
         else

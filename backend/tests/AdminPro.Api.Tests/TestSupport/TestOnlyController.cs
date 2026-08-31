@@ -1,4 +1,5 @@
 using AdminPro.Application.Common.Exceptions;
+using AdminPro.Domain.Exceptions;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,5 +22,17 @@ public class TestOnlyController : ControllerBase
     public IActionResult UnhandledError()
     {
         throw new InvalidOperationException("boom");
+    }
+
+    [HttpGet("not-found-error")]
+    public IActionResult NotFoundError()
+    {
+        throw new NotFoundException("Project 1 not found.");
+    }
+
+    [HttpGet("domain-error")]
+    public IActionResult DomainError()
+    {
+        throw new DomainException("Project name already exists.");
     }
 }
