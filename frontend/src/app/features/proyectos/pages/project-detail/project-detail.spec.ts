@@ -86,4 +86,25 @@ describe('ProjectDetail', () => {
     expect(compiled.textContent).toContain('AuthDb');
     expect(compiled.querySelector('[data-testid="modal-input-nombre"]')).toBeNull();
   });
+
+  it('toggles the password field visibility', async () => {
+    const fixture = await createAndLoad();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    (compiled.querySelector('[data-testid="btn-agregar-bd"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+
+    const passwordInput = compiled.querySelector<HTMLInputElement>('[data-testid="modal-input-password"]')!;
+    expect(passwordInput.type).toBe('password');
+
+    (compiled.querySelector('[data-testid="btn-toggle-password"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+
+    expect(passwordInput.type).toBe('text');
+
+    (compiled.querySelector('[data-testid="btn-toggle-password"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+
+    expect(passwordInput.type).toBe('password');
+  });
 });

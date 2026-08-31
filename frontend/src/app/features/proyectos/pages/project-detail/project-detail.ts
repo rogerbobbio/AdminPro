@@ -21,6 +21,7 @@ export class ProjectDetail implements OnInit {
   protected projectId!: number;
 
   protected readonly showModal = signal(false);
+  protected readonly showPassword = signal(false);
   protected editingDatabaseId: number | null = null;
 
   protected readonly databaseForm = new FormGroup({
@@ -40,6 +41,7 @@ export class ProjectDetail implements OnInit {
   openAddDatabaseModal(): void {
     this.editingDatabaseId = null;
     this.databaseForm.reset();
+    this.showPassword.set(false);
     this.showModal.set(true);
   }
 
@@ -53,11 +55,16 @@ export class ProjectDetail implements OnInit {
       loginName: database.loginName,
       password: database.password,
     });
+    this.showPassword.set(false);
     this.showModal.set(true);
   }
 
   closeModal(): void {
     this.showModal.set(false);
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword.update((value) => !value);
   }
 
   async onSaveDatabase(): Promise<void> {

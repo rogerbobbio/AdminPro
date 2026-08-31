@@ -100,3 +100,29 @@ table td {
     font-weight: 800;
   }
 }
+
+.password-field {
+  position: relative;
+
+  input {
+    padding-right: 40px;
+  }
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--ap-ink-soft);
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    color: var(--bs-body-color);
+  }
+}
