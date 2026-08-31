@@ -7,6 +7,7 @@ using AdminPro.Infrastructure.Persistence;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
+using AppEntity = AdminPro.Domain.Entities.Application;
 
 namespace AdminPro.Application.Tests.Projects;
 
@@ -38,6 +39,23 @@ public class GetProjectByIdQueryHandlerTests
 
         result.Nombre.Should().Be("Acme Corp");
         result.BasesDeDatos.Should().HaveCount(2);
+    }
+
+    [Fact]
+    public async Task Handle_ReturnsRealApplications_NotAlwaysEmpty()
+    {
+        using var db = CreateInMemoryContext(nameof(Handle_ReturnsRealApplications_NotAlwaysEmpty));
+        var project = new Project { Nombre = "Acme Corp", Activo = true };
+        db.Projects.Add(project);
+        await db.SaveChangesAsync();
+
+        db.Applications.Add(new AppEntity { ProyectoId = project.Id, Nombre = "CRM", Activo = true });
+        await db.SaveChangesAsync();
+
+        var handler = new GetProjectByIdQueryHandler(db);
+        var result = await handler.Handle(new GetProjectByIdQuery(project.Id, false), CancellationToken.None);
+
+        result.Applications.Should().ContainSingle(a => a.Nombre == "CRM");
     }
 
     [Fact]

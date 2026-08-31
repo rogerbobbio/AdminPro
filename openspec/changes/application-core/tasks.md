@@ -1,7 +1,7 @@
 ## 0. Setup (MANDATORY FIRST)
 
 - [x] 0.1 Create branch `feature/application-core`
-- [ ] 0.2 Push branch to `origin` (Draft PR opened manually if `gh` CLI is unavailable, per the note in `projects-management`'s tasks.md)
+- [x] 0.2 Push branch to `origin` (Draft PR opened manually if `gh` CLI is unavailable, per the note in `projects-management`'s tasks.md)
 
 ## 1. Specs & Design
 
@@ -11,21 +11,21 @@
 
 ## 2. Backend Application — Application CQRS (TDD)
 
-- [ ] 2.1 TDD: write a failing test for `CreateApplicationCommandValidator` proving a duplicate `Nombre` within the same `ProyectoId` fails validation (rule APP-001) but the same name under a different project succeeds; implement the validator + `CreateApplicationCommand`/Handler (insert, throw `NotFoundException` if the project doesn't exist or is inactive, set `CreatedAt`/`UpdatedAt`, return new id).
-- [ ] 2.2 TDD: write a failing test for `GetApplicationsByProjectQuery` proving it returns only active applications for the given project ordered by `Orden` then `Nombre`, with an `IncludeInactive` flag; implement query + handler + `ApplicationSummaryDto`.
-- [ ] 2.3 TDD: write a failing test for `GetApplicationByIdQuery` proving it returns an `ApplicationDetailDto` with `ambientes` populated and always-empty `reportes`/`notas`/`documentos`/`fixDatas`/`servicios`, and throws `NotFoundException` for a missing/inactive id; implement.
-- [ ] 2.4 TDD: write a failing test for `UpdateApplicationCommandValidator`/Handler proving renaming to another application's name in the same project fails but renaming to its own current name succeeds, and a missing id throws `NotFoundException`; implement.
-- [ ] 2.5 TDD: write a failing test for `DeleteApplicationCommand` proving it sets `Activo = false` on the application AND cascades to its `Ambiente` children, and throws `NotFoundException` for a missing id; implement, including the marked extension-point comments for the not-yet-existing Reportes/Notas/Documentos/FixDatas cascades (rule APP-002, design.md Decision 5).
+- [x] 2.1 TDD: write a failing test for `CreateApplicationCommandValidator` proving a duplicate `Nombre` within the same `ProyectoId` fails validation (rule APP-001) but the same name under a different project succeeds; implement the validator + `CreateApplicationCommand`/Handler (insert, throw `NotFoundException` if the project doesn't exist or is inactive, set `CreatedAt`/`UpdatedAt`, return new id). Written together with 2.2-2.5 (one pass across all Application CQRS, verified together). Hit and fixed an EF Core InMemory-provider gotcha: `UseInMemoryDatabase(name)` shares the same store across DbContext instances whenever the name string matches, even across unrelated test classes/collections — several new test methods coincidentally reused method names already used in `Projects`/`Databases` tests (e.g. `Handler_MissingProject_ThrowsNotFoundException`, `Validator_AllowsRenamingToOwnCurrentName`), causing cross-test data bleed and one flaky failure in `UpdateProjectTests`. Fixed by prefixing every new test class's in-memory db name with `nameof(<TestClass>)`.
+- [x] 2.2 TDD: write a failing test for `GetApplicationsByProjectQuery` proving it returns only active applications for the given project ordered by `Orden` then `Nombre`, with an `IncludeInactive` flag; implement query + handler + `ApplicationSummaryDto`. See 2.1.
+- [x] 2.3 TDD: write a failing test for `GetApplicationByIdQuery` proving it returns an `ApplicationDetailDto` with `ambientes` populated and always-empty `reportes`/`notas`/`documentos`/`fixDatas`/`servicios`, and throws `NotFoundException` for a missing/inactive id; implement. See 2.1.
+- [x] 2.4 TDD: write a failing test for `UpdateApplicationCommandValidator`/Handler proving renaming to another application's name in the same project fails but renaming to its own current name succeeds, and a missing id throws `NotFoundException`; implement. See 2.1.
+- [x] 2.5 TDD: write a failing test for `DeleteApplicationCommand` proving it sets `Activo = false` on the application AND cascades to its `Ambiente` children, and throws `NotFoundException` for a missing id; implement, including the marked extension-point comments for the not-yet-existing Reportes/Notas/Documentos/FixDatas cascades (rule APP-002, design.md Decision 5). See 2.1.
 
 ## 3. Backend Application — Ambiente CQRS (TDD)
 
-- [ ] 3.1 TDD: write a failing test for `CreateEnvironmentCommand` proving it inserts a row scoped to `AplicacionId`, throws `NotFoundException` if the application doesn't exist, and rejects an invalid `Url` (rule ENV-002); implement command + handler + validator.
-- [ ] 3.2 TDD: write a failing test for `UpdateEnvironmentCommand` proving it updates fields and throws `NotFoundException` for a missing id; implement.
-- [ ] 3.3 TDD: write a failing test for `DeleteEnvironmentCommand` proving it sets `Activo = false` and throws `NotFoundException` for a missing id; implement.
+- [x] 3.1 TDD: write a failing test for `CreateEnvironmentCommand` proving it inserts a row scoped to `AplicacionId`, throws `NotFoundException` if the application doesn't exist, and rejects an invalid `Url` (rule ENV-002); implement command + handler + validator. Written together with 3.2/3.3, verified together (see 2.1's note on the shared-db-name fix, applied here too).
+- [x] 3.2 TDD: write a failing test for `UpdateEnvironmentCommand` proving it updates fields and throws `NotFoundException` for a missing id; implement. See 3.1.
+- [x] 3.3 TDD: write a failing test for `DeleteEnvironmentCommand` proving it sets `Activo = false` and throws `NotFoundException` for a missing id; implement. See 3.1.
 
 ## 4. Backend Application — Project detail integration
 
-- [ ] 4.1 TDD: update `GetProjectByIdQueryHandlerTests` to prove `ProjectDetailDto.Applications` now returns real created applications (not always-empty); update `GetProjectByIdQueryHandler` accordingly (no DTO shape change needed per design.md Decision 6).
+- [x] 4.1 TDD: update `GetProjectByIdQueryHandlerTests` to prove `ProjectDetailDto.Applications` now returns real created applications (not always-empty); update `GetProjectByIdQueryHandler` accordingly (no DTO shape change needed per design.md Decision 6). Deviation: `GetProjectByIdQueryHandler` already queried `dbContext.Applications` for the summary list since `projects-management` (it was just always empty because nothing could create an `Application` yet) — no handler code change was needed, only the new test proving it now returns real rows. Verified green: 79/79 in `AdminPro.Application.Tests` (was 56/56 before this change).
 
 ## 5. Backend API (TDD)
 
