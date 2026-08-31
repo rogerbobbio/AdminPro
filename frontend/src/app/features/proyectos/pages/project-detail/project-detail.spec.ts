@@ -40,16 +40,50 @@ describe('ProjectDetail', () => {
     TestBed.resetTestingModule();
   });
 
-  it('renders the databases list and an empty Aplicaciones section', async () => {
+  async function createAndLoad() {
     const fixture = TestBed.createComponent(ProjectDetail);
     fixture.detectChanges();
     httpMock.expectOne('/api/projects/1').flush(detail);
     await new Promise((resolve) => setTimeout(resolve, 0));
     fixture.detectChanges();
+    return fixture;
+  }
+
+  it('renders the databases list and an empty Aplicaciones section', async () => {
+    const fixture = await createAndLoad();
 
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('SalesDb');
     expect(compiled.querySelector('[data-testid="btn-nueva-aplicacion"]')).toBeNull();
     expect(compiled.textContent?.toLowerCase()).toContain('no hay aplicaciones');
+  });
+
+  it('adding a database updates the list without navigating away', async () => {
+    const fixture = await createAndLoad();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    (compiled.querySelector('[data-testid="btn-agregar-bd"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+
+    const nombreInput = compiled.querySelector('[data-testid="modal-input-nombre"]') as HTMLInputElement;
+    nombreInput.value = 'AuthDb';
+    nombreInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    (compiled.querySelector('[data-testid="modal-btn-guardar"]') as HTMLButtonElement).click();
+
+    const createReq = httpMock.expectOne('/api/projects/1/basesdedatos');
+    createReq.flush(11);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    httpMock.expectOne('/api/projects/1').flush({
+      ...detail,
+      basesDeDatos: [...detail.basesDeDatos, { id: 11, nombre: 'AuthDb', servidor: null, databaseId: null, loginName: null, ambiente: null, notas: null, activo: true }],
+    });
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    fixture.detectChanges();
+
+    expect(compiled.textContent).toContain('AuthDb');
+    expect(compiled.querySelector('[data-testid="modal-input-nombre"]')).toBeNull();
   });
 });

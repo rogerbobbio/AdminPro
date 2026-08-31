@@ -75,3 +75,28 @@ table td {
   border-top: 1px solid var(--bs-border-color);
   font-size: 13.5px;
 }
+
+.modal-backdrop-custom {
+  position: fixed;
+  inset: 0;
+  background: rgba(14, 42, 32, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+}
+
+.modal-dialog-custom {
+  background: #fff;
+  border-radius: var(--bs-border-radius-lg);
+  padding: 24px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--bs-box-shadow-lg);
+
+  h4 {
+    margin: 0 0 16px;
+    font-size: 17px;
+    font-weight: 800;
+  }
+}
