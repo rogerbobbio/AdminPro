@@ -44,8 +44,8 @@
 
 ## 7. Frontend — Services (TDD)
 
-- [ ] 7.1 TDD: write failing tests for `ProjectService` (`loadProjects`, `getById`, `create`, `update`, `delete`, all Signal-based per `docs/design/DESIGN.md` §3.2's pattern); implement, with `Project`/`ProjectDetail` TS models.
-- [ ] 7.2 TDD: write failing tests for `DatabaseService` (`create`, `update`, `delete` — no standalone `load`, since the list comes embedded in `ProjectService.selectedProject()`); implement.
+- [x] 7.1 TDD: write failing tests for `ProjectService` (`loadProjects`, `getById`, `create`, `update`, `delete`, all Signal-based per `docs/design/DESIGN.md` §3.2's pattern); implement, with `Project`/`ProjectDetail` TS models. Hit a real timing bug writing the `create`/`update` tests: `HttpTestingController.expectOne()` right after `.flush()` on the first request raced the service's internal `await this.loadProjects()` (a microtask boundary from `firstValueFrom`), so the follow-up GET wasn't dispatched yet — fixed by awaiting a `setTimeout(0)` tick between flushing the mutation and expecting the reload request. Verified red (TS2307) then green (5/5 passed).
+- [x] 7.2 TDD: write failing tests for `DatabaseService` (`create`, `update`, `delete` — no standalone `load`, since the list comes embedded in `ProjectService.selectedProject()`); implement. Verified red then green (3/3 passed, 27/27 total across all specs).
 
 ## 8. Frontend — Pages (TDD)
 
