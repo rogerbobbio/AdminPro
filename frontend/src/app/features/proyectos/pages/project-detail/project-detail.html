@@ -1,1 +1,64 @@
-<p>Cargando proyecto...</p>
+@if (projectService.selectedProject(); as project) {
+  <div class="breadcrumb mb-3">
+    <a routerLink="/proyectos">Proyectos</a>
+    <span class="sep">/</span>
+    <span class="current">{{ project.nombre }}</span>
+  </div>
+
+  <div class="page-head">
+    <div>
+      <h1>{{ project.nombre }}</h1>
+      <p>{{ project.descripcion }}</p>
+    </div>
+    <a class="btn btn-outline-secondary rounded-pill" [routerLink]="['/proyectos', project.id, 'editar']">
+      <i class="bi bi-pencil"></i> Editar
+    </a>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-head">
+      <h3>Bases de Datos ({{ project.basesDeDatos.length }})</h3>
+      <button type="button" class="btn btn-sm btn-outline-primary" data-testid="btn-agregar-bd">
+        <i class="bi bi-plus"></i> Agregar
+      </button>
+    </div>
+    @if (project.basesDeDatos.length === 0) {
+      <p class="text-secondary mb-0">No hay bases de datos todavía.</p>
+    } @else {
+      <table class="w-100">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Ambiente</th>
+            <th>Servidor</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (db of project.basesDeDatos; track db.id) {
+            <tr>
+              <td>{{ db.nombre }}</td>
+              <td>{{ db.ambiente }}</td>
+              <td>{{ db.servidor }}</td>
+              <td class="text-end">
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-testid="btn-editar-bd">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-danger" data-testid="btn-eliminar-bd">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <h3>Aplicaciones ({{ project.applications.length }})</h3>
+    </div>
+    <p class="text-secondary mb-0">No hay aplicaciones todavía.</p>
+  </div>
+}
