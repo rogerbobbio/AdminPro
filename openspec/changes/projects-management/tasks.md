@@ -25,9 +25,9 @@
 
 ## 4. Backend Application — BaseDeDatos CQRS (TDD)
 
-- [ ] 4.1 TDD: write a failing test for `CreateBaseDeDatosCommand` proving it inserts a row scoped to `ProyectoId` and throws `NotFoundException` if the project doesn't exist; implement command + handler + validator (required `Nombre`, max lengths).
-- [ ] 4.2 TDD: write a failing test for `UpdateBaseDeDatosCommand` proving it updates fields and throws `NotFoundException` for a missing id; implement.
-- [ ] 4.3 TDD: write a failing test for `DeleteBaseDeDatosCommand` proving it sets `Activo = false` and throws `NotFoundException` for a missing id; implement.
+- [x] 4.1 TDD: write a failing test for `CreateBaseDeDatosCommand` proving it inserts a row scoped to `ProyectoId` and throws `NotFoundException` if the project doesn't exist; implement command + handler + validator (required `Nombre`, max lengths). Deviation from design.md's literal namespace: used `AdminPro.Application.Databases` instead of `AdminPro.Application.BaseDeDatos` — the latter collides with the `AdminPro.Domain.Entities.BaseDeDatos` type name project-wide (same class of bug the `Application`/`AppEntity` alias in `frontend-dashboard`'s dashboard tests worked around), breaking unrelated pre-existing files (`Domain/BaseDeDatosTests.cs`, etc.) the moment the namespace was introduced. Renaming the namespace (not the command/handler class names) avoided touching any pre-existing file. Verified red (CS0234) then green (2/2 passed).
+- [x] 4.2 TDD: write a failing test for `UpdateBaseDeDatosCommand` proving it updates fields and throws `NotFoundException` for a missing id; implement. Verified red then green (2/2 passed).
+- [x] 4.3 TDD: write a failing test for `DeleteBaseDeDatosCommand` proving it sets `Activo = false` and throws `NotFoundException` for a missing id; implement. Verified red then green (2/2 passed, 54/54 total in `AdminPro.Application.Tests`).
 
 ## 5. Backend API (TDD)
 
