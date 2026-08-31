@@ -18,6 +18,7 @@ public class UpdateBaseDeDatosCommandHandler(AppDbContext dbContext) : IRequestH
         database.Servidor = request.Servidor;
         database.DatabaseId = request.DatabaseId;
         database.LoginName = request.LoginName;
+        database.Password = request.Password;
         database.Ambiente = request.Ambiente;
         database.Notas = request.Notas;
 

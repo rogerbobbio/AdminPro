@@ -27,6 +27,7 @@ public class CreateBaseDeDatosCommandHandler(AppDbContext dbContext) : IRequestH
             Servidor = request.Servidor,
             DatabaseId = request.DatabaseId,
             LoginName = request.LoginName,
+            Password = request.Password,
             Ambiente = request.Ambiente,
             Notas = request.Notas,
             Activo = true,

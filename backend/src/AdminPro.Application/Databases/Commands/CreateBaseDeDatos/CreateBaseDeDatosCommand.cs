@@ -8,5 +8,6 @@ public record CreateBaseDeDatosCommand(
     string? Servidor,
     int? DatabaseId,
     string? LoginName,
+    string? Password,
     string? Ambiente,
     string? Notas) : ICommand<int>;

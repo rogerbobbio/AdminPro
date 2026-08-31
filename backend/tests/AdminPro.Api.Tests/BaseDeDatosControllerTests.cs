@@ -39,6 +39,23 @@ public class BaseDeDatosControllerTests : IClassFixture<InMemoryApiFactory>
     }
 
     [Fact]
+    public async Task CreateDatabase_WithConnectionCredentials_PersistsThem()
+    {
+        var projectId = await CreateProjectAsync("Acme Corp DB1b");
+
+        var createResponse = await _client.PostAsJsonAsync(
+            $"/api/projects/{projectId}/basesdedatos",
+            new { nombre = "SalesDb", databaseId = 42, loginName = "app_user", password = "s3cr3t" });
+
+        createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+        var detail = await (await _client.GetAsync($"/api/projects/{projectId}")).Content.ReadFromJsonAsync<ProjectDetailDto>();
+        var db = detail!.BasesDeDatos.Single();
+        db.DatabaseId.Should().Be(42);
+        db.LoginName.Should().Be("app_user");
+        db.Password.Should().Be("s3cr3t");
+    }
+
+    [Fact]
     public async Task CreateDatabase_MissingProject_Returns404()
     {
         var response = await _client.PostAsJsonAsync("/api/projects/999999/basesdedatos", new { nombre = "SalesDb" });
@@ -58,6 +75,25 @@ public class BaseDeDatosControllerTests : IClassFixture<InMemoryApiFactory>
         updateResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
         var detail = await (await _client.GetAsync($"/api/projects/{projectId}")).Content.ReadFromJsonAsync<ProjectDetailDto>();
         detail!.BasesDeDatos.Single().Ambiente.Should().Be("uat");
+    }
+
+    [Fact]
+    public async Task UpdateDatabase_WithConnectionCredentials_PersistsThem()
+    {
+        var projectId = await CreateProjectAsync("Acme Corp DB2b");
+        var createResponse = await _client.PostAsJsonAsync($"/api/projects/{projectId}/basesdedatos", new { nombre = "SalesDb" });
+        var dbId = await createResponse.Content.ReadFromJsonAsync<int>();
+
+        var updateResponse = await _client.PutAsJsonAsync(
+            $"/api/basesdedatos/{dbId}",
+            new { id = dbId, nombre = "SalesDb", databaseId = 7, loginName = "new_user", password = "new-secret" });
+
+        updateResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        var detail = await (await _client.GetAsync($"/api/projects/{projectId}")).Content.ReadFromJsonAsync<ProjectDetailDto>();
+        var db = detail!.BasesDeDatos.Single();
+        db.DatabaseId.Should().Be(7);
+        db.LoginName.Should().Be("new_user");
+        db.Password.Should().Be("new-secret");
     }
 
     [Fact]

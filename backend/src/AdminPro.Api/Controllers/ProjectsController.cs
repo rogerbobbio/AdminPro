@@ -60,11 +60,11 @@ public class ProjectsController(ISender sender) : ApiController(sender)
     public async Task<ActionResult<int>> CreateDatabase(int projectId, CreateDatabaseRequest request, CancellationToken ct)
     {
         var command = new CreateBaseDeDatosCommand(
-            projectId, request.Nombre, request.Servidor, request.DatabaseId, request.LoginName, request.Ambiente, request.Notas);
+            projectId, request.Nombre, request.Servidor, request.DatabaseId, request.LoginName, request.Password, request.Ambiente, request.Notas);
         var id = await Sender.Send(command, ct);
         return CreatedAtAction(nameof(GetById), new { id = projectId }, id);
     }
 
     public record CreateDatabaseRequest(
-        string Nombre, string? Servidor, int? DatabaseId, string? LoginName, string? Ambiente, string? Notas);
+        string Nombre, string? Servidor, int? DatabaseId, string? LoginName, string? Password, string? Ambiente, string? Notas);
 }

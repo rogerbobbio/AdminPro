@@ -69,9 +69,9 @@
 
 ## 11. Amendment — BaseDeDatos Password field + expose DatabaseId/Usuario (user request, post-implementation)
 
-- [ ] 11.1 TDD: add a failing test proving `CreateBaseDeDatosCommand`/`UpdateBaseDeDatosCommand` accept and persist a `Password` field; add the `Password` property to the `BaseDeDatos` entity, update both commands/handlers/validators, add and apply a new `AddBaseDeDatosPassword` EF Core migration.
-- [ ] 11.2 Update `BaseDeDatosDto`/`ProjectDetailDto` mapping to include `password` (and confirm `databaseId`/`loginName` were already included — they were, per design.md Decision 3's original shape, just never exposed in the UI).
-- [ ] 11.3 TDD: update `ProjectsControllerTests`/`BaseDeDatosControllerTests` to cover creating/updating a database with `databaseId`, `loginName`, and `password`.
+- [x] 11.1 TDD: add a failing test proving `CreateBaseDeDatosCommand`/`UpdateBaseDeDatosCommand` accept and persist a `Password` field; add the `Password` property to the `BaseDeDatos` entity, update both commands/handlers/validators, add and apply a new `AddBaseDeDatosPassword` EF Core migration. Verified red (`CS1729` constructor arity mismatch) then green after also fixing `ProjectsController.CreateDatabaseRequest`/`CreateDatabase` (missed on first pass, caught by `dotnet build` before `dotnet ef migrations add` would even run) — 6/6 `Databases` tests passed.
+- [x] 11.2 Update `BaseDeDatosDto`/`ProjectDetailDto` mapping to include `password` (and confirm `databaseId`/`loginName` were already included — they were, per design.md Decision 3's original shape, just never exposed in the UI).
+- [x] 11.3 TDD: update `ProjectsControllerTests`/`BaseDeDatosControllerTests` to cover creating/updating a database with `databaseId`, `loginName`, and `password`. Verified green (28/28 in `AdminPro.Api.Tests`, 56/56 in `AdminPro.Application.Tests`, 84/84 total, 0 build warnings/errors).
 - [ ] 11.4 Frontend: add `password` to `CreateBaseDeDatosCommand`/`UpdateBaseDeDatosCommand`/`BaseDeDatos` TS models; add `databaseId` (number), `loginName` (labeled "Usuario"), and `password` fields to `ProjectDetail`'s add/edit database modal form.
 - [ ] 11.5 Manually verify: add a database with all fields via the running app, confirm it round-trips through the API and displays correctly.
 - [ ] 11.6 `dotnet build`/`dotnet test` and `ng build`/`ng test` all green.

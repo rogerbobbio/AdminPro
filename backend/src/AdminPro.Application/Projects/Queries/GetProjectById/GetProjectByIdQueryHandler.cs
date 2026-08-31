@@ -21,7 +21,7 @@ public class GetProjectByIdQueryHandler(AppDbContext dbContext) : IRequestHandle
 
         var basesDeDatos = await basesQuery
             .Where(d => d.ProyectoId == request.Id)
-            .Select(d => new BaseDeDatosDto(d.Id, d.Nombre, d.Servidor, d.DatabaseId, d.LoginName, d.Ambiente, d.Notas, d.Activo))
+            .Select(d => new BaseDeDatosDto(d.Id, d.Nombre, d.Servidor, d.DatabaseId, d.LoginName, d.Password, d.Ambiente, d.Notas, d.Activo))
             .ToListAsync(cancellationToken);
 
         var applicationsQuery = request.IncludeInactiveChildren
