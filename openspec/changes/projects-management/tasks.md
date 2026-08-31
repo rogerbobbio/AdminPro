@@ -56,7 +56,7 @@
 
 ## 9. Frontend E2E
 
-- [ ] 9.1 Cypress test: full project CRUD flow — create a project, see it in the list, open its detail, add a database, edit the project, delete it, confirm it disappears from the list.
+- [x] 9.1 Cypress test: full project CRUD flow — create a project, see it in the list, open its detail, add a database, edit the project, delete it, confirm it disappears from the list. Added `cypress/e2e/projects.cy.ts`. Scope note: no requirement in `specs/projects-screens/spec.md` calls for a "delete project" UI button (the mockups/specs only cover create/edit/detail + database CRUD), so the delete step in this test calls `DELETE /api/projects/{id}` directly via `cy.request` rather than clicking a nonexistent button — verifies the cascade behavior end-to-end without inventing UI beyond what was specified. Could NOT execute in this dev environment: same Cypress Electron-binary launch failure documented in `frontend-dashboard`'s tasks.md (`bad option: --smoke-test`), confirmed it persists even now that Docker Desktop is running (unrelated causes). The equivalent flow was manually verified end-to-end via Playwright screenshots in this session (create → detail → add database → list). Needs a Cypress run in an environment where its binary can launch before merge.
 
 ## 10. Documentation + Final
 
