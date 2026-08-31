@@ -67,15 +67,20 @@
 - **THEN** the project and both `BaseDeDatos` rows have `Activo = false`, and `GET /api/projects/{id}` subsequently returns `404`
 
 ### Requirement: Create database
-`POST /api/projects/{projectId}/basesdedatos` SHALL create a `BaseDeDatos` under the given project with required `Nombre` (max 100 chars) and optional `Servidor`, `DatabaseId`, `LoginName`, `Ambiente`, `Notas`, returning `201 Created` with the new id. Returns `404` if `projectId` doesn't reference an existing active project.
+`POST /api/projects/{projectId}/basesdedatos` SHALL create a `BaseDeDatos` under the given project with required `Nombre` (max 100 chars) and optional `Servidor`, `DatabaseId`, `LoginName`, `Password`, `Ambiente`, `Notas`, returning `201 Created` with the new id. Returns `404` if `projectId` doesn't reference an existing active project. `Password` is stored as plain text (no encryption), per explicit user decision for this single-user, no-auth internal tool.
 
 #### Scenario: Database created under project
 - **GIVEN** project "Acme Corp" exists
 - **WHEN** `POST /api/projects/{id}/basesdedatos` is called with `{ "nombre": "SalesDb", "ambiente": "desarrollo" }`
 - **THEN** the response is `201 Created`, and the project's detail response subsequently includes it
 
+#### Scenario: Database created with connection credentials
+- **GIVEN** project "Acme Corp" exists
+- **WHEN** `POST /api/projects/{id}/basesdedatos` is called with `{ "nombre": "SalesDb", "databaseId": 42, "loginName": "app_user", "password": "s3cr3t" }`
+- **THEN** the response is `201 Created`, and the project's detail response subsequently includes a `basesDeDatos` entry with `databaseId: 42` and `loginName: "app_user"`
+
 ### Requirement: Update database
-`PUT /api/basesdedatos/{id}` SHALL update a `BaseDeDatos`'s fields, returning `404` if the id doesn't exist.
+`PUT /api/basesdedatos/{id}` SHALL update a `BaseDeDatos`'s fields (including `DatabaseId`, `LoginName`, `Password`), returning `404` if the id doesn't exist.
 
 #### Scenario: Existing database updated
 - **GIVEN** a `BaseDeDatos` "SalesDb" exists

@@ -30,6 +30,12 @@ public record DeleteBaseDeDatosCommand(int Id) : ICommand;
 ```
 No separate "list databases by project" query is needed as its own endpoint — `GetProjectByIdQuery`'s `ProjectDetailDto` already embeds the `basesDeDatos` array per `docs/design/DESIGN.md` §4.2's documented response shape, so the Project Detail page's initial load already has everything; only the 3 mutations need their own endpoints (nested under `/api/projects/{projectId}/basesdedatos`).
 
+**Amendment (post-implementation, user request):** added a `Password` field — a new `nvarchar` column on `BaseDeDatos`, stored as plain text. This is an explicit user decision for this single-user, no-auth internal tool, consistent with `Servidor`/`LoginName`/`Notas` already being plain text with no encryption — added via a new `AddBaseDeDatosPassword` migration (the entity/table already exists from Foundation, so this is the first schema-changing migration since `SeedModulos`). The UI's "Agregar/Editar Base de Datos" modal was also missing two already-designed fields — `LoginName` (labeled "Usuario" in the UI; no new backend field) and `DatabaseId` — which are now exposed in the form alongside `Password`. Updated command shape:
+```csharp
+public record CreateBaseDeDatosCommand(int ProyectoId, string Nombre, string? Servidor, int? DatabaseId, string? LoginName, string? Password, string? Ambiente, string? Notas) : ICommand<int>;
+public record UpdateBaseDeDatosCommand(int Id, string Nombre, string? Servidor, int? DatabaseId, string? LoginName, string? Password, string? Ambiente, string? Notas) : ICommand;
+```
+
 **4. Soft-delete cascade implemented in the `DeleteProjectCommand` handler, not via a DB trigger.**
 Per `solution-foundation`'s own decision (`Project → BaseDeDatos`/`Application` use `DeleteBehavior.Restrict`, "soft cascade implemented in the Application layer"). `DeleteProjectCommandHandler` sets `Activo = false` on the `Project`, then iterates `IgnoreQueryFilters()`-loaded `BaseDeDatos` and `Application` children (currently always empty for `Application`, but written generically) and sets `Activo = false` on each, in one transaction (via `TransactionBehavior`, already automatic for any `ICommand`).
 

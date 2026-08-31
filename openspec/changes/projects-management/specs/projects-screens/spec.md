@@ -17,12 +17,17 @@ The `/proyectos` route and its children SHALL render inside a `ProyectosLayout` 
 - **THEN** only "Acme Corp" remains visible
 
 ### Requirement: Project detail
-`ProjectDetail` (`/proyectos/:id`) SHALL show the project's name/description, a "Bases de Datos" section listing its `BaseDeDatos` rows with add/edit/delete actions (via modal forms), and an "Aplicaciones" section rendering an empty-state (no create action — `Application` CRUD is out of scope for this change).
+`ProjectDetail` (`/proyectos/:id`) SHALL show the project's name/description, a "Bases de Datos" section listing its `BaseDeDatos` rows with add/edit/delete actions (via modal forms), and an "Aplicaciones" section rendering an empty-state (no create action — `Application` CRUD is out of scope for this change). The add/edit database modal SHALL include `Nombre`, `Servidor`, `DatabaseId`, `Usuario` (bound to the `LoginName` field), `Password`, `Ambiente`, and `Notas`.
 
 #### Scenario: Adding a database updates the list without a page reload
 - **GIVEN** the user is on a project's detail page
 - **WHEN** they submit the "add database" modal with a valid name
 - **THEN** the new database appears in the "Bases de Datos" list without navigating away
+
+#### Scenario: Adding a database with connection credentials
+- **GIVEN** the user is on a project's detail page and opens the "add database" modal
+- **WHEN** they fill `Nombre`, `DatabaseId`, `Usuario`, and `Password`, then submit
+- **THEN** the new database is created with those values and appears in the "Bases de Datos" list
 
 #### Scenario: Aplicaciones section shows an empty state
 - **WHEN** the user views any project's detail page
