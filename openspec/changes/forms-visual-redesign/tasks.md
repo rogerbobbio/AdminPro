@@ -25,7 +25,7 @@
 
 ## 4. Verification
 
-- [ ] 4.1 `ng build` succeeds with zero errors; Angular unit tests all green.
-- [ ] 4.2 Manually verify both forms (create + edit mode for each) via the running app — screenshot each, confirm breadcrumb text, Cancelar behavior, and section/rail layout render correctly, matching the visual language of `ProjectDetail`/`ApplicationDetail`.
-- [ ] 4.3 Confirm every task above was committed individually per the `commit` skill format.
-- [ ] 4.4 Mark this `tasks.md` complete and ready for `/opsx:archive`.
+- [x] 4.1 `ng build` succeeds with zero errors; Angular unit tests all green. Verified: build 0 errors, `ng test` 55/55 passed across 19 spec files.
+- [x] 4.2 Manually verify both forms (create + edit mode for each) via the running app — screenshot each, confirm breadcrumb text, Cancelar behavior, and section/rail layout render correctly, matching the visual language of `ProjectDetail`/`ApplicationDetail`. Verified via Playwright against the real running app (`dotnet run` + `ng serve`): `ProjectForm` create + edit (using the real "DOLE" project, read-only — no data changed), `ApplicationForm` create + edit (using a temporary isolated "QA Screenshot Project (temp)" created and then deleted via the API afterward, so no real project's data was touched). All 4 screenshots confirmed correct breadcrumbs, the "Nombre" checklist item turning green when valid, the collapsible "Detalles técnicos" section, and zero console/page errors.
+- [x] 4.3 Confirm every task above was committed individually per the `commit` skill format. Verified via `git log --oneline feature/forms-visual-redesign`.
+- [x] 4.4 Mark this `tasks.md` complete and ready for `/opsx:archive`.
