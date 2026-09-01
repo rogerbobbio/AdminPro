@@ -44,6 +44,90 @@ export interface UpdateProjectCommand {
   descripcion?: string | null;
 }
 
+export interface Ambiente {
+  id: number;
+  nombre: string;
+  url: string | null;
+  esWebApi: boolean;
+  notas: string | null;
+  orden: number;
+  activo: boolean;
+}
+
+export interface ApplicationDetail {
+  id: number;
+  proyectoId: number;
+  nombre: string;
+  descripcion: string | null;
+  tecnologiaFront: string | null;
+  tecnologiaBack: string | null;
+  ramaDesarrollo: string | null;
+  applicationName: string | null;
+  tieneProyectoBD: string | null;
+  rutaLocal: string | null;
+  rutaGit: string | null;
+  comoSeLevanta: string | null;
+  notasCompilacion: string | null;
+  orden: number;
+  activo: boolean;
+  createdAt: string;
+  updatedAt: string;
+  ambientes: Ambiente[];
+  reportes: unknown[];
+  notas: unknown[];
+  documentos: unknown[];
+  fixDatas: unknown[];
+  servicios: unknown[];
+}
+
+export interface CreateApplicationCommand {
+  nombre: string;
+  descripcion?: string | null;
+  tecnologiaFront?: string | null;
+  tecnologiaBack?: string | null;
+  ramaDesarrollo?: string | null;
+  applicationName?: string | null;
+  tieneProyectoBD?: string | null;
+  rutaLocal?: string | null;
+  rutaGit?: string | null;
+  comoSeLevanta?: string | null;
+  notasCompilacion?: string | null;
+  orden: number;
+}
+
+export interface UpdateApplicationCommand {
+  id: number;
+  nombre: string;
+  descripcion?: string | null;
+  tecnologiaFront?: string | null;
+  tecnologiaBack?: string | null;
+  ramaDesarrollo?: string | null;
+  applicationName?: string | null;
+  tieneProyectoBD?: string | null;
+  rutaLocal?: string | null;
+  rutaGit?: string | null;
+  comoSeLevanta?: string | null;
+  notasCompilacion?: string | null;
+  orden: number;
+}
+
+export interface CreateEnvironmentCommand {
+  nombre: string;
+  url?: string | null;
+  esWebApi: boolean;
+  notas?: string | null;
+  orden: number;
+}
+
+export interface UpdateEnvironmentCommand {
+  id: number;
+  nombre: string;
+  url?: string | null;
+  esWebApi: boolean;
+  notas?: string | null;
+  orden: number;
+}
+
 export interface CreateBaseDeDatosCommand {
   nombre: string;
   servidor?: string | null;

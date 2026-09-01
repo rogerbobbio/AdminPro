@@ -40,22 +40,34 @@ describe('ProjectDetail', () => {
     TestBed.resetTestingModule();
   });
 
-  async function createAndLoad() {
+  async function createAndLoad(detailOverride: ProjectDetailModel = detail) {
     const fixture = TestBed.createComponent(ProjectDetail);
     fixture.detectChanges();
-    httpMock.expectOne('/api/projects/1').flush(detail);
+    httpMock.expectOne('/api/projects/1').flush(detailOverride);
     await new Promise((resolve) => setTimeout(resolve, 0));
     fixture.detectChanges();
     return fixture;
   }
 
-  it('renders the databases list and an empty Aplicaciones section', async () => {
+  it('renders the databases list and an empty Aplicaciones section with the create action', async () => {
     const fixture = await createAndLoad();
 
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('SalesDb');
-    expect(compiled.querySelector('[data-testid="btn-nueva-aplicacion"]')).toBeNull();
+    expect(compiled.querySelector('[data-testid="btn-nueva-aplicacion"]')).not.toBeNull();
     expect(compiled.textContent?.toLowerCase()).toContain('no hay aplicaciones');
+  });
+
+  it('renders existing applications with their technology pills', async () => {
+    const withApp: ProjectDetailModel = {
+      ...detail,
+      applications: [{ id: 7, nombre: 'CRM', tecnologiaFront: 'Angular', tecnologiaBack: null, orden: 0, activo: true }],
+    };
+    const fixture = await createAndLoad(withApp);
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('CRM');
+    expect(compiled.textContent).toContain('Angular');
   });
 
   it('adding a database updates the list without navigating away', async () => {

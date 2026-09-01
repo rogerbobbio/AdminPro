@@ -1,0 +1,75 @@
+<div class="page-head">
+  <h1>{{ isEditMode() ? 'Editar Aplicación' : 'Nueva Aplicación' }}</h1>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="application-form">
+  <div class="mb-3">
+    <label class="form-label">Nombre *</label>
+    <input type="text" class="form-control" formControlName="nombre" data-testid="input-nombre" />
+    @if (fieldErrors()['nombre']; as error) {
+      <div class="text-danger small mt-1" data-testid="error-nombre">{{ error }}</div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Descripción</label>
+    <textarea class="form-control" formControlName="descripcion" rows="3"></textarea>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Tecnología Front</label>
+      <input type="text" class="form-control" formControlName="tecnologiaFront" />
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Tecnología Back</label>
+      <input type="text" class="form-control" formControlName="tecnologiaBack" />
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="btn btn-link p-0 mb-3"
+    data-testid="btn-detalles-tecnicos"
+    (click)="toggleDetallesTecnicos()"
+  >
+    Detalles técnicos {{ showDetallesTecnicos() ? '▲' : '▼' }}
+  </button>
+
+  @if (showDetallesTecnicos()) {
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Rama de desarrollo</label>
+        <input type="text" class="form-control" formControlName="ramaDesarrollo" />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Application Name</label>
+        <input type="text" class="form-control" formControlName="applicationName" />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">¿Tiene proyecto BD?</label>
+        <input type="text" class="form-control" formControlName="tieneProyectoBD" />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Ruta local</label>
+        <input type="text" class="form-control" formControlName="rutaLocal" />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Ruta Git</label>
+        <input type="text" class="form-control" formControlName="rutaGit" />
+      </div>
+      <div class="col-md-12 mb-3">
+        <label class="form-label">Cómo se levanta</label>
+        <textarea class="form-control" formControlName="comoSeLevanta" rows="2"></textarea>
+      </div>
+      <div class="col-md-12 mb-3">
+        <label class="form-label">Notas de compilación</label>
+        <textarea class="form-control" formControlName="notasCompilacion" rows="2"></textarea>
+      </div>
+    </div>
+  }
+
+  <button type="submit" class="btn btn-primary rounded-pill" data-testid="btn-guardar" [disabled]="form.invalid">
+    Guardar
+  </button>
+</form>
