@@ -37,19 +37,19 @@
 
 ## 6. Frontend — Services (TDD)
 
-- [ ] 6.1 TDD: write failing tests for `ApplicationService` (`loadByProject`, `getById`, `create`, `update`, `delete`, Signal-based, mirroring `ProjectService`'s pattern); implement, with `Application`/`ApplicationDetail`/`ApplicationSummary` TS models added to `project.model.ts` (or a new `application.model.ts` if that keeps the file focused).
-- [ ] 6.2 TDD: write failing tests for `EnvironmentService` (`create`, `update`, `delete` — no standalone `load`, mirroring `DatabaseService`'s pattern since the list comes embedded in `ApplicationService.selectedApplication()`); implement.
+- [x] 6.1 TDD: write failing tests for `ApplicationService` (`loadByProject`, `getById`, `create`, `update`, `delete`, Signal-based, mirroring `ProjectService`'s pattern); implement, with `Application`/`ApplicationDetail`/`ApplicationSummary` TS models added to `project.model.ts` (or a new `application.model.ts` if that keeps the file focused). Kept in `project.model.ts` (deviation: no separate file needed, it stayed focused enough). Verified green: 43/43 (was 35/35).
+- [x] 6.2 TDD: write failing tests for `EnvironmentService` (`create`, `update`, `delete` — no standalone `load`, mirroring `DatabaseService`'s pattern since the list comes embedded in `ApplicationService.selectedApplication()`); implement. See 6.1.
 
 ## 7. Frontend — Pages (TDD)
 
-- [ ] 7.1 TDD: write a failing test asserting `ApplicationForm` shows an inline error when the backend returns a `400` validation error on `nombre`, and navigates to the detail page on success; implement the reactive form (handles both create via `?proyectoId=` query param and edit via `:id` route param), with the "Detalles técnicos" fields grouped under a collapsed sub-section per design.md Decision 7.
-- [ ] 7.2 TDD: write a failing test asserting `ApplicationDetail` renders the application's fields, the `Ambientes` list from `selectedApplication().ambientes`, and empty-state sections for Reportes/Notas/Documentos/FixDatas/Servicios with no create action; implement the accordion layout per PRES-UI-008.
-- [ ] 7.3 TDD: write a failing test asserting the "add environment" modal calls `EnvironmentService.create()`, the ambientes list updates without a full page reload, and an invalid URL shows an inline error; implement the modal form and edit/delete actions.
-- [ ] 7.4 TDD: update `ProjectDetail`'s existing "Aplicaciones section shows an empty state" test to also cover the populated case (application list rendered from `selectedProject().applications`, "+ Nueva Aplicación" navigating to `/proyectos/aplicaciones/nuevo?proyectoId=:id`, and each row navigating to `/proyectos/aplicaciones/:id`); implement.
+- [x] 7.1 TDD: write a failing test asserting `ApplicationForm` shows an inline error when the backend returns a `400` validation error on `nombre`, and navigates to the detail page on success; implement the reactive form (handles both create via `?proyectoId=` query param and edit via `:id` route param), with the "Detalles técnicos" fields grouped under a collapsed sub-section per design.md Decision 7.
+- [x] 7.2 TDD: write a failing test asserting `ApplicationDetail` renders the application's fields, the `Ambientes` list from `selectedApplication().ambientes`, and empty-state sections for Reportes/Notas/Documentos/FixDatas/Servicios with no create action; implement the accordion layout per PRES-UI-008. Deviation: implemented as stacked cards (matching `ProjectDetail`'s existing pattern) rather than a literal Bootstrap accordion widget, for the same reason `projects-management`'s design.md avoided Bootstrap's JS modal — no `bootstrap.bundle.min.js` is loaded in this project.
+- [x] 7.3 TDD: write a failing test asserting the "add environment" modal calls `EnvironmentService.create()`, the ambientes list updates without a full page reload, and an invalid URL shows an inline error; implement the modal form and edit/delete actions. The invalid-URL error surfaces from the backend's 400 response (parsed the same way `ApplicationForm`/`ProjectForm` do), not duplicated client-side, per PRES-VAL-001's intent that client validation mirrors server validation rather than replacing the server as source of truth.
+- [x] 7.4 TDD: update `ProjectDetail`'s existing "Aplicaciones section shows an empty state" test to also cover the populated case (application list rendered from `selectedProject().applications`, "+ Nueva Aplicación" navigating to `/proyectos/aplicaciones/nuevo?proyectoId=:id`, and each row navigating to `/proyectos/aplicaciones/:id`); implement. Verified green: 49/49 Angular unit tests (was 35/35 before this change), `ng build` 0 errors.
 
 ## 8. Frontend — Routing
 
-- [ ] 8.1 Add `aplicaciones/nuevo`, `aplicaciones/:id`, `aplicaciones/:id/editar` routes to `proyectos.routes.ts`, wired to `ApplicationForm`/`ApplicationDetail`.
+- [x] 8.1 Add `aplicaciones/nuevo`, `aplicaciones/:id`, `aplicaciones/:id/editar` routes to `proyectos.routes.ts`, wired to `ApplicationForm`/`ApplicationDetail`. Ordered before the existing `:id`/`:id/editar` routes so `aplicaciones` isn't greedily matched as a project id.
 
 ## 9. Frontend E2E
 

@@ -1,0 +1,156 @@
+@if (applicationService.selectedApplication(); as application) {
+  <div class="breadcrumb mb-3">
+    <a routerLink="/proyectos">Proyectos</a>
+    <span class="sep">/</span>
+    <span class="current">{{ application.nombre }}</span>
+  </div>
+
+  <div class="page-head">
+    <div>
+      <h1>{{ application.nombre }}</h1>
+      <p>{{ application.descripcion }}</p>
+      @if (application.tecnologiaFront || application.tecnologiaBack) {
+        <div class="tech-pills">
+          @if (application.tecnologiaFront) {
+            <span class="stack-pill">{{ application.tecnologiaFront }}</span>
+          }
+          @if (application.tecnologiaBack) {
+            <span class="stack-pill">{{ application.tecnologiaBack }}</span>
+          }
+        </div>
+      }
+    </div>
+    <a class="btn btn-outline-secondary rounded-pill" [routerLink]="['/proyectos/aplicaciones', application.id, 'editar']">
+      <i class="bi bi-pencil"></i> Editar
+    </a>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-head">
+      <h3>Ambientes ({{ application.ambientes.length }})</h3>
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-primary"
+        data-testid="btn-agregar-ambiente"
+        (click)="openAddEnvironmentModal()"
+      >
+        <i class="bi bi-plus"></i> Agregar
+      </button>
+    </div>
+    @if (application.ambientes.length === 0) {
+      <p class="text-secondary mb-0">No hay ambientes todavía.</p>
+    } @else {
+      <table class="w-100">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>URL</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (ambiente of application.ambientes; track ambiente.id) {
+            <tr>
+              <td>{{ ambiente.nombre }}</td>
+              <td>
+                @if (ambiente.url) {
+                  <a [href]="ambiente.url" target="_blank">{{ ambiente.url }}</a>
+                }
+              </td>
+              <td class="text-end">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                  data-testid="btn-editar-ambiente"
+                  (click)="openEditEnvironmentModal(ambiente)"
+                >
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  data-testid="btn-eliminar-ambiente"
+                  (click)="onDeleteEnvironment(ambiente.id)"
+                >
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-head">
+      <h3>Reportes ({{ application.reportes.length }})</h3>
+    </div>
+    <p class="text-secondary mb-0">No hay reportes todavía.</p>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-head">
+      <h3>Notas ({{ application.notas.length }})</h3>
+    </div>
+    <p class="text-secondary mb-0">No hay notas todavía.</p>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-head">
+      <h3>Documentos ({{ application.documentos.length }})</h3>
+    </div>
+    <p class="text-secondary mb-0">No hay documentos todavía.</p>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-head">
+      <h3>FixDatas ({{ application.fixDatas.length }})</h3>
+    </div>
+    <p class="text-secondary mb-0">No hay fix datas todavía.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <h3>Servicios ({{ application.servicios.length }})</h3>
+    </div>
+    <p class="text-secondary mb-0">No hay servicios todavía.</p>
+  </div>
+}
+
+@if (showModal()) {
+  <div class="modal-backdrop-custom">
+    <div class="modal-dialog-custom">
+      <h4>{{ editingEnvironmentId === null ? 'Agregar Ambiente' : 'Editar Ambiente' }}</h4>
+      <form [formGroup]="environmentForm" (ngSubmit)="onSaveEnvironment()">
+        <div class="mb-3">
+          <label class="form-label">Nombre *</label>
+          <input type="text" class="form-control" formControlName="nombre" data-testid="modal-input-nombre" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">URL</label>
+          <input type="text" class="form-control" formControlName="url" data-testid="modal-input-url" />
+          @if (urlError(); as error) {
+            <div class="text-danger small mt-1" data-testid="modal-error-url">{{ error }}</div>
+          }
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" formControlName="esWebApi" id="esWebApi" />
+          <label class="form-check-label" for="esWebApi">Es Web API</label>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Notas</label>
+          <textarea class="form-control" formControlName="notas" rows="2"></textarea>
+        </div>
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar">
+            Guardar
+          </button>
+          <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeModal()">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

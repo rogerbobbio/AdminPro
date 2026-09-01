@@ -73,8 +73,42 @@
   <div class="card">
     <div class="card-head">
       <h3>Aplicaciones ({{ project.applications.length }})</h3>
+      <a
+        class="btn btn-sm btn-outline-primary"
+        data-testid="btn-nueva-aplicacion"
+        [routerLink]="['/proyectos/aplicaciones/nuevo']"
+        [queryParams]="{ proyectoId: project.id }"
+      >
+        <i class="bi bi-plus"></i> Nueva Aplicación
+      </a>
     </div>
-    <p class="text-secondary mb-0">No hay aplicaciones todavía.</p>
+    @if (project.applications.length === 0) {
+      <p class="text-secondary mb-0">No hay aplicaciones todavía.</p>
+    } @else {
+      <table class="w-100">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Tecnologías</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (app of project.applications; track app.id) {
+            <tr class="clickable-row" [routerLink]="['/proyectos/aplicaciones', app.id]">
+              <td>{{ app.nombre }}</td>
+              <td>
+                @if (app.tecnologiaFront) {
+                  <span class="stack-pill">{{ app.tecnologiaFront }}</span>
+                }
+                @if (app.tecnologiaBack) {
+                  <span class="stack-pill">{{ app.tecnologiaBack }}</span>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
   </div>
 }
 
