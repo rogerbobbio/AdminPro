@@ -1,22 +1,76 @@
-<div class="page-head">
-  <h1>{{ isEditMode() ? 'Editar Proyecto' : 'Nuevo Proyecto' }}</h1>
+<div class="breadcrumb mb-3" data-testid="breadcrumb">
+  <a routerLink="/proyectos">Proyectos</a>
+  <span class="sep">/</span>
+  @if (isEditMode() && projectService.selectedProject(); as project) {
+    <a [routerLink]="['/proyectos', project.id]">{{ project.nombre }}</a>
+    <span class="sep">/</span>
+    <span class="current" data-testid="breadcrumb-current">Editar</span>
+  } @else {
+    <span class="current" data-testid="breadcrumb-current">Nuevo Proyecto</span>
+  }
 </div>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="project-form">
-  <div class="mb-3">
-    <label class="form-label">Nombre *</label>
-    <input type="text" class="form-control" formControlName="nombre" data-testid="input-nombre" />
-    @if (fieldErrors()['nombre']; as error) {
-      <div class="text-danger small mt-1" data-testid="error-nombre">{{ error }}</div>
-    }
+<div class="page-head">
+  <div class="page-id">
+    <div class="page-icon"><i class="bi bi-folder-plus"></i></div>
+    <div>
+      <h1>{{ isEditMode() ? 'Editar Proyecto' : 'Nuevo Proyecto' }}</h1>
+      <p>Define el proyecto. Luego podrás agregar aplicaciones y bases de datos.</p>
+    </div>
+  </div>
+  <div class="actions">
+    <button type="button" class="btn btn-outline-secondary rounded-pill" data-testid="btn-cancelar" (click)="cancel()">
+      Cancelar
+    </button>
+    <button
+      type="submit"
+      form="project-form"
+      class="btn btn-primary rounded-pill"
+      data-testid="btn-guardar"
+      [disabled]="form.invalid"
+    >
+      <i class="bi bi-check2"></i> Guardar
+    </button>
+  </div>
+</div>
+
+<div class="split">
+  <div>
+    <div class="section">
+      <div class="section-head">
+        <div class="sec-ico"><i class="bi bi-info-circle"></i></div>
+        <h3>Información general</h3>
+      </div>
+      <form id="project-form" [formGroup]="form" (ngSubmit)="onSubmit()" class="section-body">
+        <div class="field">
+          <label>Nombre <span class="req">*</span></label>
+          <input type="text" class="form-control" formControlName="nombre" data-testid="input-nombre" />
+          @if (fieldErrors()['nombre']; as error) {
+            <div class="text-danger small mt-1" data-testid="error-nombre">{{ error }}</div>
+          }
+        </div>
+
+        <div class="field">
+          <label>Descripción</label>
+          <textarea class="form-control" formControlName="descripcion" rows="3"></textarea>
+        </div>
+      </form>
+    </div>
   </div>
 
-  <div class="mb-3">
-    <label class="form-label">Descripción</label>
-    <textarea class="form-control" formControlName="descripcion" rows="3"></textarea>
-  </div>
-
-  <button type="submit" class="btn btn-primary rounded-pill" data-testid="btn-guardar" [disabled]="form.invalid">
-    Guardar
-  </button>
-</form>
+  <aside class="rail">
+    <h3>Antes de crear</h3>
+    <div class="check-list">
+      <div class="check">
+        <i class="bi" [class.bi-check-circle-fill]="form.controls.nombre.valid" [class.bi-circle]="!form.controls.nombre.valid"></i>
+        <div>
+          <div class="check-t">Nombre</div>
+          <div class="check-s">Es el único campo obligatorio.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rail-foot">
+      Al crear el proyecto se registra en el catálogo y podrás agregar aplicaciones y bases de datos después.
+    </div>
+  </aside>
+</div>

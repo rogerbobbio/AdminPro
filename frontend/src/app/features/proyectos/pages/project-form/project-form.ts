@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProjectService } from '../../../../shared/services/project.service';
 
 interface ValidationErrorBody {
@@ -11,14 +12,16 @@ interface ValidationErrorBody {
 @Component({
   selector: 'app-project-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './project-form.html',
+  styleUrl: './project-form.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectForm implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly projectService = inject(ProjectService);
+  private readonly location = inject(Location);
+  protected readonly projectService = inject(ProjectService);
 
   private projectId: number | null = null;
 
@@ -41,6 +44,10 @@ export class ProjectForm implements OnInit {
         this.form.setValue({ nombre: project.nombre, descripcion: project.descripcion });
       }
     }
+  }
+
+  cancel(): void {
+    this.location.back();
   }
 
   async onSubmit(): Promise<void> {

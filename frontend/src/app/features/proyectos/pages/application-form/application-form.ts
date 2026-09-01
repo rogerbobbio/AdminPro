@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApplicationService } from '../../../../shared/services/application.service';
+import { ProjectService } from '../../../../shared/services/project.service';
 
 interface ValidationErrorBody {
   details?: { field: string; error: string }[];
@@ -11,14 +13,17 @@ interface ValidationErrorBody {
 @Component({
   selector: 'app-application-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './application-form.html',
+  styleUrl: './application-form.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ApplicationForm implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly applicationService = inject(ApplicationService);
+  private readonly location = inject(Location);
+  protected readonly applicationService = inject(ApplicationService);
+  protected readonly projectService = inject(ProjectService);
 
   private applicationId: number | null = null;
   private projectId!: number;
@@ -67,10 +72,16 @@ export class ApplicationForm implements OnInit {
     } else {
       this.projectId = Number(this.route.snapshot.queryParamMap.get('proyectoId'));
     }
+
+    await this.projectService.getById(this.projectId);
   }
 
   toggleDetallesTecnicos(): void {
     this.showDetallesTecnicos.update((value) => !value);
+  }
+
+  cancel(): void {
+    this.location.back();
   }
 
   async onSubmit(): Promise<void> {

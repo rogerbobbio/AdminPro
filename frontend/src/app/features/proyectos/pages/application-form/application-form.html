@@ -1,75 +1,135 @@
-<div class="page-head">
-  <h1>{{ isEditMode() ? 'Editar Aplicación' : 'Nueva Aplicación' }}</h1>
+<div class="breadcrumb mb-3" data-testid="breadcrumb">
+  <a routerLink="/proyectos">Proyectos</a>
+  @if (projectService.selectedProject(); as project) {
+    <span class="sep">/</span>
+    <a [routerLink]="['/proyectos', project.id]">{{ project.nombre }}</a>
+  }
+  <span class="sep">/</span>
+  @if (isEditMode() && applicationService.selectedApplication(); as application) {
+    <a [routerLink]="['/proyectos/aplicaciones', application.id]">{{ application.nombre }}</a>
+    <span class="sep">/</span>
+    <span class="current">Editar</span>
+  } @else {
+    <span class="current">Nueva Aplicación</span>
+  }
 </div>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="application-form">
-  <div class="mb-3">
-    <label class="form-label">Nombre *</label>
-    <input type="text" class="form-control" formControlName="nombre" data-testid="input-nombre" />
-    @if (fieldErrors()['nombre']; as error) {
-      <div class="text-danger small mt-1" data-testid="error-nombre">{{ error }}</div>
-    }
-  </div>
-
-  <div class="mb-3">
-    <label class="form-label">Descripción</label>
-    <textarea class="form-control" formControlName="descripcion" rows="3"></textarea>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Tecnología Front</label>
-      <input type="text" class="form-control" formControlName="tecnologiaFront" />
-    </div>
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Tecnología Back</label>
-      <input type="text" class="form-control" formControlName="tecnologiaBack" />
+<div class="page-head">
+  <div class="page-id">
+    <div class="page-icon"><i class="bi bi-hdd-stack"></i></div>
+    <div>
+      <h1>{{ isEditMode() ? 'Editar Aplicación' : 'Nueva Aplicación' }}</h1>
+      <p>Define la aplicación. Luego podrás agregar ambientes.</p>
     </div>
   </div>
+  <div class="actions">
+    <button type="button" class="btn btn-outline-secondary rounded-pill" data-testid="btn-cancelar" (click)="cancel()">
+      Cancelar
+    </button>
+    <button
+      type="submit"
+      form="application-form"
+      class="btn btn-primary rounded-pill"
+      data-testid="btn-guardar"
+      [disabled]="form.invalid"
+    >
+      <i class="bi bi-check2"></i> Guardar
+    </button>
+  </div>
+</div>
 
-  <button
-    type="button"
-    class="btn btn-link p-0 mb-3"
-    data-testid="btn-detalles-tecnicos"
-    (click)="toggleDetallesTecnicos()"
-  >
-    Detalles técnicos {{ showDetallesTecnicos() ? '▲' : '▼' }}
-  </button>
+<div class="split">
+  <div>
+    <form id="application-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="section">
+        <div class="section-head">
+          <div class="sec-ico"><i class="bi bi-info-circle"></i></div>
+          <h3>Información general</h3>
+        </div>
+        <div class="section-body">
+          <div class="field">
+            <label>Nombre <span class="req">*</span></label>
+            <input type="text" class="form-control" formControlName="nombre" data-testid="input-nombre" />
+            @if (fieldErrors()['nombre']; as error) {
+              <div class="text-danger small mt-1" data-testid="error-nombre">{{ error }}</div>
+            }
+          </div>
 
-  @if (showDetallesTecnicos()) {
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Rama de desarrollo</label>
-        <input type="text" class="form-control" formControlName="ramaDesarrollo" />
+          <div class="field">
+            <label>Descripción</label>
+            <textarea class="form-control" formControlName="descripcion" rows="3"></textarea>
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label>Tecnología Front</label>
+              <input type="text" class="form-control" formControlName="tecnologiaFront" />
+            </div>
+            <div class="field">
+              <label>Tecnología Back</label>
+              <input type="text" class="form-control" formControlName="tecnologiaBack" />
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Application Name</label>
-        <input type="text" class="form-control" formControlName="applicationName" />
+
+      <div class="section">
+        <button type="button" class="section-head as-button" data-testid="btn-detalles-tecnicos" (click)="toggleDetallesTecnicos()">
+          <div class="section-head-left">
+            <div class="sec-ico amber"><i class="bi bi-tools"></i></div>
+            <h3>Detalles técnicos</h3>
+          </div>
+          <i class="bi" [class.bi-chevron-down]="!showDetallesTecnicos()" [class.bi-chevron-up]="showDetallesTecnicos()"></i>
+        </button>
+        @if (showDetallesTecnicos()) {
+          <div class="section-body grid-2">
+            <div class="field">
+              <label>Rama de desarrollo</label>
+              <input type="text" class="form-control" formControlName="ramaDesarrollo" />
+            </div>
+            <div class="field">
+              <label>Application Name</label>
+              <input type="text" class="form-control" formControlName="applicationName" />
+            </div>
+            <div class="field">
+              <label>¿Tiene proyecto BD?</label>
+              <input type="text" class="form-control" formControlName="tieneProyectoBD" />
+            </div>
+            <div class="field">
+              <label>Ruta local</label>
+              <input type="text" class="form-control" formControlName="rutaLocal" />
+            </div>
+            <div class="field">
+              <label>Ruta Git</label>
+              <input type="text" class="form-control" formControlName="rutaGit" />
+            </div>
+            <div class="field span-2">
+              <label>Cómo se levanta</label>
+              <textarea class="form-control" formControlName="comoSeLevanta" rows="2"></textarea>
+            </div>
+            <div class="field span-2">
+              <label>Notas de compilación</label>
+              <textarea class="form-control" formControlName="notasCompilacion" rows="2"></textarea>
+            </div>
+          </div>
+        }
       </div>
-      <div class="col-md-6 mb-3">
-        <label class="form-label">¿Tiene proyecto BD?</label>
-        <input type="text" class="form-control" formControlName="tieneProyectoBD" />
-      </div>
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Ruta local</label>
-        <input type="text" class="form-control" formControlName="rutaLocal" />
-      </div>
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Ruta Git</label>
-        <input type="text" class="form-control" formControlName="rutaGit" />
-      </div>
-      <div class="col-md-12 mb-3">
-        <label class="form-label">Cómo se levanta</label>
-        <textarea class="form-control" formControlName="comoSeLevanta" rows="2"></textarea>
-      </div>
-      <div class="col-md-12 mb-3">
-        <label class="form-label">Notas de compilación</label>
-        <textarea class="form-control" formControlName="notasCompilacion" rows="2"></textarea>
+    </form>
+  </div>
+
+  <aside class="rail">
+    <h3>Antes de crear</h3>
+    <div class="check-list">
+      <div class="check">
+        <i class="bi" [class.bi-check-circle-fill]="form.controls.nombre.valid" [class.bi-circle]="!form.controls.nombre.valid"></i>
+        <div>
+          <div class="check-t">Nombre</div>
+          <div class="check-s">Debe ser único dentro del proyecto.</div>
+        </div>
       </div>
     </div>
-  }
-
-  <button type="submit" class="btn btn-primary rounded-pill" data-testid="btn-guardar" [disabled]="form.invalid">
-    Guardar
-  </button>
-</form>
+    <div class="rail-foot">
+      Al crear la aplicación se registra bajo este proyecto y podrás agregar ambientes después.
+    </div>
+  </aside>
+</div>

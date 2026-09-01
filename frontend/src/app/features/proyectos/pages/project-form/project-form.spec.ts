@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { Location } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ActivatedRoute, Router, provideRouter } from '@angular/router';
@@ -75,5 +76,54 @@ describe('ProjectForm', () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
 
     expect(navigateSpy).toHaveBeenCalledWith(['/proyectos', 3]);
+  });
+
+  it('renders a breadcrumb ending in "Nuevo Proyecto" in create mode', async () => {
+    await setup();
+    const fixture = TestBed.createComponent(ProjectForm);
+    fixture.detectChanges();
+
+    const breadcrumb = fixture.nativeElement.querySelector('[data-testid="breadcrumb-current"]');
+    expect(breadcrumb?.textContent).toContain('Nuevo Proyecto');
+  });
+
+  it('renders a breadcrumb with the project name in edit mode', async () => {
+    await setup({ id: '7' });
+    const fixture = TestBed.createComponent(ProjectForm);
+    fixture.detectChanges();
+
+    httpMock.expectOne('/api/projects/7').flush({
+      id: 7,
+      nombre: 'Acme Corp',
+      descripcion: null,
+      activo: true,
+      createdAt: '',
+      updatedAt: '',
+      basesDeDatos: [],
+      applications: [],
+    });
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    fixture.detectChanges();
+
+    const breadcrumb = fixture.nativeElement.querySelector('[data-testid="breadcrumb"]');
+    expect(breadcrumb?.textContent).toContain('Acme Corp');
+  });
+
+  it('clicking Cancelar navigates back without making an HTTP request', async () => {
+    await setup();
+    const fixture = TestBed.createComponent(ProjectForm);
+    fixture.detectChanges();
+    const location = TestBed.inject(Location);
+    const backSpy = vi.spyOn(location, 'back').mockImplementation(() => {});
+
+    const nombreInput = fixture.nativeElement.querySelector('[data-testid="input-nombre"]') as HTMLInputElement;
+    nombreInput.value = 'Draft Name';
+    nombreInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    (fixture.nativeElement.querySelector('[data-testid="btn-cancelar"]') as HTMLButtonElement).click();
+
+    expect(backSpy).toHaveBeenCalled();
+    httpMock.expectNone('/api/projects');
   });
 });
