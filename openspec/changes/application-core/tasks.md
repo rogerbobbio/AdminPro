@@ -29,11 +29,11 @@
 
 ## 5. Backend API (TDD)
 
-- [ ] 5.1 TDD: write failing `WebApplicationFactory` tests for `GET /api/projects/{projectId}/applications` (list, `includeInactive`) and `GET /api/applications/{id}` (detail + 404); implement `ApplicationsController`'s GET actions.
-- [ ] 5.2 TDD: write failing tests for `POST /api/projects/{projectId}/applications` (201 + duplicate-name-in-project 400 + 404 for missing project) and `PUT /api/applications/{id}` (204 + 404 + duplicate-name 400); implement.
-- [ ] 5.3 TDD: write a failing test for `DELETE /api/applications/{id}` (204 + cascade to ambientes reflected in a subsequent detail call + 404 for missing id); implement.
-- [ ] 5.4 TDD: write failing tests for `POST /api/applications/{appId}/ambientes` (201 + 404 for missing application + 400 for invalid url), `PUT /api/ambientes/{id}` (204 + 404), `DELETE /api/ambientes/{id}` (204 + 404); implement `AmbientesController`.
-- [ ] 5.5 Backend integration test (Testcontainers): full create → get → update → delete flow for both `Application` and `Ambiente` against a real SQL Server, confirming the cascade-on-delete behavior with real FK constraints.
+- [x] 5.1 TDD: write failing `WebApplicationFactory` tests for `GET /api/projects/{projectId}/applications` (list, `includeInactive`) and `GET /api/applications/{id}` (detail + 404); implement `ApplicationsController`'s GET actions. Written together with 5.2-5.4 (one pass, `ApplicationsControllerTests`/`AmbientesControllerTests`, verified together — same rationale `projects-management` used for its 5.1-5.3). Hit and fixed a real ambiguous-reference compile error: `ApplicationSummaryDto` exists in both the new `Applications.Queries.GetApplicationsByProject` namespace and the pre-existing `Projects.Queries.GetProjectById` namespace; fully qualified the type in `ProjectsController.GetApplications`'s return type instead of adding another `using`.
+- [x] 5.2 TDD: write failing tests for `POST /api/projects/{projectId}/applications` (201 + duplicate-name-in-project 400 + 404 for missing project) and `PUT /api/applications/{id}` (204 + 404 + duplicate-name 400); implement. Nested `POST` added to `ProjectsController` (mirrors `CreateDatabaseRequest`'s pattern), flat `GET`/`PUT`/`DELETE` on the new `ApplicationsController`. See 5.1.
+- [x] 5.3 TDD: write a failing test for `DELETE /api/applications/{id}` (204 + cascade to ambientes reflected in a subsequent detail call + 404 for missing id); implement. See 5.1.
+- [x] 5.4 TDD: write failing tests for `POST /api/applications/{appId}/ambientes` (201 + 404 for missing application + 400 for invalid url), `PUT /api/ambientes/{id}` (204 + 404), `DELETE /api/ambientes/{id}` (204 + 404); implement `AmbientesController`. See 5.1. Verified red (routes didn't exist) then green (45/45 in `AdminPro.Api.Tests`, up from 28/28).
+- [x] 5.5 Backend integration test (Testcontainers): full create → get → update → delete flow for both `Application` and `Ambiente` against a real SQL Server, confirming the cascade-on-delete behavior with real FK constraints. Added `ApplicationsIntegrationTests.cs` mirroring `ProjectsIntegrationTests.cs`. Verified green against a real containerized SQL Server (Docker Desktop running). Full backend suite: 79/79 (`AdminPro.Application.Tests`) + 46/46 (`AdminPro.Api.Tests`) = 125/125.
 
 ## 6. Frontend — Services (TDD)
 

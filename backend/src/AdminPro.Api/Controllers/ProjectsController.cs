@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AdminPro.Application.Applications.Commands.CreateApplication;
+using AdminPro.Application.Applications.Queries.GetApplicationsByProject;
 using AdminPro.Application.Databases.Commands.CreateBaseDeDatos;
 using AdminPro.Application.Projects.Commands.CreateProject;
 using AdminPro.Application.Projects.Commands.DeleteProject;
@@ -67,4 +69,47 @@ public class ProjectsController(ISender sender) : ApiController(sender)
 
     public record CreateDatabaseRequest(
         string Nombre, string? Servidor, int? DatabaseId, string? LoginName, string? Password, string? Ambiente, string? Notas);
+
+    [HttpGet("{projectId}/applications")]
+    public async Task<ActionResult<IReadOnlyList<AdminPro.Application.Applications.Queries.GetApplicationsByProject.ApplicationSummaryDto>>> GetApplications(
+        int projectId, [FromQuery] bool includeInactive, CancellationToken ct)
+    {
+        var applications = await Sender.Send(new GetApplicationsByProjectQuery(projectId, includeInactive), ct);
+        return Ok(applications);
+    }
+
+    [HttpPost("{projectId}/applications")]
+    public async Task<ActionResult<int>> CreateApplication(int projectId, CreateApplicationRequest request, CancellationToken ct)
+    {
+        var command = new CreateApplicationCommand(
+            projectId,
+            request.Nombre,
+            request.Descripcion,
+            request.TecnologiaFront,
+            request.TecnologiaBack,
+            request.RamaDesarrollo,
+            request.ApplicationName,
+            request.TieneProyectoBD,
+            request.RutaLocal,
+            request.RutaGit,
+            request.ComoSeLevanta,
+            request.NotasCompilacion,
+            request.Orden);
+        var id = await Sender.Send(command, ct);
+        return CreatedAtAction(nameof(ApplicationsController.GetById), "Applications", new { id }, id);
+    }
+
+    public record CreateApplicationRequest(
+        string Nombre,
+        string? Descripcion,
+        string? TecnologiaFront,
+        string? TecnologiaBack,
+        string? RamaDesarrollo,
+        string? ApplicationName,
+        string? TieneProyectoBD,
+        string? RutaLocal,
+        string? RutaGit,
+        string? ComoSeLevanta,
+        string? NotasCompilacion,
+        int Orden);
 }
