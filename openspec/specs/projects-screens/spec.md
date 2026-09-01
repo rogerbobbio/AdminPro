@@ -22,7 +22,7 @@ The `/proyectos` route and its children SHALL render inside a `ProyectosLayout` 
 - **THEN** only "Acme Corp" remains visible
 
 ### Requirement: Project detail
-`ProjectDetail` (`/proyectos/:id`) SHALL show the project's name/description, a "Bases de Datos" section listing its `BaseDeDatos` rows with add/edit/delete actions (via modal forms), and an "Aplicaciones" section rendering an empty-state (no create action — `Application` CRUD is out of scope for this change). The add/edit database modal SHALL include `Nombre`, `Servidor`, `DatabaseId`, `Usuario` (bound to the `LoginName` field), `Password`, `Ambiente`, and `Notas`.
+`ProjectDetail` (`/proyectos/:id`) SHALL show the project's name/description, a "Bases de Datos" section listing its `BaseDeDatos` rows with add/edit/delete actions (via modal forms), and an "Aplicaciones" section listing its `Application` rows (name, technology pills) loaded from the project detail response, with a "+ Nueva Aplicación" action navigating to `/proyectos/aplicaciones/nuevo?proyectoId=:id` and each row navigating to `/proyectos/aplicaciones/:id`. The add/edit database modal SHALL include `Nombre`, `Servidor`, `DatabaseId`, `Usuario` (bound to the `LoginName` field), `Password`, `Ambiente`, and `Notas`.
 
 #### Scenario: Adding a database updates the list without a page reload
 - **GIVEN** the user is on a project's detail page
@@ -34,9 +34,15 @@ The `/proyectos` route and its children SHALL render inside a `ProyectosLayout` 
 - **WHEN** they fill `Nombre`, `DatabaseId`, `Usuario`, and `Password`, then submit
 - **THEN** the new database is created with those values and appears in the "Bases de Datos" list
 
-#### Scenario: Aplicaciones section shows an empty state
-- **WHEN** the user views any project's detail page
-- **THEN** the "Aplicaciones" section shows an empty-state message, with no "+ Nueva Aplicación" action
+#### Scenario: Aplicaciones section lists existing applications
+- **GIVEN** project "Acme Corp" has an application "CRM"
+- **WHEN** the user views the project's detail page
+- **THEN** the "Aplicaciones" section shows "CRM", and clicking it navigates to `/proyectos/aplicaciones/:id`
+
+#### Scenario: Aplicaciones section shows an empty state when there are none
+- **GIVEN** a project has no applications
+- **WHEN** the user views its detail page
+- **THEN** the "Aplicaciones" section shows an empty-state message alongside the "+ Nueva Aplicación" action
 
 ### Requirement: Project create/edit form
 `ProjectForm` (`/proyectos/nuevo` for create, `/proyectos/:id/editar` for edit) SHALL be a reactive form for `Nombre` (required) and `Descripcion` (optional), surfacing the backend's `400` uniqueness/validation errors inline per-field, and navigating to the project's detail page on success.
