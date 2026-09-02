@@ -26,7 +26,7 @@ Backend HTTP API for managing `Application` and `Ambiente` entities: CRUD endpoi
 - **THEN** the response is `404 Not Found`
 
 ### Requirement: Create application
-`POST /api/projects/{projectId}/applications` SHALL create an `Application` under the given project with required `Nombre` (max 100 chars, unique within the project per rule APP-001) and optional `Descripcion`, `TecnologiaFront`, `TecnologiaBack`, `RamaDesarrollo`, `ApplicationName`, `TieneProyectoBD`, `RutaLocal`, `RutaGit`, `ComoSeLevanta`, `NotasCompilacion`, and `Orden` (default 0), returning `201 Created` with the new id. Returns `404` if `projectId` doesn't reference an existing active project.
+`POST /api/projects/{projectId}/applications` SHALL create an `Application` under the given project with required `Nombre` (max 100 chars, unique within the project per rule APP-001) and optional `Descripcion`, `TecnologiaFront`, `TecnologiaBack`, `RamaDesarrollo`, `ApplicationName`, `RutaLocal`, `RutaGit`, `ComoSeLevanta`, `NotasCompilacion`, and `Orden` (default 0), returning `201 Created` with the new id. Returns `404` if `projectId` doesn't reference an existing active project.
 
 #### Scenario: Duplicate name within same project rejected
 - **GIVEN** project "Acme Corp" has an application named "CRM"

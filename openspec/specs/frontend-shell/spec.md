@@ -23,7 +23,7 @@ The application SHALL load Bootstrap 5 and Bootstrap Icons, with a global styles
 - **THEN** its computed background color matches the design's dark-green token (`#0C3B29`), not Bootstrap's default blue
 
 ### Requirement: Reusable application shell
-A standalone `AppShell` component SHALL render the sidebar (brand, nav items, "Presupuesto" promo card) and topbar (search, notification/message icons, user info) shared identically across all screens, accepting the active nav item (`activeNav` input) and page content (via content projection, `<ng-content>`), so feature screens do not duplicate this markup.
+A standalone `AppShell` component SHALL render the sidebar (brand, nav items, "Presupuesto" promo card) and topbar (search, notification/message icons, user info) shared identically across all screens, accepting the active nav item (`activeNav` input) and page content (via content projection, `<ng-content>`), so feature screens do not duplicate this markup. The "Proyectos" nav item SHALL show a badge with the current total project count, loaded via `ProjectService` when the shell initializes.
 
 #### Scenario: Shell highlights the active section
 - **GIVEN** the Dashboard route is active
@@ -34,3 +34,8 @@ A standalone `AppShell` component SHALL render the sidebar (brand, nav items, "P
 - **GIVEN** a page wraps its content in `<app-shell>`
 - **WHEN** the page renders
 - **THEN** the sidebar and topbar render around the projected content unchanged, regardless of what that page's content is
+
+#### Scenario: Proyectos nav item shows the project count
+- **GIVEN** the catalog has 2 active projects
+- **WHEN** `AppShell` renders the sidebar
+- **THEN** the "Proyectos" nav item shows a badge reading "2"

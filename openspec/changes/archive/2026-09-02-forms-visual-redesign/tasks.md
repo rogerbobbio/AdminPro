@@ -1,7 +1,7 @@
 ## 0. Setup (MANDATORY FIRST)
 
 - [x] 0.1 Create branch `feature/forms-visual-redesign`
-- [ ] 0.2 Push branch to `origin` (Draft PR opened manually if `gh` CLI is unavailable, per the note in previous phases' tasks.md)
+- [x] 0.2 Push branch to `origin` (Draft PR opened manually if `gh` CLI is unavailable, per the note in previous phases' tasks.md)
 
 ## 1. Specs & Design
 
