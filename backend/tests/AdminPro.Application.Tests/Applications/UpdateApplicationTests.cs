@@ -37,7 +37,7 @@ public class UpdateApplicationTests
 
         var validator = new UpdateApplicationCommandValidator(db);
         var result = await validator.TestValidateAsync(
-            new UpdateApplicationCommand(crm.Id, "Billing", null, null, null, null, null, null, null, null, null, null, 0));
+            new UpdateApplicationCommand(crm.Id, "Billing", null, null, null, null, null, null, null, null, null, 0));
 
         result.ShouldHaveValidationErrorFor(c => c.Nombre);
     }
@@ -56,7 +56,7 @@ public class UpdateApplicationTests
 
         var validator = new UpdateApplicationCommandValidator(db);
         var result = await validator.TestValidateAsync(
-            new UpdateApplicationCommand(crm.Id, "CRM", "Updated", null, null, null, null, null, null, null, null, null, 0));
+            new UpdateApplicationCommand(crm.Id, "CRM", "Updated", null, null, null, null, null, null, null, null, 0));
 
         result.ShouldNotHaveValidationErrorFor(c => c.Nombre);
     }
@@ -75,7 +75,7 @@ public class UpdateApplicationTests
 
         var handler = new UpdateApplicationCommandHandler(db);
         await handler.Handle(
-            new UpdateApplicationCommand(crm.Id, "CRM Updated", "New description", null, null, null, null, null, null, null, null, null, 2),
+            new UpdateApplicationCommand(crm.Id, "CRM Updated", "New description", null, null, null, null, null, null, null, null, 2),
             CancellationToken.None);
 
         var updated = await db.Applications.FindAsync(crm.Id);
@@ -91,7 +91,7 @@ public class UpdateApplicationTests
         var handler = new UpdateApplicationCommandHandler(db);
 
         var act = async () => await handler.Handle(
-            new UpdateApplicationCommand(999, "CRM", null, null, null, null, null, null, null, null, null, null, 0),
+            new UpdateApplicationCommand(999, "CRM", null, null, null, null, null, null, null, null, null, 0),
             CancellationToken.None);
 
         await act.Should().ThrowAsync<NotFoundException>();

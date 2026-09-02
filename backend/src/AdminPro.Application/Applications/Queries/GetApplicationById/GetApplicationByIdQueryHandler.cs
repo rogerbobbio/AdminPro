@@ -30,7 +30,6 @@ public class GetApplicationByIdQueryHandler(AppDbContext dbContext) : IRequestHa
             application.TecnologiaBack,
             application.RamaDesarrollo,
             application.ApplicationName,
-            application.TieneProyectoBD,
             application.RutaLocal,
             application.RutaGit,
             application.ComoSeLevanta,

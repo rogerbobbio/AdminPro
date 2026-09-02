@@ -21,7 +21,6 @@ public class ApplicationEntityTests
             TecnologiaBack = ".NET 10",
             RamaDesarrollo = "origin/main",
             ApplicationName = "Company.CRM",
-            TieneProyectoBD = "SI",
             RutaLocal = @"C:\Dev\Acme\CRM",
             RutaGit = "https://github.com/acme/crm",
             ComoSeLevanta = "dotnet run",

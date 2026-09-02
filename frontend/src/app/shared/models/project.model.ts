@@ -63,7 +63,6 @@ export interface ApplicationDetail {
   tecnologiaBack: string | null;
   ramaDesarrollo: string | null;
   applicationName: string | null;
-  tieneProyectoBD: string | null;
   rutaLocal: string | null;
   rutaGit: string | null;
   comoSeLevanta: string | null;
@@ -87,7 +86,6 @@ export interface CreateApplicationCommand {
   tecnologiaBack?: string | null;
   ramaDesarrollo?: string | null;
   applicationName?: string | null;
-  tieneProyectoBD?: string | null;
   rutaLocal?: string | null;
   rutaGit?: string | null;
   comoSeLevanta?: string | null;
@@ -103,7 +101,6 @@ export interface UpdateApplicationCommand {
   tecnologiaBack?: string | null;
   ramaDesarrollo?: string | null;
   applicationName?: string | null;
-  tieneProyectoBD?: string | null;
   rutaLocal?: string | null;
   rutaGit?: string | null;
   comoSeLevanta?: string | null;

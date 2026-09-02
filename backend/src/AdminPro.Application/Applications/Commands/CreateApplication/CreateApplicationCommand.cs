@@ -10,7 +10,6 @@ public record CreateApplicationCommand(
     string? TecnologiaBack,
     string? RamaDesarrollo,
     string? ApplicationName,
-    string? TieneProyectoBD,
     string? RutaLocal,
     string? RutaGit,
     string? ComoSeLevanta,

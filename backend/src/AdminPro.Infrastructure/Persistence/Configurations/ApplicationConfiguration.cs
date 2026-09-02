@@ -16,7 +16,6 @@ public class ApplicationConfiguration : IEntityTypeConfiguration<Application>
         builder.Property(a => a.TecnologiaBack).HasMaxLength(100);
         builder.Property(a => a.RamaDesarrollo).HasMaxLength(100);
         builder.Property(a => a.ApplicationName).HasMaxLength(100);
-        builder.Property(a => a.TieneProyectoBD).HasMaxLength(50);
         builder.Property(a => a.RutaLocal).HasMaxLength(500);
         builder.Property(a => a.RutaGit).HasMaxLength(500);
         builder.Property(a => a.ComoSeLevanta).HasMaxLength(500);

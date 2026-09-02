@@ -19,7 +19,7 @@
     <div class="page-icon"><i class="bi bi-hdd-stack"></i></div>
     <div>
       <h1>{{ isEditMode() ? 'Editar Aplicación' : 'Nueva Aplicación' }}</h1>
-      <p>Define la aplicación. Luego podrás agregar ambientes.</p>
+      <p>Registra la aplicación, su stack y cómo se levanta.</p>
     </div>
   </div>
   <div class="actions">
@@ -43,78 +43,186 @@
     <form id="application-form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="section">
         <div class="section-head">
-          <div class="sec-ico"><i class="bi bi-info-circle"></i></div>
-          <h3>Información general</h3>
+          <div class="section-head-left">
+            <div class="sec-ico"><i class="bi bi-info-circle"></i></div>
+            <h3>Información general</h3>
+          </div>
         </div>
         <div class="section-body">
-          <div class="field">
-            <label>Nombre <span class="req">*</span></label>
-            <input type="text" class="form-control" formControlName="nombre" data-testid="input-nombre" />
-            @if (fieldErrors()['nombre']; as error) {
-              <div class="text-danger small mt-1" data-testid="error-nombre">{{ error }}</div>
-            }
+          <div class="grid-2">
+            <div class="field">
+              <label>Nombre <span class="req">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="nombre"
+                placeholder="Ej. EIR"
+                data-testid="input-nombre"
+              />
+              @if (fieldErrors()['nombre']; as error) {
+                <div class="text-danger small mt-1" data-testid="error-nombre">{{ error }}</div>
+              }
+            </div>
+            <div class="field">
+              <label>Tipo</label>
+              <div class="chips">
+                @for (tipo of tiposDisponibles; track tipo) {
+                  <div class="chip" [class.on]="tipoSeleccionado() === tipo" (click)="selectTipo(tipo)">{{ tipo }}</div>
+                }
+              </div>
+            </div>
           </div>
 
           <div class="field">
             <label>Descripción</label>
-            <textarea class="form-control" formControlName="descripcion" rows="3"></textarea>
-          </div>
-
-          <div class="grid-2">
-            <div class="field">
-              <label>Tecnología Front</label>
-              <input type="text" class="form-control" formControlName="tecnologiaFront" />
-            </div>
-            <div class="field">
-              <label>Tecnología Back</label>
-              <input type="text" class="form-control" formControlName="tecnologiaBack" />
-            </div>
+            <textarea
+              class="form-control"
+              formControlName="descripcion"
+              rows="3"
+              placeholder="Equipment Inspection Report"
+            ></textarea>
           </div>
         </div>
       </div>
 
       <div class="section">
-        <button type="button" class="section-head as-button" data-testid="btn-detalles-tecnicos" (click)="toggleDetallesTecnicos()">
+        <div class="section-head">
           <div class="section-head-left">
-            <div class="sec-ico amber"><i class="bi bi-tools"></i></div>
-            <h3>Detalles técnicos</h3>
+            <div class="sec-ico purple"><i class="bi bi-layers"></i></div>
+            <h3>Stack</h3>
           </div>
-          <i class="bi" [class.bi-chevron-down]="!showDetallesTecnicos()" [class.bi-chevron-up]="showDetallesTecnicos()"></i>
-        </button>
-        @if (showDetallesTecnicos()) {
-          <div class="section-body grid-2">
-            <div class="field">
-              <label>Rama de desarrollo</label>
-              <input type="text" class="form-control" formControlName="ramaDesarrollo" />
-            </div>
-            <div class="field">
-              <label>Application Name</label>
-              <input type="text" class="form-control" formControlName="applicationName" />
-            </div>
-            <div class="field">
-              <label>¿Tiene proyecto BD?</label>
-              <input type="text" class="form-control" formControlName="tieneProyectoBD" />
-            </div>
-            <div class="field">
-              <label>Ruta local</label>
-              <input type="text" class="form-control" formControlName="rutaLocal" />
-            </div>
-            <div class="field">
-              <label>Ruta Git</label>
-              <input type="text" class="form-control" formControlName="rutaGit" />
-            </div>
-            <div class="field span-2">
-              <label>Cómo se levanta</label>
-              <textarea class="form-control" formControlName="comoSeLevanta" rows="2"></textarea>
-            </div>
-            <div class="field span-2">
-              <label>Notas de compilación</label>
-              <textarea class="form-control" formControlName="notasCompilacion" rows="2"></textarea>
-            </div>
+        </div>
+        <div class="section-body grid-2">
+          <div class="field">
+            <label>Frontend</label>
+            <input type="text" class="form-control" formControlName="tecnologiaFront" placeholder="Angular 6" />
           </div>
-        }
+          <div class="field">
+            <label>Backend</label>
+            <input type="text" class="form-control" formControlName="tecnologiaBack" placeholder=".NET 6" />
+          </div>
+          <div class="field span-2">
+            <label>Rama principal</label>
+            <input type="text" class="form-control mono" formControlName="ramaDesarrollo" placeholder="origin/main" />
+          </div>
+        </div>
       </div>
+
+      <div class="section">
+        <div class="section-head">
+          <div class="section-head-left">
+            <div class="sec-ico"><i class="bi bi-folder2"></i></div>
+            <h3>Rutas</h3>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="field">
+            <label>Ruta local</label>
+            <input
+              type="text"
+              class="form-control mono"
+              formControlName="rutaLocal"
+              placeholder="C:\Proyectos\EIR"
+            />
+          </div>
+          <div class="field">
+            <label>Repositorio Git</label>
+            <input
+              type="text"
+              class="form-control mono"
+              formControlName="rutaGit"
+              placeholder="https://github.com/org/eir"
+            />
+          </div>
+          <div class="field">
+            <label>Cómo se levanta</label>
+            <textarea
+              class="form-control"
+              formControlName="comoSeLevanta"
+              rows="2"
+              placeholder="Abrir con Visual Studio y VSCode"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
     </form>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="sec-ico"><i class="bi bi-globe2"></i></div>
+          <h3>Ambientes <span class="count-badge">{{ ambientesArray.length }}</span></h3>
+        </div>
+      </div>
+      <div class="section-body">
+        @if (ambientesArray.length > 0) {
+          <div class="env-head">
+            <div>Nombre</div>
+            <div>URL</div>
+            <div>Tipo</div>
+            <div></div>
+          </div>
+          <div [formArray]="ambientesArray">
+            @for (ambiente of ambientesArray.controls; track ambiente; let i = $index) {
+              <div class="env-row" [formGroup]="ambiente">
+                <input class="name" formControlName="nombre" placeholder="UAT" />
+                <input class="url" formControlName="url" placeholder="app.ejemplo.com" />
+                <select formControlName="esWebApi">
+                  <option [ngValue]="false">Web</option>
+                  <option [ngValue]="true">API</option>
+                </select>
+                <div class="mini-btn" (click)="removeAmbiente(i)"><i class="bi bi-x-lg"></i></div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="empty">Aún no agregaste ambientes. Podés sumarlos ahora o más adelante.</div>
+        }
+        <div class="add-btn" (click)="addAmbiente()"><i class="bi bi-plus-lg"></i> Agregar ambiente</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="sec-ico"><i class="bi bi-sticky"></i></div>
+          <h3>Notas de arranque</h3>
+        </div>
+        <span class="soon-badge">Próximamente</span>
+      </div>
+      <div class="section-body">
+        <div class="grid-2">
+          <div class="field">
+            <input placeholder="Título — ej. nvm use 14.16.0" disabled />
+          </div>
+          <div class="field">
+            <input placeholder="Detalle de la nota" disabled />
+          </div>
+        </div>
+        <div class="soon-actions">
+          <div class="add-btn ghost disabled"><i class="bi bi-plus-lg"></i> Agregar nota</div>
+          <div class="add-btn ghost disabled"><i class="bi bi-paperclip"></i> Adjuntar documento</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="sec-ico purple"><i class="bi bi-link-45deg"></i></div>
+          <h3>Servicios vinculados</h3>
+        </div>
+        <span class="soon-badge">Próximamente</span>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <select disabled>
+            <option>Vincular servicio del catálogo…</option>
+          </select>
+        </div>
+      </div>
+    </div>
   </div>
 
   <aside class="rail">
@@ -129,7 +237,7 @@
       </div>
     </div>
     <div class="rail-foot">
-      Al crear la aplicación se registra bajo este proyecto y podrás agregar ambientes después.
+      Al crear la aplicación se registra bajo este proyecto junto con los ambientes que hayas cargado.
     </div>
   </aside>
 </div>

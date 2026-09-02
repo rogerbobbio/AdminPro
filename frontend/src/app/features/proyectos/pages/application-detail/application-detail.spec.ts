@@ -17,7 +17,6 @@ describe('ApplicationDetail', () => {
     tecnologiaBack: '.NET',
     ramaDesarrollo: null,
     applicationName: null,
-    tieneProyectoBD: null,
     rutaLocal: null,
     rutaGit: null,
     comoSeLevanta: null,

@@ -45,7 +45,6 @@ describe('ApplicationService', () => {
       tecnologiaBack: null,
       ramaDesarrollo: null,
       applicationName: null,
-      tieneProyectoBD: null,
       rutaLocal: null,
       rutaGit: null,
       comoSeLevanta: null,

@@ -12,7 +12,6 @@ public class Application : IAuditableEntity
     public string? TecnologiaBack { get; set; }
     public string? RamaDesarrollo { get; set; }
     public string? ApplicationName { get; set; }
-    public string? TieneProyectoBD { get; set; }
     public string? RutaLocal { get; set; }
     public string? RutaGit { get; set; }
     public string? ComoSeLevanta { get; set; }

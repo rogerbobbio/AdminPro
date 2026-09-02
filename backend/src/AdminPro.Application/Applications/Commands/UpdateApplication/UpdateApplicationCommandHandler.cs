@@ -20,7 +20,6 @@ public class UpdateApplicationCommandHandler(AppDbContext dbContext) : IRequestH
         application.TecnologiaBack = request.TecnologiaBack;
         application.RamaDesarrollo = request.RamaDesarrollo;
         application.ApplicationName = request.ApplicationName;
-        application.TieneProyectoBD = request.TieneProyectoBD;
         application.RutaLocal = request.RutaLocal;
         application.RutaGit = request.RutaGit;
         application.ComoSeLevanta = request.ComoSeLevanta;

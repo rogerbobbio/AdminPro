@@ -29,7 +29,6 @@ public class CreateApplicationCommandHandler(AppDbContext dbContext) : IRequestH
             TecnologiaBack = request.TecnologiaBack,
             RamaDesarrollo = request.RamaDesarrollo,
             ApplicationName = request.ApplicationName,
-            TieneProyectoBD = request.TieneProyectoBD,
             RutaLocal = request.RutaLocal,
             RutaGit = request.RutaGit,
             ComoSeLevanta = request.ComoSeLevanta,
