@@ -11,9 +11,9 @@
 
 ## 2. Backend — Nota CRUD (TDD)
 
-- [ ] 2.1 TDD: write failing validator/handler tests for `CreateNotaCommand` (rules APP-CMD-010, NOTE-001 `Titulo` required, NOTE-002 `Descripcion` required memo text) in `backend/tests/AdminPro.Application.Tests/Notas/CreateNotaTests.cs`; implement `CreateNotaCommand`, `CreateNotaCommandValidator`, `CreateNotaCommandHandler` in `backend/src/AdminPro.Application/Notas/Commands/CreateNota/`.
-- [ ] 2.2 TDD: write failing tests for `UpdateNotaCommand`/`DeleteNotaCommand` handlers; implement in `backend/src/AdminPro.Application/Notas/Commands/UpdateNota/` and `DeleteNota/`.
-- [ ] 2.3 Add `NotasController` (`backend/src/AdminPro.Api/Controllers/NotasController.cs`): `POST /api/applications/{appId}/notas`, `PUT /api/notas/{id}`, `DELETE /api/notas/{id}`.
+- [x] 2.1 TDD: write failing validator/handler tests for `CreateNotaCommand` (rules APP-CMD-010, NOTE-001 `Titulo` required, NOTE-002 `Descripcion` required memo text) in `backend/tests/AdminPro.Application.Tests/Notas/CreateNotaTests.cs`; implement `CreateNotaCommand`, `CreateNotaCommandValidator`, `CreateNotaCommandHandler` in `backend/src/AdminPro.Application/Notas/Commands/CreateNota/`.
+- [x] 2.2 TDD: write failing tests for `UpdateNotaCommand`/`DeleteNotaCommand` handlers; implement in `backend/src/AdminPro.Application/Notas/Commands/UpdateNota/` and `DeleteNota/`.
+- [x] 2.3 Add `NotasController` (`backend/src/AdminPro.Api/Controllers/NotasController.cs`): `PUT /api/notas/{id}`, `DELETE /api/notas/{id}` (create is `POST /api/applications/{appId}/notas` on `ApplicationsController`, same deviation as Reportes).
 
 ## 3. Backend — Documento CRUD (TDD)
 

@@ -4,6 +4,7 @@ using AdminPro.Application.Ambientes.Commands.CreateEnvironment;
 using AdminPro.Application.Applications.Commands.DeleteApplication;
 using AdminPro.Application.Applications.Commands.UpdateApplication;
 using AdminPro.Application.Applications.Queries.GetApplicationById;
+using AdminPro.Application.Notas.Commands.CreateNota;
 using AdminPro.Application.Reportes.Commands.CreateReporte;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -74,4 +75,14 @@ public class ApplicationsController(ISender sender) : ApiController(sender)
         string? SpReportViewer,
         string? Notas,
         string? ParametrosEjemplo);
+
+    [HttpPost("{appId}/notas")]
+    public async Task<ActionResult<int>> CreateNota(int appId, CreateNotaRequest request, CancellationToken ct)
+    {
+        var command = new CreateNotaCommand(appId, request.Titulo, request.Descripcion, request.Orden);
+        var id = await Sender.Send(command, ct);
+        return CreatedAtAction(nameof(GetById), new { id = appId }, id);
+    }
+
+    public record CreateNotaRequest(string Titulo, string Descripcion, int Orden);
 }
