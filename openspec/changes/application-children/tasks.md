@@ -50,8 +50,8 @@
 
 ## 9. Frontend — Remove Notas de arranque placeholder from ApplicationForm
 
-- [ ] 9.1 Remove the disabled "Notas de arranque" section from `application-form.html` (Servicios vinculados placeholder stays); remove any now-unused CSS rules scoped only to that section from `application-form.scss`.
-- [ ] 9.2 Run `application-form.spec.ts` to confirm no regressions (no test currently asserts on that placeholder, but re-run to be sure).
+- [x] 9.1 Remove the disabled "Notas de arranque" section from `application-form.html` (Servicios vinculados placeholder stays); remove any now-unused CSS rules scoped only to that section from `application-form.scss`.
+- [x] 9.2 Run `application-form.spec.ts` to confirm no regressions (no test currently asserts on that placeholder, but re-run to be sure). Verified: 62/62 green across the full suite.
 
 ## 10. Verification
 
