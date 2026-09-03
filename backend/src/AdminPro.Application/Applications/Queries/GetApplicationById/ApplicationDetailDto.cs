@@ -8,6 +8,7 @@ public record ApplicationDetailDto(
     int ProyectoId,
     string Nombre,
     string? Descripcion,
+    string? Tipo,
     string? TecnologiaFront,
     string? TecnologiaBack,
     string? RamaDesarrollo,

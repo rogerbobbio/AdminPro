@@ -25,6 +25,7 @@ public class CreateApplicationCommandHandler(AppDbContext dbContext) : IRequestH
             ProyectoId = request.ProyectoId,
             Nombre = request.Nombre,
             Descripcion = request.Descripcion,
+            Tipo = request.Tipo,
             TecnologiaFront = request.TecnologiaFront,
             TecnologiaBack = request.TecnologiaBack,
             RamaDesarrollo = request.RamaDesarrollo,

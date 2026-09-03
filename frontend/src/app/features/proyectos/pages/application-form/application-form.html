@@ -67,7 +67,7 @@
               <label>Tipo</label>
               <div class="chips">
                 @for (tipo of tiposDisponibles; track tipo) {
-                  <div class="chip" [class.on]="tipoSeleccionado() === tipo" (click)="selectTipo(tipo)">{{ tipo }}</div>
+                  <div class="chip" [class.on]="form.controls.tipo.value === tipo" (click)="selectTipo(tipo)">{{ tipo }}</div>
                 }
               </div>
             </div>

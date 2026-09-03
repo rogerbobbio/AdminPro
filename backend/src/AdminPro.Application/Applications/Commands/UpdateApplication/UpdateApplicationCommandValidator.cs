@@ -29,6 +29,10 @@ public class UpdateApplicationCommandValidator : AbstractValidator<UpdateApplica
             .WithName("Nombre")
             .WithMessage("Ya existe una aplicación con ese nombre en este proyecto.");
 
+        RuleFor(x => x.Tipo)
+            .Must(tipo => tipo is null or "Web" or "API" or "Mobile")
+            .WithMessage("Tipo debe ser Web, API o Mobile.");
+
         RuleFor(x => x.TecnologiaFront).MaximumLength(100);
         RuleFor(x => x.TecnologiaBack).MaximumLength(100);
         RuleFor(x => x.RamaDesarrollo).MaximumLength(100);

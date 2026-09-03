@@ -17,6 +17,7 @@ public class ApplicationEntityTests
             ProyectoId = 1,
             Nombre = "CRM",
             Descripcion = "Customer Relationship Manager",
+            Tipo = "Web",
             TecnologiaFront = "Angular 22",
             TecnologiaBack = ".NET 10",
             RamaDesarrollo = "origin/main",

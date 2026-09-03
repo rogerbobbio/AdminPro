@@ -16,6 +16,7 @@ public class UpdateApplicationCommandHandler(AppDbContext dbContext) : IRequestH
 
         application.Nombre = request.Nombre;
         application.Descripcion = request.Descripcion;
+        application.Tipo = request.Tipo;
         application.TecnologiaFront = request.TecnologiaFront;
         application.TecnologiaBack = request.TecnologiaBack;
         application.RamaDesarrollo = request.RamaDesarrollo;

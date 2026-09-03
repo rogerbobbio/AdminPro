@@ -6,6 +6,7 @@ public record UpdateApplicationCommand(
     int Id,
     string Nombre,
     string? Descripcion,
+    string? Tipo,
     string? TecnologiaFront,
     string? TecnologiaBack,
     string? RamaDesarrollo,

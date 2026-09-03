@@ -26,6 +26,7 @@ public class GetApplicationByIdQueryHandler(AppDbContext dbContext) : IRequestHa
             application.ProyectoId,
             application.Nombre,
             application.Descripcion,
+            application.Tipo,
             application.TecnologiaFront,
             application.TecnologiaBack,
             application.RamaDesarrollo,

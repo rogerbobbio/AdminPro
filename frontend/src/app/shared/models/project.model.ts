@@ -59,6 +59,7 @@ export interface ApplicationDetail {
   proyectoId: number;
   nombre: string;
   descripcion: string | null;
+  tipo: string | null;
   tecnologiaFront: string | null;
   tecnologiaBack: string | null;
   ramaDesarrollo: string | null;
@@ -82,6 +83,7 @@ export interface ApplicationDetail {
 export interface CreateApplicationCommand {
   nombre: string;
   descripcion?: string | null;
+  tipo?: string | null;
   tecnologiaFront?: string | null;
   tecnologiaBack?: string | null;
   ramaDesarrollo?: string | null;
@@ -97,6 +99,7 @@ export interface UpdateApplicationCommand {
   id: number;
   nombre: string;
   descripcion?: string | null;
+  tipo?: string | null;
   tecnologiaFront?: string | null;
   tecnologiaBack?: string | null;
   ramaDesarrollo?: string | null;

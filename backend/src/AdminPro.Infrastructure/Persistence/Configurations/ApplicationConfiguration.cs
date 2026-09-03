@@ -12,6 +12,7 @@ public class ApplicationConfiguration : IEntityTypeConfiguration<Application>
 
         builder.Property(a => a.Nombre).HasMaxLength(100).IsRequired();
         builder.Property(a => a.Descripcion).HasMaxLength(500);
+        builder.Property(a => a.Tipo).HasMaxLength(20);
         builder.Property(a => a.TecnologiaFront).HasMaxLength(100);
         builder.Property(a => a.TecnologiaBack).HasMaxLength(100);
         builder.Property(a => a.RamaDesarrollo).HasMaxLength(100);

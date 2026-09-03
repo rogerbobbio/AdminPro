@@ -6,6 +6,7 @@ public record CreateApplicationCommand(
     int ProyectoId,
     string Nombre,
     string? Descripcion,
+    string? Tipo,
     string? TecnologiaFront,
     string? TecnologiaBack,
     string? RamaDesarrollo,

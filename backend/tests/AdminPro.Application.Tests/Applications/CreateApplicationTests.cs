@@ -34,7 +34,7 @@ public class CreateApplicationTests
 
         var validator = new CreateApplicationCommandValidator(db);
         var result = await validator.TestValidateAsync(
-            new CreateApplicationCommand(project.Id, "CRM", null, null, null, null, null, null, null, null, null, 0));
+            new CreateApplicationCommand(project.Id, "CRM", null, null, null, null, null, null, null, null, null, null, 0));
 
         result.ShouldHaveValidationErrorFor(c => c.Nombre);
     }
@@ -52,7 +52,7 @@ public class CreateApplicationTests
 
         var validator = new CreateApplicationCommandValidator(db);
         var result = await validator.TestValidateAsync(
-            new CreateApplicationCommand(globex.Id, "CRM", null, null, null, null, null, null, null, null, null, 0));
+            new CreateApplicationCommand(globex.Id, "CRM", null, null, null, null, null, null, null, null, null, null, 0));
 
         result.ShouldNotHaveValidationErrorFor(c => c.Nombre);
     }
@@ -67,7 +67,7 @@ public class CreateApplicationTests
 
         var handler = new CreateApplicationCommandHandler(db);
         var id = await handler.Handle(
-            new CreateApplicationCommand(project.Id, "CRM", "Customer Relationship Manager", "Angular", ".NET", null, null, null, null, null, null, 1),
+            new CreateApplicationCommand(project.Id, "CRM", "Customer Relationship Manager", null, "Angular", ".NET", null, null, null, null, null, null, 1),
             CancellationToken.None);
 
         var created = await db.Applications.FindAsync(id);
@@ -84,7 +84,7 @@ public class CreateApplicationTests
         var handler = new CreateApplicationCommandHandler(db);
 
         var act = async () => await handler.Handle(
-            new CreateApplicationCommand(999, "CRM", null, null, null, null, null, null, null, null, null, 0),
+            new CreateApplicationCommand(999, "CRM", null, null, null, null, null, null, null, null, null, null, 0),
             CancellationToken.None);
 
         await act.Should().ThrowAsync<NotFoundException>();

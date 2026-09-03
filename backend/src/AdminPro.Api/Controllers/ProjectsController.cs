@@ -85,6 +85,7 @@ public class ProjectsController(ISender sender) : ApiController(sender)
             projectId,
             request.Nombre,
             request.Descripcion,
+            request.Tipo,
             request.TecnologiaFront,
             request.TecnologiaBack,
             request.RamaDesarrollo,
@@ -101,6 +102,7 @@ public class ProjectsController(ISender sender) : ApiController(sender)
     public record CreateApplicationRequest(
         string Nombre,
         string? Descripcion,
+        string? Tipo,
         string? TecnologiaFront,
         string? TecnologiaBack,
         string? RamaDesarrollo,

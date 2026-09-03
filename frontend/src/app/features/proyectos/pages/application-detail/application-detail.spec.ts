@@ -13,6 +13,7 @@ describe('ApplicationDetail', () => {
     proyectoId: 1,
     nombre: 'CRM',
     descripcion: 'Customer Relationship Manager',
+    tipo: 'Web',
     tecnologiaFront: 'Angular',
     tecnologiaBack: '.NET',
     ramaDesarrollo: null,

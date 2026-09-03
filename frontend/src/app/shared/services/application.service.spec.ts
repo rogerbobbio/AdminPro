@@ -41,6 +41,7 @@ describe('ApplicationService', () => {
       proyectoId: 1,
       nombre: 'CRM',
       descripcion: null,
+      tipo: null,
       tecnologiaFront: null,
       tecnologiaBack: null,
       ramaDesarrollo: null,

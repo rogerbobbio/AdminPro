@@ -8,6 +8,7 @@ public class Application : IAuditableEntity
     public int ProyectoId { get; set; }
     public string Nombre { get; set; } = string.Empty;
     public string? Descripcion { get; set; }
+    public string? Tipo { get; set; }
     public string? TecnologiaFront { get; set; }
     public string? TecnologiaBack { get; set; }
     public string? RamaDesarrollo { get; set; }
