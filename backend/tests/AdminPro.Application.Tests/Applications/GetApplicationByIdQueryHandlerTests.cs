@@ -49,6 +49,33 @@ public class GetApplicationByIdQueryHandlerTests
     }
 
     [Fact]
+    public async Task Handle_ReturnsRealReportesNotasDocumentosFixDatas()
+    {
+        using var db = CreateInMemoryContext(nameof(Handle_ReturnsRealReportesNotasDocumentosFixDatas));
+        var project = new Project { Nombre = "Acme Corp", Activo = true };
+        db.Projects.Add(project);
+        await db.SaveChangesAsync();
+
+        var application = new AppEntity { ProyectoId = project.Id, Nombre = "CRM", Activo = true };
+        db.Applications.Add(application);
+        await db.SaveChangesAsync();
+
+        db.Reportes.Add(new Reporte { AplicacionId = application.Id, ReportCode = "VFL", ReportName = "Volumen de Carga", Activo = true });
+        db.Notas.Add(new Nota { AplicacionId = application.Id, Titulo = "nvm use 14.16.0", Descripcion = "Usar Node 14.16.0.", Activo = true });
+        db.Documentos.Add(new Documento { AplicacionId = application.Id, NombreArchivo = "Manual", UrlOneDrive = "https://onedrive.example.com/manual", Tipo = "manual", Activo = true });
+        db.FixDatas.Add(new FixData { AplicacionId = application.Id, Nombre = "Fix duplicate customers", Activo = true });
+        await db.SaveChangesAsync();
+
+        var handler = new GetApplicationByIdQueryHandler(db);
+        var result = await handler.Handle(new GetApplicationByIdQuery(application.Id), CancellationToken.None);
+
+        result.Reportes.Should().ContainSingle(r => r.ReportCode == "VFL");
+        result.Notas.Should().ContainSingle(n => n.Titulo == "nvm use 14.16.0");
+        result.Documentos.Should().ContainSingle(d => d.NombreArchivo == "Manual");
+        result.FixDatas.Should().ContainSingle(f => f.Nombre == "Fix duplicate customers");
+    }
+
+    [Fact]
     public async Task Handle_MissingApplication_ThrowsNotFoundException()
     {
         using var db = CreateInMemoryContext(nameof(Handle_MissingApplication_ThrowsNotFoundException));

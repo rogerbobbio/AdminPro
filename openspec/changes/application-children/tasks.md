@@ -29,8 +29,8 @@
 
 ## 5. Backend — Populate real children in Application detail (TDD)
 
-- [ ] 5.1 TDD: write a failing test asserting `GetApplicationByIdQueryHandler` returns real `ReporteDto`/`NotaDto`/`DocumentoDto`/`FixDataDto` arrays (each ordered by `Orden`) instead of the always-empty placeholders; add the four DTOs to `ApplicationDetailDto.cs` (mirroring `AmbienteDto`) and populate them in `GetApplicationByIdQueryHandler`, per rule APP-QRY-005. Verify green.
-- [ ] 5.2 Run the full backend test suite (`dotnet test`) to confirm no regressions.
+- [x] 5.1 TDD: write a failing test asserting `GetApplicationByIdQueryHandler` returns real `ReporteDto`/`NotaDto`/`DocumentoDto`/`FixDataDto` arrays (each ordered by `Orden`) instead of the always-empty placeholders; add the four DTOs to `ApplicationDetailDto.cs` (mirroring `AmbienteDto`) and populate them in `GetApplicationByIdQueryHandler`, per rule APP-QRY-005. Verify green. Deviation: `ReporteDto` has no `Orden` (the `Reporte` entity has none per business-rules.md §2.2.6) — ordered by `ReportCode` instead.
+- [x] 5.2 Run the full backend test suite (`dotnet test`) to confirm no regressions. Verified: 111 Application.Tests + 46 Api.Tests, all green.
 
 ## 6. Frontend — Shared model & services
 
