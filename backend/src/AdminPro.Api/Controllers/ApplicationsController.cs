@@ -5,6 +5,7 @@ using AdminPro.Application.Applications.Commands.DeleteApplication;
 using AdminPro.Application.Applications.Commands.UpdateApplication;
 using AdminPro.Application.Applications.Queries.GetApplicationById;
 using AdminPro.Application.Documentos.Commands.CreateDocumento;
+using AdminPro.Application.FixDatas.Commands.CreateFixData;
 using AdminPro.Application.Notas.Commands.CreateNota;
 using AdminPro.Application.Reportes.Commands.CreateReporte;
 using MediatR;
@@ -96,4 +97,14 @@ public class ApplicationsController(ISender sender) : ApiController(sender)
     }
 
     public record CreateDocumentoRequest(string NombreArchivo, string UrlOneDrive, string Tipo, string? Descripcion, int Orden);
+
+    [HttpPost("{appId}/fixdatas")]
+    public async Task<ActionResult<int>> CreateFixData(int appId, CreateFixDataRequest request, CancellationToken ct)
+    {
+        var command = new CreateFixDataCommand(appId, request.Nombre, request.Descripcion, request.Script, request.Orden);
+        var id = await Sender.Send(command, ct);
+        return CreatedAtAction(nameof(GetById), new { id = appId }, id);
+    }
+
+    public record CreateFixDataRequest(string Nombre, string? Descripcion, string? Script, int Orden);
 }

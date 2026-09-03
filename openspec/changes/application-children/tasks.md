@@ -23,9 +23,9 @@
 
 ## 4. Backend — FixData CRUD (TDD)
 
-- [ ] 4.1 TDD: write failing validator/handler tests for `CreateFixDataCommand` (rules APP-CMD-012, FIX-001 `Nombre` required, FIX-002 `Script` free text) in `backend/tests/AdminPro.Application.Tests/FixDatas/CreateFixDataTests.cs`; implement `CreateFixDataCommand`, `CreateFixDataCommandValidator`, `CreateFixDataCommandHandler` in `backend/src/AdminPro.Application/FixDatas/Commands/CreateFixData/`.
-- [ ] 4.2 TDD: write failing tests for `UpdateFixDataCommand`/`DeleteFixDataCommand` handlers; implement in `backend/src/AdminPro.Application/FixDatas/Commands/UpdateFixData/` and `DeleteFixData/`.
-- [ ] 4.3 Add `FixDatasController` (`backend/src/AdminPro.Api/Controllers/FixDatasController.cs`): `POST /api/applications/{appId}/fixdatas`, `PUT /api/fixdatas/{id}`, `DELETE /api/fixdatas/{id}`.
+- [x] 4.1 TDD: write failing validator/handler tests for `CreateFixDataCommand` (rules APP-CMD-012, FIX-001 `Nombre` required, FIX-002 `Script` free text) in `backend/tests/AdminPro.Application.Tests/FixDatas/CreateFixDataTests.cs`; implement `CreateFixDataCommand`, `CreateFixDataCommandValidator`, `CreateFixDataCommandHandler` in `backend/src/AdminPro.Application/FixDatas/Commands/CreateFixData/`.
+- [x] 4.2 TDD: write failing tests for `UpdateFixDataCommand`/`DeleteFixDataCommand` handlers; implement in `backend/src/AdminPro.Application/FixDatas/Commands/UpdateFixData/` and `DeleteFixData/`.
+- [x] 4.3 Add `FixDatasController` (`backend/src/AdminPro.Api/Controllers/FixDatasController.cs`): `PUT /api/fixdatas/{id}`, `DELETE /api/fixdatas/{id}` (create is `POST /api/applications/{appId}/fixdatas` on `ApplicationsController`, same deviation as Reportes/Notas/Documentos).
 
 ## 5. Backend — Populate real children in Application detail (TDD)
 
