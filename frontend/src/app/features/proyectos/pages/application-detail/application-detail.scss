@@ -92,6 +92,51 @@ table td {
   font-size: 13.5px;
 }
 
+.nota-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.nota-row {
+  border-top: 1px solid var(--bs-border-color);
+  padding: 10px 0;
+
+  &:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+}
+
+.nota-row-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+
+  i {
+    font-size: 12px;
+    color: var(--ap-ink-soft);
+  }
+}
+
+.nota-titulo {
+  font-weight: 700;
+  font-size: 13.5px;
+  flex: 1;
+}
+
+.nota-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.nota-descripcion {
+  margin: 8px 0 0 20px;
+  font-size: 13px;
+  color: var(--ap-ink-soft);
+  white-space: pre-wrap;
+}
+
 .modal-backdrop-custom {
   position: fixed;
   inset: 0;

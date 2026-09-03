@@ -85,29 +85,153 @@
   <div class="card mb-3">
     <div class="card-head">
       <h3>Reportes ({{ application.reportes.length }})</h3>
+      <button type="button" class="btn btn-sm btn-outline-primary" data-testid="btn-agregar-reporte" (click)="openAddReporteModal()">
+        <i class="bi bi-plus"></i> Agregar
+      </button>
     </div>
-    <p class="text-secondary mb-0">No hay reportes todavía.</p>
+    @if (application.reportes.length === 0) {
+      <p class="text-secondary mb-0">No hay reportes todavía.</p>
+    } @else {
+      <table class="w-100">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (reporte of application.reportes; track reporte.id) {
+            <tr>
+              <td>{{ reporte.reportCode }}</td>
+              <td>{{ reporte.reportName }}</td>
+              <td class="text-end">
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-testid="btn-editar-reporte" (click)="openEditReporteModal(reporte)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-danger" data-testid="btn-eliminar-reporte" (click)="onDeleteReporte(reporte.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
   </div>
 
   <div class="card mb-3">
     <div class="card-head">
       <h3>Notas ({{ application.notas.length }})</h3>
+      <button type="button" class="btn btn-sm btn-outline-primary" data-testid="btn-agregar-nota" (click)="openAddNotaModal()">
+        <i class="bi bi-plus"></i> Agregar
+      </button>
     </div>
-    <p class="text-secondary mb-0">No hay notas todavía.</p>
+    @if (application.notas.length === 0) {
+      <p class="text-secondary mb-0">No hay notas todavía.</p>
+    } @else {
+      <div class="nota-list">
+        @for (nota of application.notas; track nota.id) {
+          <div class="nota-row">
+            <div class="nota-row-head" data-testid="nota-toggle" (click)="toggleNota(nota.id)">
+              <i class="bi" [class.bi-chevron-right]="!isNotaExpanded(nota.id)" [class.bi-chevron-down]="isNotaExpanded(nota.id)"></i>
+              <span class="nota-titulo">{{ nota.titulo }}</span>
+              <span class="nota-actions">
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-testid="btn-editar-nota" (click)="$event.stopPropagation(); openEditNotaModal(nota)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-danger" data-testid="btn-eliminar-nota" (click)="$event.stopPropagation(); onDeleteNota(nota.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </span>
+            </div>
+            @if (isNotaExpanded(nota.id)) {
+              <p class="nota-descripcion" data-testid="nota-descripcion">{{ nota.descripcion }}</p>
+            }
+          </div>
+        }
+      </div>
+    }
   </div>
 
   <div class="card mb-3">
     <div class="card-head">
       <h3>Documentos ({{ application.documentos.length }})</h3>
+      <button type="button" class="btn btn-sm btn-outline-primary" data-testid="btn-agregar-documento" (click)="openAddDocumentoModal()">
+        <i class="bi bi-plus"></i> Agregar
+      </button>
     </div>
-    <p class="text-secondary mb-0">No hay documentos todavía.</p>
+    @if (application.documentos.length === 0) {
+      <p class="text-secondary mb-0">No hay documentos todavía.</p>
+    } @else {
+      <table class="w-100">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (documento of application.documentos; track documento.id) {
+            <tr>
+              <td>{{ documento.nombreArchivo }}</td>
+              <td>{{ documento.tipo }}</td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-secondary" [href]="documento.urlOneDrive" target="_blank" data-testid="link-abrir-documento">
+                  <i class="bi bi-box-arrow-up-right"></i>
+                </a>
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-testid="btn-editar-documento" (click)="openEditDocumentoModal(documento)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-danger" data-testid="btn-eliminar-documento" (click)="onDeleteDocumento(documento.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
   </div>
 
   <div class="card mb-3">
     <div class="card-head">
       <h3>FixDatas ({{ application.fixDatas.length }})</h3>
+      <button type="button" class="btn btn-sm btn-outline-primary" data-testid="btn-agregar-fixdata" (click)="openAddFixDataModal()">
+        <i class="bi bi-plus"></i> Agregar
+      </button>
     </div>
-    <p class="text-secondary mb-0">No hay fix datas todavía.</p>
+    @if (application.fixDatas.length === 0) {
+      <p class="text-secondary mb-0">No hay fix datas todavía.</p>
+    } @else {
+      <table class="w-100">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (fixData of application.fixDatas; track fixData.id) {
+            <tr>
+              <td>{{ fixData.nombre }}</td>
+              <td class="text-end">
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-testid="btn-copiar-script" (click)="copyScript(fixData.script)">
+                  <i class="bi bi-clipboard"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-testid="btn-editar-fixdata" (click)="openEditFixDataModal(fixData)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-danger" data-testid="btn-eliminar-fixdata" (click)="onDeleteFixData(fixData.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
   </div>
 
   <div class="card">
@@ -149,6 +273,128 @@
           <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeModal()">
             Cancelar
           </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+@if (showReporteModal()) {
+  <div class="modal-backdrop-custom">
+    <div class="modal-dialog-custom">
+      <h4>{{ editingReporteId === null ? 'Agregar Reporte' : 'Editar Reporte' }}</h4>
+      <form [formGroup]="reporteForm" (ngSubmit)="onSaveReporte()">
+        <div class="mb-3">
+          <label class="form-label">Código *</label>
+          <input type="text" class="form-control" formControlName="reportCode" data-testid="modal-input-report-code" />
+          @if (reportCodeError(); as error) {
+            <div class="text-danger small mt-1" data-testid="modal-error-report-code">{{ error }}</div>
+          }
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Nombre *</label>
+          <input type="text" class="form-control" formControlName="reportName" data-testid="modal-input-report-name" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Región</label>
+          <input type="text" class="form-control" formControlName="regionId" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Ruta</label>
+          <input type="text" class="form-control" formControlName="reportPath" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Notas</label>
+          <textarea class="form-control" formControlName="notas" rows="2"></textarea>
+        </div>
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar-reporte">Guardar</button>
+          <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeReporteModal()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+@if (showNotaModal()) {
+  <div class="modal-backdrop-custom">
+    <div class="modal-dialog-custom">
+      <h4>{{ editingNotaId === null ? 'Agregar Nota' : 'Editar Nota' }}</h4>
+      <form [formGroup]="notaForm" (ngSubmit)="onSaveNota()">
+        <div class="mb-3">
+          <label class="form-label">Título *</label>
+          <input type="text" class="form-control" formControlName="titulo" data-testid="modal-input-titulo" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Descripción *</label>
+          <textarea class="form-control" formControlName="descripcion" rows="3" data-testid="modal-input-descripcion"></textarea>
+        </div>
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar-nota">Guardar</button>
+          <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeNotaModal()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+@if (showDocumentoModal()) {
+  <div class="modal-backdrop-custom">
+    <div class="modal-dialog-custom">
+      <h4>{{ editingDocumentoId === null ? 'Agregar Documento' : 'Editar Documento' }}</h4>
+      <form [formGroup]="documentoForm" (ngSubmit)="onSaveDocumento()">
+        <div class="mb-3">
+          <label class="form-label">Nombre *</label>
+          <input type="text" class="form-control" formControlName="nombreArchivo" data-testid="modal-input-nombre-archivo" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">URL OneDrive *</label>
+          <input type="text" class="form-control" formControlName="urlOneDrive" data-testid="modal-input-url-onedrive" />
+          @if (documentoUrlError(); as error) {
+            <div class="text-danger small mt-1" data-testid="modal-error-url-onedrive">{{ error }}</div>
+          }
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Tipo</label>
+          <select class="form-select" formControlName="tipo" data-testid="modal-select-tipo">
+            @for (tipo of tiposDocumento; track tipo) {
+              <option [value]="tipo">{{ tipo }}</option>
+            }
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Descripción</label>
+          <textarea class="form-control" formControlName="descripcion" rows="2"></textarea>
+        </div>
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar-documento">Guardar</button>
+          <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeDocumentoModal()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+@if (showFixDataModal()) {
+  <div class="modal-backdrop-custom">
+    <div class="modal-dialog-custom">
+      <h4>{{ editingFixDataId === null ? 'Agregar FixData' : 'Editar FixData' }}</h4>
+      <form [formGroup]="fixDataForm" (ngSubmit)="onSaveFixData()">
+        <div class="mb-3">
+          <label class="form-label">Nombre *</label>
+          <input type="text" class="form-control" formControlName="nombre" data-testid="modal-input-fixdata-nombre" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Descripción</label>
+          <textarea class="form-control" formControlName="descripcion" rows="2"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Script</label>
+          <textarea class="form-control" formControlName="script" rows="4" data-testid="modal-input-script"></textarea>
+        </div>
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar-fixdata">Guardar</button>
+          <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeFixDataModal()">Cancelar</button>
         </div>
       </form>
     </div>

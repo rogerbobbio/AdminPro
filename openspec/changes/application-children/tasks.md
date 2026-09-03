@@ -39,14 +39,14 @@
 
 ## 7. Frontend — ApplicationDetail: Reportes/Documentos/FixDatas sections (TDD)
 
-- [ ] 7.1 TDD: write failing tests asserting the "Reportes" section renders an empty state, then a list after creation, with edit/delete wired to `ReporteService`; implement in `application-detail.html`/`.ts` reusing the existing Ambientes modal-form pattern (own modal + form group for `ReportCode`/`ReportName`/etc.).
-- [ ] 7.2 TDD: same pattern for "Documentos" (`NombreArchivo`/`UrlOneDrive`/`Tipo` select/`Descripcion`), including the "open in new tab" link on `UrlOneDrive`.
-- [ ] 7.3 TDD: same pattern for "FixDatas" (`Nombre`/`Descripcion`/`Script` textarea), including a "copy script" action that copies `Script` to the clipboard.
+- [x] 7.1 TDD: write failing tests asserting the "Reportes" section renders an empty state, then a list after creation, with edit/delete wired to `ReporteService`; implement in `application-detail.html`/`.ts` reusing the existing Ambientes modal-form pattern (own modal + form group for `ReportCode`/`ReportName`/etc.).
+- [x] 7.2 TDD: same pattern for "Documentos" (`NombreArchivo`/`UrlOneDrive`/`Tipo` select/`Descripcion`), including the "open in new tab" link on `UrlOneDrive`.
+- [x] 7.3 TDD: same pattern for "FixDatas" (`Nombre`/`Descripcion`/`Script` textarea), including a "copy script" action that copies `Script` to the clipboard.
 
 ## 8. Frontend — ApplicationDetail: Notas collapsible list (TDD)
 
-- [ ] 8.1 TDD: write a failing test asserting a note row renders only its `Titulo` when collapsed and reveals `Descripcion` when clicked/expanded; implement the "Notas" section in `application-detail.html`/`.ts` as a collapsible list (chevron icon, click toggles a per-row expanded state), with the count badge and "+ Agregar Nota" action, matching `docs/design/DESIGN.md` §5.4 and the reference mockup (`▶ nvm use 14.16.0` / description on expand).
-- [ ] 8.2 TDD: write failing tests for add/edit/delete via the Nota modal form (`Titulo`, `Descripcion`), wired to `NotaService`; implement and verify green.
+- [x] 8.1 TDD: write a failing test asserting a note row renders only its `Titulo` when collapsed and reveals `Descripcion` when clicked/expanded; implement the "Notas" section in `application-detail.html`/`.ts` as a collapsible list (chevron icon, click toggles a per-row expanded state), with the count badge and "+ Agregar Nota" action, matching `docs/design/DESIGN.md` §5.4 and the reference mockup (`▶ nvm use 14.16.0` / description on expand).
+- [x] 8.2 TDD: write failing tests for add/edit/delete via the Nota modal form (`Titulo`, `Descripcion`), wired to `NotaService`; implement and verify green.
 
 ## 9. Frontend — Remove Notas de arranque placeholder from ApplicationForm
 
