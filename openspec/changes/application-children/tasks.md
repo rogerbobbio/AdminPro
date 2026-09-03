@@ -1,13 +1,13 @@
 ## 0. Setup (MANDATORY FIRST)
 
-- [ ] 0.1 Create branch `feature/application-children`
-- [ ] 0.2 Push branch to `origin` (Draft PR opened manually if `gh` CLI is unavailable)
+- [x] 0.1 Create branch `feature/application-children`
+- [x] 0.2 Push branch to `origin` (Draft PR opened manually if `gh` CLI is unavailable)
 
 ## 1. Backend — Reporte CRUD (TDD)
 
-- [ ] 1.1 TDD: write failing validator/handler tests for `CreateReporteCommand` (rules APP-CMD-009, REP-001 report-code-uniqueness-within-application) in `backend/tests/AdminPro.Application.Tests/Reportes/CreateReporteTests.cs`; implement `CreateReporteCommand`, `CreateReporteCommandValidator`, `CreateReporteCommandHandler` in `backend/src/AdminPro.Application/Reportes/Commands/CreateReporte/`, mirroring `Applications/Commands/CreateApplication/`.
-- [ ] 1.2 TDD: write failing tests for `UpdateReporteCommand`/`DeleteReporteCommand` handlers (re-validate REP-001 excluding own row on update; soft-delete via `Activo = false` on delete); implement in `backend/src/AdminPro.Application/Reportes/Commands/UpdateReporte/` and `DeleteReporte/`.
-- [ ] 1.3 Add `ReportesController` (`backend/src/AdminPro.Api/Controllers/ReportesController.cs`): `POST /api/applications/{appId}/reportes`, `PUT /api/reportes/{id}`, `DELETE /api/reportes/{id}`, mirroring `AmbientesController`'s nested-route shape.
+- [x] 1.1 TDD: write failing validator/handler tests for `CreateReporteCommand` (rules APP-CMD-009, REP-001 report-code-uniqueness-within-application) in `backend/tests/AdminPro.Application.Tests/Reportes/CreateReporteTests.cs`; implement `CreateReporteCommand`, `CreateReporteCommandValidator`, `CreateReporteCommandHandler` in `backend/src/AdminPro.Application/Reportes/Commands/CreateReporte/`, mirroring `Applications/Commands/CreateApplication/`.
+- [x] 1.2 TDD: write failing tests for `UpdateReporteCommand`/`DeleteReporteCommand` handlers (re-validate REP-001 excluding own row on update; soft-delete via `Activo = false` on delete); implement in `backend/src/AdminPro.Application/Reportes/Commands/UpdateReporte/` and `DeleteReporte/`. Deviation: `POST` lives on `ApplicationsController` (not `ReportesController`), matching the precedent `CreateEnvironment` set on `AmbientesController`/`ApplicationsController` in Phase 4.
+- [x] 1.3 Add `ReportesController` (`backend/src/AdminPro.Api/Controllers/ReportesController.cs`): `PUT /api/reportes/{id}`, `DELETE /api/reportes/{id}` (create is `POST /api/applications/{appId}/reportes` on `ApplicationsController`, see 1.2 deviation note).
 
 ## 2. Backend — Nota CRUD (TDD)
 

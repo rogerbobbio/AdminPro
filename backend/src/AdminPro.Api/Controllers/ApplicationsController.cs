@@ -4,6 +4,7 @@ using AdminPro.Application.Ambientes.Commands.CreateEnvironment;
 using AdminPro.Application.Applications.Commands.DeleteApplication;
 using AdminPro.Application.Applications.Commands.UpdateApplication;
 using AdminPro.Application.Applications.Queries.GetApplicationById;
+using AdminPro.Application.Reportes.Commands.CreateReporte;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,4 +47,31 @@ public class ApplicationsController(ISender sender) : ApiController(sender)
     }
 
     public record CreateEnvironmentRequest(string Nombre, string? Url, bool EsWebApi, string? Notas, int Orden);
+
+    [HttpPost("{appId}/reportes")]
+    public async Task<ActionResult<int>> CreateReporte(int appId, CreateReporteRequest request, CancellationToken ct)
+    {
+        var command = new CreateReporteCommand(
+            appId,
+            request.ReportCode,
+            request.ReportName,
+            request.RegionId,
+            request.ReportPath,
+            request.SpTranship,
+            request.SpReportViewer,
+            request.Notas,
+            request.ParametrosEjemplo);
+        var id = await Sender.Send(command, ct);
+        return CreatedAtAction(nameof(GetById), new { id = appId }, id);
+    }
+
+    public record CreateReporteRequest(
+        string ReportCode,
+        string ReportName,
+        string? RegionId,
+        string? ReportPath,
+        string? SpTranship,
+        string? SpReportViewer,
+        string? Notas,
+        string? ParametrosEjemplo);
 }
