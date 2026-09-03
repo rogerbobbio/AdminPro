@@ -34,8 +34,8 @@
 
 ## 6. Frontend — Shared model & services
 
-- [ ] 6.1 Extend `frontend/src/app/shared/models/project.model.ts`: add `Reporte`, `Nota`, `Documento`, `FixData` interfaces and their `Create*Command`/`Update*Command` types; update `ApplicationDetail`'s `reportes`/`notas`/`documentos`/`fixDatas` fields from `unknown[]` to the new typed arrays.
-- [ ] 6.2 Add `ReporteService`, `NotaService`, `DocumentoService`, `FixDataService` under `frontend/src/app/shared/services/`, each mirroring `EnvironmentService` (`create(applicationId, command)`, `update(id, command)`, `delete(id)` against the new controllers).
+- [x] 6.1 Extend `frontend/src/app/shared/models/project.model.ts`: add `Reporte`, `Nota`, `Documento`, `FixData` interfaces and their `Create*Command`/`Update*Command` types; update `ApplicationDetail`'s `reportes`/`notas`/`documentos`/`fixDatas` fields from `unknown[]` to the new typed arrays.
+- [x] 6.2 Add `ReporteService`, `NotaService`, `DocumentoService`, `FixDataService` under `frontend/src/app/shared/services/`, each mirroring `EnvironmentService` (`create(applicationId, command)`, `update(id, command)`, `delete(id)` against the new controllers).
 
 ## 7. Frontend — ApplicationDetail: Reportes/Documentos/FixDatas sections (TDD)
 

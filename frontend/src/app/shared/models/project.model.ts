@@ -73,11 +73,51 @@ export interface ApplicationDetail {
   createdAt: string;
   updatedAt: string;
   ambientes: Ambiente[];
-  reportes: unknown[];
-  notas: unknown[];
-  documentos: unknown[];
-  fixDatas: unknown[];
+  reportes: Reporte[];
+  notas: Nota[];
+  documentos: Documento[];
+  fixDatas: FixData[];
   servicios: unknown[];
+}
+
+export interface Reporte {
+  id: number;
+  reportCode: string;
+  reportName: string;
+  regionId: string | null;
+  reportPath: string | null;
+  spTranship: string | null;
+  spReportViewer: string | null;
+  notas: string | null;
+  parametrosEjemplo: string | null;
+  activo: boolean;
+}
+
+export interface Nota {
+  id: number;
+  titulo: string;
+  descripcion: string;
+  orden: number;
+  activo: boolean;
+}
+
+export interface Documento {
+  id: number;
+  nombreArchivo: string;
+  urlOneDrive: string;
+  tipo: string;
+  descripcion: string | null;
+  orden: number;
+  activo: boolean;
+}
+
+export interface FixData {
+  id: number;
+  nombre: string;
+  descripcion: string | null;
+  script: string | null;
+  orden: number;
+  activo: boolean;
 }
 
 export interface CreateApplicationCommand {
@@ -125,6 +165,74 @@ export interface UpdateEnvironmentCommand {
   url?: string | null;
   esWebApi: boolean;
   notas?: string | null;
+  orden: number;
+}
+
+export interface CreateReporteCommand {
+  reportCode: string;
+  reportName: string;
+  regionId?: string | null;
+  reportPath?: string | null;
+  spTranship?: string | null;
+  spReportViewer?: string | null;
+  notas?: string | null;
+  parametrosEjemplo?: string | null;
+}
+
+export interface UpdateReporteCommand {
+  id: number;
+  reportCode: string;
+  reportName: string;
+  regionId?: string | null;
+  reportPath?: string | null;
+  spTranship?: string | null;
+  spReportViewer?: string | null;
+  notas?: string | null;
+  parametrosEjemplo?: string | null;
+}
+
+export interface CreateNotaCommand {
+  titulo: string;
+  descripcion: string;
+  orden: number;
+}
+
+export interface UpdateNotaCommand {
+  id: number;
+  titulo: string;
+  descripcion: string;
+  orden: number;
+}
+
+export interface CreateDocumentoCommand {
+  nombreArchivo: string;
+  urlOneDrive: string;
+  tipo: string;
+  descripcion?: string | null;
+  orden: number;
+}
+
+export interface UpdateDocumentoCommand {
+  id: number;
+  nombreArchivo: string;
+  urlOneDrive: string;
+  tipo: string;
+  descripcion?: string | null;
+  orden: number;
+}
+
+export interface CreateFixDataCommand {
+  nombre: string;
+  descripcion?: string | null;
+  script?: string | null;
+  orden: number;
+}
+
+export interface UpdateFixDataCommand {
+  id: number;
+  nombre: string;
+  descripcion?: string | null;
+  script?: string | null;
   orden: number;
 }
 
