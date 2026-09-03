@@ -4,6 +4,7 @@ using AdminPro.Application.Ambientes.Commands.CreateEnvironment;
 using AdminPro.Application.Applications.Commands.DeleteApplication;
 using AdminPro.Application.Applications.Commands.UpdateApplication;
 using AdminPro.Application.Applications.Queries.GetApplicationById;
+using AdminPro.Application.Documentos.Commands.CreateDocumento;
 using AdminPro.Application.Notas.Commands.CreateNota;
 using AdminPro.Application.Reportes.Commands.CreateReporte;
 using MediatR;
@@ -85,4 +86,14 @@ public class ApplicationsController(ISender sender) : ApiController(sender)
     }
 
     public record CreateNotaRequest(string Titulo, string Descripcion, int Orden);
+
+    [HttpPost("{appId}/documentos")]
+    public async Task<ActionResult<int>> CreateDocumento(int appId, CreateDocumentoRequest request, CancellationToken ct)
+    {
+        var command = new CreateDocumentoCommand(appId, request.NombreArchivo, request.UrlOneDrive, request.Tipo, request.Descripcion, request.Orden);
+        var id = await Sender.Send(command, ct);
+        return CreatedAtAction(nameof(GetById), new { id = appId }, id);
+    }
+
+    public record CreateDocumentoRequest(string NombreArchivo, string UrlOneDrive, string Tipo, string? Descripcion, int Orden);
 }

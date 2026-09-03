@@ -17,9 +17,9 @@
 
 ## 3. Backend — Documento CRUD (TDD)
 
-- [ ] 3.1 TDD: write failing validator/handler tests for `CreateDocumentoCommand` (rules APP-CMD-011, DOC-001 `UrlOneDrive` required + valid absolute URL, DOC-002 `Tipo` one of manual/diagrama/codigo/otro) in `backend/tests/AdminPro.Application.Tests/Documentos/CreateDocumentoTests.cs`; implement `CreateDocumentoCommand`, `CreateDocumentoCommandValidator`, `CreateDocumentoCommandHandler` in `backend/src/AdminPro.Application/Documentos/Commands/CreateDocumento/`.
-- [ ] 3.2 TDD: write failing tests for `UpdateDocumentoCommand`/`DeleteDocumentoCommand` handlers; implement in `backend/src/AdminPro.Application/Documentos/Commands/UpdateDocumento/` and `DeleteDocumento/`.
-- [ ] 3.3 Add `DocumentosController` (`backend/src/AdminPro.Api/Controllers/DocumentosController.cs`): `POST /api/applications/{appId}/documentos`, `PUT /api/documentos/{id}`, `DELETE /api/documentos/{id}`.
+- [x] 3.1 TDD: write failing validator/handler tests for `CreateDocumentoCommand` (rules APP-CMD-011, DOC-001 `UrlOneDrive` required + valid absolute URL, DOC-002 `Tipo` one of manual/diagrama/codigo/otro) in `backend/tests/AdminPro.Application.Tests/Documentos/CreateDocumentoTests.cs`; implement `CreateDocumentoCommand`, `CreateDocumentoCommandValidator`, `CreateDocumentoCommandHandler` in `backend/src/AdminPro.Application/Documentos/Commands/CreateDocumento/`. Deviation: validator checks `Tipo` is non-empty (max 50 chars) rather than restricting to the 4-value catalog, per DOC-002's "MAY allow free-text entry"; the frontend select still suggests the 4 values.
+- [x] 3.2 TDD: write failing tests for `UpdateDocumentoCommand`/`DeleteDocumentoCommand` handlers; implement in `backend/src/AdminPro.Application/Documentos/Commands/UpdateDocumento/` and `DeleteDocumento/`.
+- [x] 3.3 Add `DocumentosController` (`backend/src/AdminPro.Api/Controllers/DocumentosController.cs`): `PUT /api/documentos/{id}`, `DELETE /api/documentos/{id}` (create is `POST /api/applications/{appId}/documentos` on `ApplicationsController`, same deviation as Reportes/Notas).
 
 ## 4. Backend — FixData CRUD (TDD)
 
