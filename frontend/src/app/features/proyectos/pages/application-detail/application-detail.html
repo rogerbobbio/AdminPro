@@ -1,3 +1,11 @@
+@if (savedMessage(); as message) {
+  <div class="alert alert-success alert-dismissible d-flex align-items-center gap-2 mb-3" data-testid="saved-message" role="alert">
+    <i class="bi bi-check-circle-fill"></i>
+    <span>{{ message }}</span>
+    <button type="button" class="btn-close ms-auto" aria-label="Cerrar" (click)="dismissSavedMessage()"></button>
+  </div>
+}
+
 @if (applicationService.selectedApplication(); as application) {
   <div class="breadcrumb mb-3">
     <a routerLink="/proyectos">Proyectos</a>

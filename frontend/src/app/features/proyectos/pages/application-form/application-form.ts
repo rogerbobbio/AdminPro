@@ -5,8 +5,9 @@ import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } fr
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApplicationService } from '../../../../shared/services/application.service';
 import { EnvironmentService } from '../../../../shared/services/environment.service';
+import { NotaService } from '../../../../shared/services/nota.service';
 import { ProjectService } from '../../../../shared/services/project.service';
-import { Ambiente } from '../../../../shared/models/project.model';
+import { Ambiente, Nota } from '../../../../shared/models/project.model';
 
 interface ValidationErrorBody {
   details?: { field: string; error: string }[];
@@ -15,8 +16,14 @@ interface ValidationErrorBody {
 type AmbienteGroup = FormGroup<{
   id: FormControl<number | null>;
   nombre: FormControl<string>;
-  url: FormControl<string | null>;
+  url: FormControl<string>;
   esWebApi: FormControl<boolean>;
+}>;
+
+type NotaGroup = FormGroup<{
+  id: FormControl<number | null>;
+  titulo: FormControl<string>;
+  descripcion: FormControl<string>;
 }>;
 
 const TIPOS_APLICACION = ['Web', 'API', 'Mobile'] as const;
@@ -37,6 +44,7 @@ export class ApplicationForm implements OnInit {
   protected readonly applicationService = inject(ApplicationService);
   protected readonly projectService = inject(ProjectService);
   private readonly environmentService = inject(EnvironmentService);
+  private readonly notaService = inject(NotaService);
 
   private applicationId: number | null = null;
   private projectId!: number;
@@ -56,7 +64,11 @@ export class ApplicationForm implements OnInit {
   protected readonly ambientesArray = new FormArray<AmbienteGroup>([]);
   private readonly removedAmbienteIds: number[] = [];
 
+  protected readonly notasArray = new FormArray<NotaGroup>([]);
+  private readonly removedNotaIds: number[] = [];
+
   protected readonly fieldErrors = signal<Record<string, string>>({});
+  protected readonly submitError = signal<string | null>(null);
   protected readonly isEditMode = signal(false);
 
   protected readonly tiposDisponibles = TIPOS_APLICACION;
@@ -83,6 +95,9 @@ export class ApplicationForm implements OnInit {
         });
         for (const ambiente of application.ambientes) {
           this.ambientesArray.push(this.createAmbienteGroup(ambiente));
+        }
+        for (const nota of application.notas) {
+          this.notasArray.push(this.createNotaGroup(nota));
         }
       }
     } else {
@@ -115,9 +130,35 @@ export class ApplicationForm implements OnInit {
   private createAmbienteGroup(ambiente?: Ambiente): AmbienteGroup {
     return new FormGroup({
       id: new FormControl<number | null>(ambiente?.id ?? null),
-      nombre: new FormControl(ambiente?.nombre ?? '', { nonNullable: true }),
-      url: new FormControl<string | null>(ambiente?.url ?? null),
+      nombre: new FormControl(ambiente?.nombre ?? '', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      url: new FormControl(ambiente?.url ?? '', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
       esWebApi: new FormControl(ambiente?.esWebApi ?? false, { nonNullable: true }),
+    });
+  }
+
+  addNota(): void {
+    this.notasArray.push(this.createNotaGroup());
+  }
+
+  removeNota(index: number): void {
+    const id = this.notasArray.at(index).controls.id.value;
+    if (id !== null) {
+      this.removedNotaIds.push(id);
+    }
+    this.notasArray.removeAt(index);
+  }
+
+  private createNotaGroup(nota?: Nota): NotaGroup {
+    return new FormGroup({
+      id: new FormControl<number | null>(nota?.id ?? null),
+      titulo: new FormControl(nota?.titulo ?? '', { nonNullable: true }),
+      descripcion: new FormControl(nota?.descripcion ?? '', { nonNullable: true }),
     });
   }
 
@@ -127,6 +168,14 @@ export class ApplicationForm implements OnInit {
 
   async onSubmit(): Promise<void> {
     this.fieldErrors.set({});
+    this.submitError.set(null);
+
+    if (this.ambientesArray.invalid) {
+      this.ambientesArray.markAllAsTouched();
+      this.submitError.set('Revisá los ambientes: nombre y URL son obligatorios.');
+      return;
+    }
+
     const value = this.form.getRawValue();
     const command = {
       ...value,
@@ -139,11 +188,13 @@ export class ApplicationForm implements OnInit {
       if (this.isEditMode() && this.applicationId !== null) {
         await this.applicationService.update(this.applicationId, { id: this.applicationId, ...command });
         await this.syncAmbientes(this.applicationId);
-        await this.router.navigate(['/proyectos/aplicaciones', this.applicationId]);
+        await this.syncNotas(this.applicationId);
+        await this.router.navigate(['/proyectos/aplicaciones', this.applicationId], { queryParams: { saved: 'updated' } });
       } else {
         const id = await this.applicationService.create(this.projectId, command);
         await this.syncAmbientes(id);
-        await this.router.navigate(['/proyectos/aplicaciones', id]);
+        await this.syncNotas(id);
+        await this.router.navigate(['/proyectos/aplicaciones', id], { queryParams: { saved: 'created' } });
       }
     } catch (err) {
       if (err instanceof HttpErrorResponse && err.status === 400) {
@@ -152,8 +203,13 @@ export class ApplicationForm implements OnInit {
         for (const detail of body.details ?? []) {
           errors[detail.field.toLowerCase()] = detail.error;
         }
-        this.fieldErrors.set(errors);
+        if (Object.keys(errors).length > 0) {
+          this.fieldErrors.set(errors);
+        } else {
+          this.submitError.set('No se pudo guardar la aplicación. Verificá los datos ingresados e intentá nuevamente.');
+        }
       } else {
+        this.submitError.set('No se pudo guardar la aplicación. Intentá nuevamente.');
         throw err;
       }
     }
@@ -182,6 +238,33 @@ export class ApplicationForm implements OnInit {
           nombre: row.nombre,
           url: row.url,
           esWebApi: row.esWebApi,
+          orden: index,
+        });
+      }
+    }
+  }
+
+  private async syncNotas(applicationId: number): Promise<void> {
+    for (const id of this.removedNotaIds) {
+      await this.notaService.delete(id);
+    }
+
+    const rows = this.notasArray.getRawValue();
+    for (const [index, row] of rows.entries()) {
+      if (!row.titulo.trim()) {
+        continue;
+      }
+      if (row.id !== null) {
+        await this.notaService.update(row.id, {
+          id: row.id,
+          titulo: row.titulo,
+          descripcion: row.descripcion,
+          orden: index,
+        });
+      } else {
+        await this.notaService.create(applicationId, {
+          titulo: row.titulo,
+          descripcion: row.descripcion,
           orden: index,
         });
       }

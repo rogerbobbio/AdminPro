@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProjectService } from '../../../../shared/services/project.service';
 import { DatabaseService } from '../../../../shared/services/database.service';
+import { ApplicationService } from '../../../../shared/services/application.service';
 import { BaseDeDatos } from '../../../../shared/models/project.model';
 
 @Component({
@@ -16,6 +17,7 @@ import { BaseDeDatos } from '../../../../shared/models/project.model';
 export class ProjectDetail implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly databaseService = inject(DatabaseService);
+  private readonly applicationService = inject(ApplicationService);
   protected readonly projectService = inject(ProjectService);
 
   protected projectId!: number;
@@ -80,6 +82,11 @@ export class ProjectDetail implements OnInit {
 
   async onDeleteDatabase(id: number): Promise<void> {
     await this.databaseService.delete(id);
+    await this.projectService.getById(this.projectId);
+  }
+
+  async onDeleteApplication(id: number): Promise<void> {
+    await this.applicationService.delete(id);
     await this.projectService.getById(this.projectId);
   }
 }

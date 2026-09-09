@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApplicationService } from '../../../../shared/services/application.service';
 import { EnvironmentService } from '../../../../shared/services/environment.service';
 import { ReporteService } from '../../../../shared/services/reporte.service';
@@ -24,6 +24,7 @@ interface ValidationErrorBody {
 })
 export class ApplicationDetail implements OnInit {
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly environmentService = inject(EnvironmentService);
   private readonly reporteService = inject(ReporteService);
   private readonly notaService = inject(NotaService);
@@ -32,6 +33,8 @@ export class ApplicationDetail implements OnInit {
   protected readonly applicationService = inject(ApplicationService);
 
   protected applicationId!: number;
+
+  protected readonly savedMessage = signal<string | null>(null);
 
   // Ambientes
   protected readonly showModal = signal(false);
@@ -100,6 +103,16 @@ export class ApplicationDetail implements OnInit {
   ngOnInit(): void {
     this.applicationId = Number(this.route.snapshot.paramMap.get('id'));
     void this.applicationService.getById(this.applicationId);
+
+    const saved = this.route.snapshot.queryParamMap.get('saved');
+    if (saved === 'created' || saved === 'updated') {
+      this.savedMessage.set(saved === 'created' ? 'Aplicación creada correctamente.' : 'Cambios guardados correctamente.');
+      void this.router.navigate([], { relativeTo: this.route, queryParams: {}, replaceUrl: true });
+    }
+  }
+
+  dismissSavedMessage(): void {
+    this.savedMessage.set(null);
   }
 
   private async reload(): Promise<void> {

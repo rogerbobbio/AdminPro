@@ -99,7 +99,7 @@ describe('ApplicationForm', () => {
     req.flush(3);
     await new Promise((resolve) => setTimeout(resolve, 0));
 
-    expect(navigateSpy).toHaveBeenCalledWith(['/proyectos/aplicaciones', 3]);
+    expect(navigateSpy).toHaveBeenCalledWith(['/proyectos/aplicaciones', 3], { queryParams: { saved: 'created' } });
   });
 
   it('renders a breadcrumb with the parent project name in create mode', async () => {

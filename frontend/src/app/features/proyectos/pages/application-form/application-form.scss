@@ -298,6 +298,11 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-weight: 700;
+
+  .req {
+    color: #d96666;
+    text-transform: none;
+  }
 }
 
 .env-row {
@@ -315,6 +320,10 @@
     color: var(--bs-body-color);
     outline: none;
     font-family: inherit;
+
+    &.is-invalid {
+      border-color: #d96666;
+    }
   }
 
   input.name {
@@ -326,6 +335,13 @@
   }
 }
 
+.env-error {
+  grid-column: 1 / -1;
+  font-size: 11.5px;
+  color: #d96666;
+  margin-top: -4px;
+}
+
 @media (max-width: 820px) {
   .env-head {
     display: none;
@@ -333,6 +349,50 @@
 
   .env-row {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.nota-form-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nota-form-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 32px;
+  gap: 10px;
+  align-items: start;
+  padding: 12px 0;
+  border-top: 1px solid var(--bs-border-color);
+
+  &:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+}
+
+.nota-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  input,
+  textarea {
+    width: 100%;
+    background: #fff;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 13px;
+    color: var(--bs-body-color);
+    outline: none;
+    font-family: inherit;
+    resize: vertical;
+  }
+
+  .nota-form-titulo {
+    font-weight: 700;
   }
 }
 

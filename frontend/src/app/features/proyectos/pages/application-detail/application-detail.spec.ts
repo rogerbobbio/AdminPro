@@ -41,7 +41,10 @@ describe('ApplicationDetail', () => {
         provideRouter([]),
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '1' } } } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { paramMap: { get: () => '1' }, queryParamMap: { get: () => null } } },
+        },
       ],
     }).compileComponents();
 

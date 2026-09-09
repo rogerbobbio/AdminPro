@@ -90,6 +90,7 @@
           <tr>
             <th>Nombre</th>
             <th>Tecnologías</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -103,6 +104,24 @@
                 @if (app.tecnologiaBack) {
                   <span class="stack-pill">{{ app.tecnologiaBack }}</span>
                 }
+              </td>
+              <td class="text-end">
+                <a
+                  class="btn btn-sm btn-outline-secondary"
+                  data-testid="btn-editar-aplicacion"
+                  [routerLink]="['/proyectos/aplicaciones', app.id, 'editar']"
+                  (click)="$event.stopPropagation()"
+                >
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  data-testid="btn-eliminar-aplicacion"
+                  (click)="$event.stopPropagation(); onDeleteApplication(app.id)"
+                >
+                  <i class="bi bi-trash"></i>
+                </button>
               </td>
             </tr>
           }

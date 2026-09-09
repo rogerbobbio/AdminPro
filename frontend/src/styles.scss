@@ -56,3 +56,13 @@ $theme-colors-map: (
 body {
   background-color: var(--bs-body-bg);
 }
+
+// Beats Bootstrap's .form-control::placeholder (color: var(--bs-secondary-color); opacity: 1),
+// which otherwise renders placeholders as dark as real input text.
+.form-control::placeholder,
+.form-select::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: var(--ap-ink-soft);
+  opacity: 0.4;
+}

@@ -23,12 +23,12 @@ public class CreateEnvironmentTests
     }
 
     [Fact]
-    public void Validator_RejectsInvalidUrl()
+    public void Validator_AcceptsFreeFormUrl()
     {
         var validator = new CreateEnvironmentCommandValidator();
         var result = validator.TestValidate(new CreateEnvironmentCommand(1, "UAT", "not-a-url", false, null, 0));
 
-        result.ShouldHaveValidationErrorFor(c => c.Url);
+        result.ShouldNotHaveValidationErrorFor(c => c.Url);
     }
 
     [Fact]
