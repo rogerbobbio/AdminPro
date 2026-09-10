@@ -209,6 +209,33 @@
     <div class="section">
       <div class="section-head">
         <div class="section-head-left">
+          <div class="sec-ico"><i class="bi bi-sticky"></i></div>
+          <h3>Notas <span class="count-badge">{{ notasArray.length }}</span></h3>
+        </div>
+      </div>
+      <div class="section-body">
+        @if (notasArray.length > 0) {
+          <div [formArray]="notasArray" class="nota-form-list">
+            @for (nota of notasArray.controls; track nota; let i = $index) {
+              <div class="nota-form-row" [formGroup]="nota">
+                <div class="nota-form-fields">
+                  <input class="nota-form-titulo" formControlName="titulo" placeholder="Título de la nota" />
+                  <textarea class="nota-form-descripcion" formControlName="descripcion" rows="2" placeholder="Descripción"></textarea>
+                </div>
+                <div class="mini-btn" (click)="removeNota(i)"><i class="bi bi-x-lg"></i></div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="empty">Aún no agregaste notas. Podés sumarlas ahora o más adelante.</div>
+        }
+        <div class="add-btn" (click)="addNota()"><i class="bi bi-plus-lg"></i> Agregar nota</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-head-left">
           <div class="sec-ico"><i class="bi bi-bar-chart"></i></div>
           <h3>Reportes <span class="count-badge">{{ reportesArray.length }}</span></h3>
         </div>
@@ -278,33 +305,6 @@
           <div class="empty">Aún no agregaste reportes. Podés sumarlos ahora o más adelante.</div>
         }
         <div class="add-btn" (click)="addReporte()"><i class="bi bi-plus-lg"></i> Agregar reporte</div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-head">
-        <div class="section-head-left">
-          <div class="sec-ico"><i class="bi bi-sticky"></i></div>
-          <h3>Notas <span class="count-badge">{{ notasArray.length }}</span></h3>
-        </div>
-      </div>
-      <div class="section-body">
-        @if (notasArray.length > 0) {
-          <div [formArray]="notasArray" class="nota-form-list">
-            @for (nota of notasArray.controls; track nota; let i = $index) {
-              <div class="nota-form-row" [formGroup]="nota">
-                <div class="nota-form-fields">
-                  <input class="nota-form-titulo" formControlName="titulo" placeholder="Título de la nota" />
-                  <textarea class="nota-form-descripcion" formControlName="descripcion" rows="2" placeholder="Descripción"></textarea>
-                </div>
-                <div class="mini-btn" (click)="removeNota(i)"><i class="bi bi-x-lg"></i></div>
-              </div>
-            }
-          </div>
-        } @else {
-          <div class="empty">Aún no agregaste notas. Podés sumarlas ahora o más adelante.</div>
-        }
-        <div class="add-btn" (click)="addNota()"><i class="bi bi-plus-lg"></i> Agregar nota</div>
       </div>
     </div>
 

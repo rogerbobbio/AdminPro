@@ -92,6 +92,40 @@
 
   <div class="card mb-3">
     <div class="card-head">
+      <h3>Notas ({{ application.notas.length }})</h3>
+      <button type="button" class="btn btn-sm btn-outline-primary" data-testid="btn-agregar-nota" (click)="openAddNotaModal()">
+        <i class="bi bi-plus"></i> Agregar
+      </button>
+    </div>
+    @if (application.notas.length === 0) {
+      <p class="text-secondary mb-0">No hay notas todavía.</p>
+    } @else {
+      <div class="nota-list">
+        @for (nota of application.notas; track nota.id) {
+          <div class="nota-row">
+            <div class="nota-row-head" data-testid="nota-toggle" (click)="toggleNota(nota.id)">
+              <i class="bi" [class.bi-chevron-right]="!isNotaExpanded(nota.id)" [class.bi-chevron-down]="isNotaExpanded(nota.id)"></i>
+              <span class="nota-titulo">{{ nota.titulo }}</span>
+              <span class="nota-actions">
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-testid="btn-editar-nota" (click)="$event.stopPropagation(); openEditNotaModal(nota)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-danger" data-testid="btn-eliminar-nota" (click)="$event.stopPropagation(); onDeleteNota(nota.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </span>
+            </div>
+            @if (isNotaExpanded(nota.id)) {
+              <p class="nota-descripcion" data-testid="nota-descripcion">{{ nota.descripcion }}</p>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-head">
       <h3>Reportes ({{ application.reportes.length }})</h3>
       <button type="button" class="btn btn-sm btn-outline-primary" data-testid="btn-agregar-reporte" (click)="openAddReporteModal()">
         <i class="bi bi-plus"></i> Agregar
@@ -131,40 +165,6 @@
           }
         </tbody>
       </table>
-    }
-  </div>
-
-  <div class="card mb-3">
-    <div class="card-head">
-      <h3>Notas ({{ application.notas.length }})</h3>
-      <button type="button" class="btn btn-sm btn-outline-primary" data-testid="btn-agregar-nota" (click)="openAddNotaModal()">
-        <i class="bi bi-plus"></i> Agregar
-      </button>
-    </div>
-    @if (application.notas.length === 0) {
-      <p class="text-secondary mb-0">No hay notas todavía.</p>
-    } @else {
-      <div class="nota-list">
-        @for (nota of application.notas; track nota.id) {
-          <div class="nota-row">
-            <div class="nota-row-head" data-testid="nota-toggle" (click)="toggleNota(nota.id)">
-              <i class="bi" [class.bi-chevron-right]="!isNotaExpanded(nota.id)" [class.bi-chevron-down]="isNotaExpanded(nota.id)"></i>
-              <span class="nota-titulo">{{ nota.titulo }}</span>
-              <span class="nota-actions">
-                <button type="button" class="btn btn-sm btn-outline-secondary" data-testid="btn-editar-nota" (click)="$event.stopPropagation(); openEditNotaModal(nota)">
-                  <i class="bi bi-pencil"></i>
-                </button>
-                <button type="button" class="btn btn-sm btn-outline-danger" data-testid="btn-eliminar-nota" (click)="$event.stopPropagation(); onDeleteNota(nota.id)">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </span>
-            </div>
-            @if (isNotaExpanded(nota.id)) {
-              <p class="nota-descripcion" data-testid="nota-descripcion">{{ nota.descripcion }}</p>
-            }
-          </div>
-        }
-      </div>
     }
   </div>
 
