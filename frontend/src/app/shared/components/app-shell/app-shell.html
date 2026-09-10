@@ -1,35 +1,36 @@
 <div class="app-shell">
-  <aside class="sidebar">
+  <aside class="sidebar" [class.collapsed]="isSidebarCollapsed()">
+    <button
+      type="button"
+      class="sidebar-toggle"
+      (click)="toggleSidebar()"
+      [attr.aria-label]="isSidebarCollapsed() ? 'Expandir menú' : 'Colapsar menú'"
+    >
+      <i class="bi" [class.bi-chevron-left]="!isSidebarCollapsed()" [class.bi-chevron-right]="isSidebarCollapsed()"></i>
+    </button>
+
     <div class="brand">
       <div class="brand-mark"><i class="bi bi-diagram-3-fill"></i></div>
       <div class="brand-name">AdminPro</div>
     </div>
 
     <div class="nav-label">Menú</div>
-    <a class="nav-item" [class.active]="activeNav() === 'dashboard'" routerLink="/">
-      <i class="bi bi-grid-fill"></i> Dashboard
+    <a class="nav-item" [class.active]="activeNav() === 'dashboard'" routerLink="/" title="Dashboard">
+      <i class="bi bi-grid-fill"></i> <span class="nav-text">Dashboard</span>
     </a>
-    <a class="nav-item" [class.active]="activeNav() === 'proyectos'" routerLink="/proyectos">
-      <i class="bi bi-folder2-open"></i> Proyectos
+    <a class="nav-item" [class.active]="activeNav() === 'proyectos'" routerLink="/proyectos" title="Proyectos">
+      <i class="bi bi-folder2-open"></i> <span class="nav-text">Proyectos</span>
       <span class="badge">{{ projectService.projects().length }}</span>
     </a>
-    <a class="nav-item" [class.active]="activeNav() === 'servicios'" routerLink="/servicios">
-      <i class="bi bi-hdd-network"></i> Servicios
+    <a class="nav-item" [class.active]="activeNav() === 'servicios'" routerLink="/servicios" title="Servicios">
+      <i class="bi bi-hdd-network"></i> <span class="nav-text">Servicios</span>
     </a>
-    <a class="nav-item" [class.active]="activeNav() === 'buscar'" routerLink="/buscar">
-      <i class="bi bi-search"></i> Buscar
+    <a class="nav-item" [class.active]="activeNav() === 'buscar'" routerLink="/buscar" title="Buscar">
+      <i class="bi bi-search"></i> <span class="nav-text">Buscar</span>
     </a>
 
     <div class="nav-label">General</div>
-    <div class="nav-item"><i class="bi bi-gear"></i> Configuración</div>
-
-    <div class="sidebar-spacer"></div>
-    <div class="promo-card">
-      <i class="bi bi-cash-coin bg-icon"></i>
-      <h4>Módulo Presupuesto</h4>
-      <p>Próximamente: control de costos y licencias por proyecto.</p>
-      <div class="promo-btn">Próximamente</div>
-    </div>
+    <div class="nav-item" title="Configuración"><i class="bi bi-gear"></i> <span class="nav-text">Configuración</span></div>
   </aside>
 
   <main class="main">

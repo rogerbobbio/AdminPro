@@ -107,6 +107,7 @@
             <th>Nombre</th>
             <th>SP TRANSHIP</th>
             <th>SP Report Viewer</th>
+            <th>Notas</th>
             <th></th>
           </tr>
         </thead>
@@ -117,6 +118,7 @@
               <td>{{ reporte.reportName }}</td>
               <td>{{ reporte.spTranship }}</td>
               <td>{{ reporte.spReportViewer }}</td>
+              <td>{{ reporte.notas }}</td>
               <td class="text-end">
                 <button type="button" class="btn btn-sm btn-outline-secondary" data-testid="btn-editar-reporte" (click)="openEditReporteModal(reporte)">
                   <i class="bi bi-pencil"></i>
