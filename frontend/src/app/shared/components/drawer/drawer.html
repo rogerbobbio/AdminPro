@@ -1,0 +1,15 @@
+<div class="drawer-backdrop" data-testid="drawer-backdrop" (click)="closed.emit()"></div>
+<aside class="drawer-panel" role="dialog" aria-modal="true">
+  <button
+    type="button"
+    class="drawer-close"
+    data-testid="drawer-btn-cerrar"
+    aria-label="Cerrar"
+    (click)="closed.emit()"
+  >
+    <i class="bi bi-x-lg"></i>
+  </button>
+  <div class="drawer-body">
+    <ng-content></ng-content>
+  </div>
+</aside>

@@ -132,10 +132,11 @@
 }
 
 @if (showModal()) {
-  <div class="modal-backdrop-custom">
-    <div class="modal-dialog-custom">
-      <h4>{{ editingDatabaseId === null ? 'Agregar Base de Datos' : 'Editar Base de Datos' }}</h4>
-      <form [formGroup]="databaseForm" (ngSubmit)="onSaveDatabase()">
+  <app-drawer (closed)="closeModal()">
+    <div class="drawer-eyebrow">Base de datos</div>
+    <h4 class="drawer-title">{{ editingDatabaseId === null ? 'Agregar base de datos' : 'Editar base de datos' }}</h4>
+    <form [formGroup]="databaseForm" (ngSubmit)="onSaveDatabase()" class="drawer-form">
+      <div class="drawer-fields">
         <div class="mb-3">
           <label class="form-label">Nombre *</label>
           <input type="text" class="form-control" formControlName="nombre" data-testid="modal-input-nombre" />
@@ -176,15 +177,15 @@
             </button>
           </div>
         </div>
-        <div class="d-flex gap-2">
-          <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar">
-            Guardar
-          </button>
-          <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeModal()">
-            Cancelar
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
+      </div>
+      <div class="drawer-actions">
+        <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar">
+          Guardar
+        </button>
+        <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeModal()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </app-drawer>
 }

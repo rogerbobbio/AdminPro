@@ -9,6 +9,7 @@ import { NotaService } from '../../../../shared/services/nota.service';
 import { DocumentoService } from '../../../../shared/services/documento.service';
 import { FixDataService } from '../../../../shared/services/fixdata.service';
 import { Ambiente, Documento, FixData, Nota, Reporte } from '../../../../shared/models/project.model';
+import { Drawer } from '../../../../shared/components/drawer/drawer';
 
 interface ValidationErrorBody {
   details?: { field: string; error: string }[];
@@ -17,7 +18,7 @@ interface ValidationErrorBody {
 @Component({
   selector: 'app-application-detail',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, Drawer],
   templateUrl: './application-detail.html',
   styleUrl: './application-detail.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -257,10 +257,11 @@
 }
 
 @if (showModal()) {
-  <div class="modal-backdrop-custom">
-    <div class="modal-dialog-custom">
-      <h4>{{ editingEnvironmentId === null ? 'Agregar Ambiente' : 'Editar Ambiente' }}</h4>
-      <form [formGroup]="environmentForm" (ngSubmit)="onSaveEnvironment()">
+  <app-drawer (closed)="closeModal()">
+    <div class="drawer-eyebrow">Ambiente</div>
+    <h4 class="drawer-title">{{ editingEnvironmentId === null ? 'Agregar ambiente' : 'Editar ambiente' }}</h4>
+    <form [formGroup]="environmentForm" (ngSubmit)="onSaveEnvironment()" class="drawer-form">
+      <div class="drawer-fields">
         <div class="mb-3">
           <label class="form-label">Nombre *</label>
           <input type="text" class="form-control" formControlName="nombre" data-testid="modal-input-nombre" />
@@ -280,24 +281,25 @@
           <label class="form-label">Notas</label>
           <textarea class="form-control" formControlName="notas" rows="2"></textarea>
         </div>
-        <div class="d-flex gap-2">
-          <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar">
-            Guardar
-          </button>
-          <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeModal()">
-            Cancelar
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
+      </div>
+      <div class="drawer-actions">
+        <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar">
+          Guardar
+        </button>
+        <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeModal()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </app-drawer>
 }
 
 @if (showReporteModal()) {
-  <div class="modal-backdrop-custom">
-    <div class="modal-dialog-custom">
-      <h4>{{ editingReporteId === null ? 'Agregar Reporte' : 'Editar Reporte' }}</h4>
-      <form [formGroup]="reporteForm" (ngSubmit)="onSaveReporte()">
+  <app-drawer (closed)="closeReporteModal()">
+    <div class="drawer-eyebrow">Reporte</div>
+    <h4 class="drawer-title">{{ editingReporteId === null ? 'Agregar reporte' : 'Editar reporte' }}</h4>
+    <form [formGroup]="reporteForm" (ngSubmit)="onSaveReporte()" class="drawer-form">
+      <div class="drawer-fields">
         <div class="mb-3">
           <label class="form-label">Código *</label>
           <input type="text" class="form-control" formControlName="reportCode" data-testid="modal-input-report-code" />
@@ -333,20 +335,21 @@
           <label class="form-label">Notas</label>
           <textarea class="form-control" formControlName="notas" rows="2"></textarea>
         </div>
-        <div class="d-flex gap-2">
-          <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar-reporte">Guardar</button>
-          <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeReporteModal()">Cancelar</button>
-        </div>
-      </form>
-    </div>
-  </div>
+      </div>
+      <div class="drawer-actions">
+        <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar-reporte">Guardar</button>
+        <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeReporteModal()">Cancelar</button>
+      </div>
+    </form>
+  </app-drawer>
 }
 
 @if (showNotaModal()) {
-  <div class="modal-backdrop-custom">
-    <div class="modal-dialog-custom">
-      <h4>{{ editingNotaId === null ? 'Agregar Nota' : 'Editar Nota' }}</h4>
-      <form [formGroup]="notaForm" (ngSubmit)="onSaveNota()">
+  <app-drawer (closed)="closeNotaModal()">
+    <div class="drawer-eyebrow">Nota</div>
+    <h4 class="drawer-title">{{ editingNotaId === null ? 'Agregar nota' : 'Editar nota' }}</h4>
+    <form [formGroup]="notaForm" (ngSubmit)="onSaveNota()" class="drawer-form">
+      <div class="drawer-fields">
         <div class="mb-3">
           <label class="form-label">Título *</label>
           <input type="text" class="form-control" formControlName="titulo" data-testid="modal-input-titulo" />
@@ -355,20 +358,21 @@
           <label class="form-label">Descripción *</label>
           <textarea class="form-control" formControlName="descripcion" rows="3" data-testid="modal-input-descripcion"></textarea>
         </div>
-        <div class="d-flex gap-2">
-          <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar-nota">Guardar</button>
-          <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeNotaModal()">Cancelar</button>
-        </div>
-      </form>
-    </div>
-  </div>
+      </div>
+      <div class="drawer-actions">
+        <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar-nota">Guardar</button>
+        <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeNotaModal()">Cancelar</button>
+      </div>
+    </form>
+  </app-drawer>
 }
 
 @if (showDocumentoModal()) {
-  <div class="modal-backdrop-custom">
-    <div class="modal-dialog-custom">
-      <h4>{{ editingDocumentoId === null ? 'Agregar Documento' : 'Editar Documento' }}</h4>
-      <form [formGroup]="documentoForm" (ngSubmit)="onSaveDocumento()">
+  <app-drawer (closed)="closeDocumentoModal()">
+    <div class="drawer-eyebrow">Documento</div>
+    <h4 class="drawer-title">{{ editingDocumentoId === null ? 'Agregar documento' : 'Editar documento' }}</h4>
+    <form [formGroup]="documentoForm" (ngSubmit)="onSaveDocumento()" class="drawer-form">
+      <div class="drawer-fields">
         <div class="mb-3">
           <label class="form-label">Nombre *</label>
           <input type="text" class="form-control" formControlName="nombreArchivo" data-testid="modal-input-nombre-archivo" />
@@ -392,20 +396,21 @@
           <label class="form-label">Descripción</label>
           <textarea class="form-control" formControlName="descripcion" rows="2"></textarea>
         </div>
-        <div class="d-flex gap-2">
-          <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar-documento">Guardar</button>
-          <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeDocumentoModal()">Cancelar</button>
-        </div>
-      </form>
-    </div>
-  </div>
+      </div>
+      <div class="drawer-actions">
+        <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar-documento">Guardar</button>
+        <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeDocumentoModal()">Cancelar</button>
+      </div>
+    </form>
+  </app-drawer>
 }
 
 @if (showFixDataModal()) {
-  <div class="modal-backdrop-custom">
-    <div class="modal-dialog-custom">
-      <h4>{{ editingFixDataId === null ? 'Agregar FixData' : 'Editar FixData' }}</h4>
-      <form [formGroup]="fixDataForm" (ngSubmit)="onSaveFixData()">
+  <app-drawer (closed)="closeFixDataModal()">
+    <div class="drawer-eyebrow">FixData</div>
+    <h4 class="drawer-title">{{ editingFixDataId === null ? 'Agregar fixdata' : 'Editar fixdata' }}</h4>
+    <form [formGroup]="fixDataForm" (ngSubmit)="onSaveFixData()" class="drawer-form">
+      <div class="drawer-fields">
         <div class="mb-3">
           <label class="form-label">Nombre *</label>
           <input type="text" class="form-control" formControlName="nombre" data-testid="modal-input-fixdata-nombre" />
@@ -418,11 +423,11 @@
           <label class="form-label">Script</label>
           <textarea class="form-control" formControlName="script" rows="4" data-testid="modal-input-script"></textarea>
         </div>
-        <div class="d-flex gap-2">
-          <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar-fixdata">Guardar</button>
-          <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeFixDataModal()">Cancelar</button>
-        </div>
-      </form>
-    </div>
-  </div>
+      </div>
+      <div class="drawer-actions">
+        <button type="submit" class="btn btn-primary rounded-pill" data-testid="modal-btn-guardar-fixdata">Guardar</button>
+        <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeFixDataModal()">Cancelar</button>
+      </div>
+    </form>
+  </app-drawer>
 }

@@ -5,11 +5,12 @@ import { ProjectService } from '../../../../shared/services/project.service';
 import { DatabaseService } from '../../../../shared/services/database.service';
 import { ApplicationService } from '../../../../shared/services/application.service';
 import { BaseDeDatos } from '../../../../shared/models/project.model';
+import { Drawer } from '../../../../shared/components/drawer/drawer';
 
 @Component({
   selector: 'app-project-detail',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, Drawer],
   templateUrl: './project-detail.html',
   styleUrl: './project-detail.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
