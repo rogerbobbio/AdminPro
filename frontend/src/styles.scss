@@ -46,11 +46,63 @@ $theme-colors-map: (
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
 :root {
+  color-scheme: light;
+
   --ap-ink-soft: #{$ink-soft};
   --ap-g-900: #{$g-900};
   --ap-g-700: #{$g-700};
   --ap-g-500: #{$g-500};
   --ap-g-100: #{$g-100};
+  --ap-surface: #ffffff;
+  --ap-icon-muted: #c7d2cc;
+
+  --ap-accent-amber-bg: #fcefdd;
+  --ap-accent-amber-text: #e8a33d;
+  --ap-accent-blue-bg: #e7eefc;
+  --ap-accent-blue-text: #3b62d6;
+  --ap-accent-purple-bg: #efe7fc;
+  --ap-accent-purple-text: #7b4fd6;
+
+  --ap-status-progreso-bg: #fcefdd;
+  --ap-status-progreso-text: #b8791f;
+  --ap-status-pendiente-bg: #f1f1f1;
+  --ap-status-pendiente-text: #6b6b6b;
+  --ap-neutral-dot: #e9edeb;
+}
+
+// Dark palette: same tokens re-pointed at a dark-friendly scale. The attribute
+// selector outweighs bootstrap's compiled `:root` rules, so overriding the
+// --bs-* custom properties here is enough to flip every component that
+// already reads them (form-control, card, border-color, etc.) without
+// touching bootstrap's own CSS.
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bs-body-bg: #0d1712;
+  --bs-body-color: #e6ece8;
+  --bs-border-color: #263630;
+  --bs-danger: #e88a8a;
+
+  --ap-ink-soft: #8da296;
+  --ap-g-900: #1f6b48;
+  --ap-g-700: #3ba374;
+  --ap-g-500: #46d090;
+  --ap-g-100: rgba(70, 208, 144, 0.16);
+  --ap-surface: #16211b;
+  --ap-icon-muted: #33443b;
+
+  --ap-accent-amber-bg: rgba(232, 163, 61, 0.16);
+  --ap-accent-amber-text: #f0b768;
+  --ap-accent-blue-bg: rgba(59, 98, 214, 0.18);
+  --ap-accent-blue-text: #7fa0f5;
+  --ap-accent-purple-bg: rgba(123, 79, 214, 0.18);
+  --ap-accent-purple-text: #b79cf2;
+
+  --ap-status-progreso-bg: rgba(232, 163, 61, 0.16);
+  --ap-status-progreso-text: #f0b768;
+  --ap-status-pendiente-bg: rgba(255, 255, 255, 0.06);
+  --ap-status-pendiente-text: #9aa9a1;
+  --ap-neutral-dot: #33443b;
 }
 
 body {

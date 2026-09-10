@@ -22,7 +22,7 @@ export class StatusDonut {
   readonly gradient = computed(() => {
     const activoEnd = this.activoPercent();
     const enProgresoEnd = activoEnd + this.enProgresoPercent();
-    return `conic-gradient(var(--ap-g-900) 0% ${activoEnd}%, var(--ap-g-500) ${activoEnd}% ${enProgresoEnd}%, #E9EDEB ${enProgresoEnd}% 100%)`;
+    return `conic-gradient(var(--ap-g-900) 0% ${activoEnd}%, var(--ap-g-500) ${activoEnd}% ${enProgresoEnd}%, var(--ap-neutral-dot) ${enProgresoEnd}% 100%)`;
   });
 
   private percentOf(value: number): number {

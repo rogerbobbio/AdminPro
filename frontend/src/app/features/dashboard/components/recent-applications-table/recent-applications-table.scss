@@ -53,12 +53,12 @@ td {
   }
 
   &.progreso {
-    background: #fcefdd;
-    color: #b8791f;
+    background: var(--ap-status-progreso-bg);
+    color: var(--ap-status-progreso-text);
   }
 
   &.pendiente {
-    background: #f1f1f1;
-    color: #6b6b6b;
+    background: var(--ap-status-pendiente-bg);
+    color: var(--ap-status-pendiente-text);
   }
 }

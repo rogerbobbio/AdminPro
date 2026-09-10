@@ -87,7 +87,7 @@
 }
 
 .section {
-  background: #fff;
+  background: var(--ap-surface);
   border: 1px solid var(--bs-border-color);
   border-radius: var(--bs-border-radius-xl);
   box-shadow: var(--bs-box-shadow-lg);
@@ -141,13 +141,13 @@
   color: var(--ap-g-700);
 
   &.amber {
-    background: #fcefdd;
-    color: #e8a33d;
+    background: var(--ap-accent-amber-bg);
+    color: var(--ap-accent-amber-text);
   }
 
   &.purple {
-    background: #efe7fc;
-    color: #7b4fd6;
+    background: var(--ap-accent-purple-bg);
+    color: var(--ap-accent-purple-text);
   }
 }
 
@@ -221,7 +221,7 @@
   padding: 8px 15px;
   border-radius: var(--bs-border-radius-pill);
   cursor: pointer;
-  background: #fff;
+  background: var(--ap-surface);
   color: var(--ap-ink-soft);
   border: 1px solid var(--bs-border-color);
 
@@ -247,7 +247,7 @@
   cursor: pointer;
 
   &.ghost {
-    background: #fff;
+    background: var(--ap-surface);
     border: 1px dashed var(--bs-border-color);
     color: var(--ap-ink-soft);
   }
@@ -274,7 +274,7 @@
   height: 32px;
   border-radius: 8px;
   border: 1px solid var(--bs-border-color);
-  background: #fff;
+  background: var(--ap-surface);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -312,7 +312,7 @@
   input,
   select {
     width: 100%;
-    background: #fff;
+    background: var(--ap-surface);
     border: 1px solid var(--bs-border-color);
     border-radius: 10px;
     padding: 9px 12px;
@@ -380,7 +380,7 @@
   input,
   textarea {
     width: 100%;
-    background: #fff;
+    background: var(--ap-surface);
     border: 1px solid var(--bs-border-color);
     border-radius: 10px;
     padding: 9px 12px;
@@ -429,7 +429,7 @@
 }
 
 .rail {
-  background: #fff;
+  background: var(--ap-surface);
   border: 1px solid var(--bs-border-color);
   border-radius: var(--bs-border-radius-xl);
   box-shadow: var(--bs-box-shadow-lg);
@@ -458,7 +458,7 @@
   i {
     font-size: 15px;
     margin-top: 1px;
-    color: #c7d2cc;
+    color: var(--ap-icon-muted);
   }
 
   i.bi-check-circle-fill {

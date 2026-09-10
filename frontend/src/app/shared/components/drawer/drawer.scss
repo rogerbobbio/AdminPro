@@ -16,7 +16,7 @@
   right: 0;
   height: 100%;
   width: min(440px, 100vw);
-  background: #fff;
+  background: var(--ap-surface);
   box-shadow: -16px 0 32px rgba(14, 42, 32, 0.12);
   border-radius: var(--bs-border-radius-lg) 0 0 var(--bs-border-radius-lg);
   z-index: 1051;
@@ -33,7 +33,7 @@
   height: 32px;
   border-radius: 50%;
   border: 1px solid var(--bs-border-color);
-  background: #fff;
+  background: var(--ap-surface);
   display: flex;
   align-items: center;
   justify-content: center;

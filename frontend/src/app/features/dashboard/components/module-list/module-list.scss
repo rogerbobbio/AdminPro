@@ -24,13 +24,13 @@
   color: var(--ap-g-700);
 
   &.blue {
-    background: #e7eefc;
-    color: #3b62d6;
+    background: var(--ap-accent-blue-bg);
+    color: var(--ap-accent-blue-text);
   }
 
   &.amber {
-    background: #fcefdd;
-    color: #e8a33d;
+    background: var(--ap-accent-amber-bg);
+    color: var(--ap-accent-amber-text);
   }
 }
 
