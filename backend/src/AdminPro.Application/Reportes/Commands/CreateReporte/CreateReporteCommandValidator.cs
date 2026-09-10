@@ -12,6 +12,9 @@ public class CreateReporteCommandValidator : AbstractValidator<CreateReporteComm
         RuleFor(x => x.ReportName).NotEmpty().MaximumLength(200);
         RuleFor(x => x.RegionId).MaximumLength(10);
         RuleFor(x => x.ReportPath).MaximumLength(200);
+        RuleFor(x => x.SpTranship).MaximumLength(200);
+        RuleFor(x => x.SpReportViewer).MaximumLength(200);
+        RuleFor(x => x.ParametrosEjecucion).MaximumLength(500);
 
         RuleFor(x => x)
             .MustAsync(async (command, ct) =>

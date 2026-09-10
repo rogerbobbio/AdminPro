@@ -6,8 +6,11 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApplicationService } from '../../../../shared/services/application.service';
 import { EnvironmentService } from '../../../../shared/services/environment.service';
 import { NotaService } from '../../../../shared/services/nota.service';
+import { ReporteService } from '../../../../shared/services/reporte.service';
+import { DocumentoService } from '../../../../shared/services/documento.service';
+import { FixDataService } from '../../../../shared/services/fixdata.service';
 import { ProjectService } from '../../../../shared/services/project.service';
-import { Ambiente, Nota } from '../../../../shared/models/project.model';
+import { Ambiente, Documento, FixData, Nota, Reporte } from '../../../../shared/models/project.model';
 
 interface ValidationErrorBody {
   details?: { field: string; error: string }[];
@@ -24,6 +27,33 @@ type NotaGroup = FormGroup<{
   id: FormControl<number | null>;
   titulo: FormControl<string>;
   descripcion: FormControl<string>;
+}>;
+
+type ReporteGroup = FormGroup<{
+  id: FormControl<number | null>;
+  reportCode: FormControl<string>;
+  reportName: FormControl<string>;
+  regionId: FormControl<string | null>;
+  reportPath: FormControl<string | null>;
+  spTranship: FormControl<string | null>;
+  spReportViewer: FormControl<string | null>;
+  notas: FormControl<string | null>;
+  parametrosEjecucion: FormControl<string | null>;
+}>;
+
+type DocumentoGroup = FormGroup<{
+  id: FormControl<number | null>;
+  nombreArchivo: FormControl<string>;
+  urlOneDrive: FormControl<string>;
+  tipo: FormControl<string>;
+  descripcion: FormControl<string | null>;
+}>;
+
+type FixDataGroup = FormGroup<{
+  id: FormControl<number | null>;
+  nombre: FormControl<string>;
+  descripcion: FormControl<string | null>;
+  script: FormControl<string | null>;
 }>;
 
 const TIPOS_APLICACION = ['Web', 'API', 'Mobile'] as const;
@@ -45,6 +75,9 @@ export class ApplicationForm implements OnInit {
   protected readonly projectService = inject(ProjectService);
   private readonly environmentService = inject(EnvironmentService);
   private readonly notaService = inject(NotaService);
+  private readonly reporteService = inject(ReporteService);
+  private readonly documentoService = inject(DocumentoService);
+  private readonly fixDataService = inject(FixDataService);
 
   private applicationId: number | null = null;
   private projectId!: number;
@@ -66,6 +99,16 @@ export class ApplicationForm implements OnInit {
 
   protected readonly notasArray = new FormArray<NotaGroup>([]);
   private readonly removedNotaIds: number[] = [];
+
+  protected readonly reportesArray = new FormArray<ReporteGroup>([]);
+  private readonly removedReporteIds: number[] = [];
+
+  protected readonly documentosArray = new FormArray<DocumentoGroup>([]);
+  private readonly removedDocumentoIds: number[] = [];
+  protected readonly tiposDocumento = ['manual', 'diagrama', 'codigo', 'otro'] as const;
+
+  protected readonly fixDatasArray = new FormArray<FixDataGroup>([]);
+  private readonly removedFixDataIds: number[] = [];
 
   protected readonly fieldErrors = signal<Record<string, string>>({});
   protected readonly submitError = signal<string | null>(null);
@@ -98,6 +141,15 @@ export class ApplicationForm implements OnInit {
         }
         for (const nota of application.notas) {
           this.notasArray.push(this.createNotaGroup(nota));
+        }
+        for (const reporte of application.reportes) {
+          this.reportesArray.push(this.createReporteGroup(reporte));
+        }
+        for (const documento of application.documentos) {
+          this.documentosArray.push(this.createDocumentoGroup(documento));
+        }
+        for (const fixData of application.fixDatas) {
+          this.fixDatasArray.push(this.createFixDataGroup(fixData));
         }
       }
     } else {
@@ -162,6 +214,90 @@ export class ApplicationForm implements OnInit {
     });
   }
 
+  addReporte(): void {
+    this.reportesArray.push(this.createReporteGroup());
+  }
+
+  removeReporte(index: number): void {
+    const id = this.reportesArray.at(index).controls.id.value;
+    if (id !== null) {
+      this.removedReporteIds.push(id);
+    }
+    this.reportesArray.removeAt(index);
+  }
+
+  private createReporteGroup(reporte?: Reporte): ReporteGroup {
+    return new FormGroup({
+      id: new FormControl<number | null>(reporte?.id ?? null),
+      reportCode: new FormControl(reporte?.reportCode ?? '', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      reportName: new FormControl(reporte?.reportName ?? '', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      regionId: new FormControl<string | null>(reporte?.regionId ?? null),
+      reportPath: new FormControl<string | null>(reporte?.reportPath ?? null),
+      spTranship: new FormControl<string | null>(reporte?.spTranship ?? null),
+      spReportViewer: new FormControl<string | null>(reporte?.spReportViewer ?? null),
+      notas: new FormControl<string | null>(reporte?.notas ?? null),
+      parametrosEjecucion: new FormControl<string | null>(reporte?.parametrosEjecucion ?? null),
+    });
+  }
+
+  addDocumento(): void {
+    this.documentosArray.push(this.createDocumentoGroup());
+  }
+
+  removeDocumento(index: number): void {
+    const id = this.documentosArray.at(index).controls.id.value;
+    if (id !== null) {
+      this.removedDocumentoIds.push(id);
+    }
+    this.documentosArray.removeAt(index);
+  }
+
+  private createDocumentoGroup(documento?: Documento): DocumentoGroup {
+    return new FormGroup({
+      id: new FormControl<number | null>(documento?.id ?? null),
+      nombreArchivo: new FormControl(documento?.nombreArchivo ?? '', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      urlOneDrive: new FormControl(documento?.urlOneDrive ?? '', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      tipo: new FormControl(documento?.tipo ?? 'manual', { nonNullable: true }),
+      descripcion: new FormControl<string | null>(documento?.descripcion ?? null),
+    });
+  }
+
+  addFixData(): void {
+    this.fixDatasArray.push(this.createFixDataGroup());
+  }
+
+  removeFixData(index: number): void {
+    const id = this.fixDatasArray.at(index).controls.id.value;
+    if (id !== null) {
+      this.removedFixDataIds.push(id);
+    }
+    this.fixDatasArray.removeAt(index);
+  }
+
+  private createFixDataGroup(fixData?: FixData): FixDataGroup {
+    return new FormGroup({
+      id: new FormControl<number | null>(fixData?.id ?? null),
+      nombre: new FormControl(fixData?.nombre ?? '', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      descripcion: new FormControl<string | null>(fixData?.descripcion ?? null),
+      script: new FormControl<string | null>(fixData?.script ?? null),
+    });
+  }
+
   cancel(): void {
     this.location.back();
   }
@@ -173,6 +309,24 @@ export class ApplicationForm implements OnInit {
     if (this.ambientesArray.invalid) {
       this.ambientesArray.markAllAsTouched();
       this.submitError.set('Revisá los ambientes: nombre y URL son obligatorios.');
+      return;
+    }
+
+    if (this.reportesArray.invalid) {
+      this.reportesArray.markAllAsTouched();
+      this.submitError.set('Revisá los reportes: código y nombre son obligatorios.');
+      return;
+    }
+
+    if (this.documentosArray.invalid) {
+      this.documentosArray.markAllAsTouched();
+      this.submitError.set('Revisá los documentos: nombre y URL son obligatorios.');
+      return;
+    }
+
+    if (this.fixDatasArray.invalid) {
+      this.fixDatasArray.markAllAsTouched();
+      this.submitError.set('Revisá los fix datas: el nombre es obligatorio.');
       return;
     }
 
@@ -189,11 +343,17 @@ export class ApplicationForm implements OnInit {
         await this.applicationService.update(this.applicationId, { id: this.applicationId, ...command });
         await this.syncAmbientes(this.applicationId);
         await this.syncNotas(this.applicationId);
+        await this.syncReportes(this.applicationId);
+        await this.syncDocumentos(this.applicationId);
+        await this.syncFixDatas(this.applicationId);
         await this.router.navigate(['/proyectos/aplicaciones', this.applicationId], { queryParams: { saved: 'updated' } });
       } else {
         const id = await this.applicationService.create(this.projectId, command);
         await this.syncAmbientes(id);
         await this.syncNotas(id);
+        await this.syncReportes(id);
+        await this.syncDocumentos(id);
+        await this.syncFixDatas(id);
         await this.router.navigate(['/proyectos/aplicaciones', id], { queryParams: { saved: 'created' } });
       }
     } catch (err) {
@@ -265,6 +425,103 @@ export class ApplicationForm implements OnInit {
         await this.notaService.create(applicationId, {
           titulo: row.titulo,
           descripcion: row.descripcion,
+          orden: index,
+        });
+      }
+    }
+  }
+
+  private async syncReportes(applicationId: number): Promise<void> {
+    for (const id of this.removedReporteIds) {
+      await this.reporteService.delete(id);
+    }
+
+    const rows = this.reportesArray.getRawValue();
+    for (const row of rows) {
+      if (!row.reportCode.trim() || !row.reportName.trim()) {
+        continue;
+      }
+      if (row.id !== null) {
+        await this.reporteService.update(row.id, {
+          id: row.id,
+          reportCode: row.reportCode,
+          reportName: row.reportName,
+          regionId: row.regionId,
+          reportPath: row.reportPath,
+          spTranship: row.spTranship,
+          spReportViewer: row.spReportViewer,
+          notas: row.notas,
+          parametrosEjecucion: row.parametrosEjecucion,
+        });
+      } else {
+        await this.reporteService.create(applicationId, {
+          reportCode: row.reportCode,
+          reportName: row.reportName,
+          regionId: row.regionId,
+          reportPath: row.reportPath,
+          spTranship: row.spTranship,
+          spReportViewer: row.spReportViewer,
+          notas: row.notas,
+          parametrosEjecucion: row.parametrosEjecucion,
+        });
+      }
+    }
+  }
+
+  private async syncDocumentos(applicationId: number): Promise<void> {
+    for (const id of this.removedDocumentoIds) {
+      await this.documentoService.delete(id);
+    }
+
+    const rows = this.documentosArray.getRawValue();
+    for (const [index, row] of rows.entries()) {
+      if (!row.nombreArchivo.trim() || !row.urlOneDrive.trim()) {
+        continue;
+      }
+      if (row.id !== null) {
+        await this.documentoService.update(row.id, {
+          id: row.id,
+          nombreArchivo: row.nombreArchivo,
+          urlOneDrive: row.urlOneDrive,
+          tipo: row.tipo,
+          descripcion: row.descripcion,
+          orden: index,
+        });
+      } else {
+        await this.documentoService.create(applicationId, {
+          nombreArchivo: row.nombreArchivo,
+          urlOneDrive: row.urlOneDrive,
+          tipo: row.tipo,
+          descripcion: row.descripcion,
+          orden: index,
+        });
+      }
+    }
+  }
+
+  private async syncFixDatas(applicationId: number): Promise<void> {
+    for (const id of this.removedFixDataIds) {
+      await this.fixDataService.delete(id);
+    }
+
+    const rows = this.fixDatasArray.getRawValue();
+    for (const [index, row] of rows.entries()) {
+      if (!row.nombre.trim()) {
+        continue;
+      }
+      if (row.id !== null) {
+        await this.fixDataService.update(row.id, {
+          id: row.id,
+          nombre: row.nombre,
+          descripcion: row.descripcion,
+          script: row.script,
+          orden: index,
+        });
+      } else {
+        await this.fixDataService.create(applicationId, {
+          nombre: row.nombre,
+          descripcion: row.descripcion,
+          script: row.script,
           orden: index,
         });
       }

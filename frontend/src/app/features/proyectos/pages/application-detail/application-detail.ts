@@ -61,7 +61,7 @@ export class ApplicationDetail implements OnInit {
     spTranship: new FormControl<string | null>(null),
     spReportViewer: new FormControl<string | null>(null),
     notas: new FormControl<string | null>(null),
-    parametrosEjemplo: new FormControl<string | null>(null),
+    parametrosEjecucion: new FormControl<string | null>(null),
   });
 
   protected readonly reportCodeError = signal<string | null>(null);
@@ -185,7 +185,7 @@ export class ApplicationDetail implements OnInit {
       spTranship: null,
       spReportViewer: null,
       notas: null,
-      parametrosEjemplo: null,
+      parametrosEjecucion: null,
     });
     this.reportCodeError.set(null);
     this.showReporteModal.set(true);
@@ -201,7 +201,7 @@ export class ApplicationDetail implements OnInit {
       spTranship: reporte.spTranship,
       spReportViewer: reporte.spReportViewer,
       notas: reporte.notas,
-      parametrosEjemplo: reporte.parametrosEjemplo,
+      parametrosEjecucion: reporte.parametrosEjecucion,
     });
     this.reportCodeError.set(null);
     this.showReporteModal.set(true);

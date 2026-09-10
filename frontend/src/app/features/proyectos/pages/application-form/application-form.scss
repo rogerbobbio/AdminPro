@@ -396,6 +396,38 @@
   }
 }
 
+.reporte-form-list,
+.documento-form-list,
+.fixdata-form-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.reporte-form-row,
+.documento-form-row,
+.fixdata-form-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 32px;
+  gap: 10px;
+  align-items: start;
+  padding: 14px 0;
+  border-top: 1px solid var(--bs-border-color);
+
+  &:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+}
+
+.reporte-form-fields,
+.documento-form-fields,
+.fixdata-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .rail {
   background: #fff;
   border: 1px solid var(--bs-border-color);

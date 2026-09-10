@@ -46,7 +46,7 @@ public record ReporteDto(
     string? SpTranship,
     string? SpReportViewer,
     string? Notas,
-    string? ParametrosEjemplo,
+    string? ParametrosEjecucion,
     bool Activo);
 
 public record NotaDto(

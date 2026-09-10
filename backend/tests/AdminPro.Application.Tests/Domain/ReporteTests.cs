@@ -22,7 +22,7 @@ public class ReporteTests
             SpTranship = "sp_Tranship",
             SpReportViewer = "sp_ReportViewer",
             Notas = "nota",
-            ParametrosEjemplo = "{}",
+            ParametrosEjecucion = "{}",
             Activo = true,
             CreatedAt = new DateTime(2026, 1, 1),
             UpdatedAt = new DateTime(2026, 1, 2)

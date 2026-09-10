@@ -174,7 +174,7 @@ ReportPath	`nvarchar(200)`	NULL	e.g., "/volume-for-load"
 SpTranship	`nvarchar(200)`	NULL	Stored procedure name
 SpReportViewer	`nvarchar(200)`	NULL	Stored procedure name
 Notas	`nvarchar(max)`	NULL	
-ParametrosEjemplo	`nvarchar(max)`	NULL	Example execution params
+ParametrosEjecucion	`nvarchar(500)`	NULL	Execution parameters
 Activo	`bit`	NOT NULL, DEFAULT 1	
 CreatedAt	`datetime2`	NOT NULL	
 UpdatedAt	`datetime2`	NOT NULL	
@@ -483,7 +483,7 @@ CreateReportCommand
 ├── SpTranship: string?
 ├── SpReportViewer: string?
 ├── Notas: string?
-├── ParametrosEjemplo: string?
+├── ParametrosEjecucion: string?
 └── Returns: int
 ```
 Rule: APP-CMD-010 — Create Note
@@ -744,7 +744,7 @@ Display validation errors inline below each field.
 Rule: PRES-UI-005 — URLs Are Clickable
 All `Url` and `UrlOneDrive` fields SHALL render as `<a>` tags with `target="_blank"`.
 Rule: PRES-UI-006 — Copy to Clipboard
-RutaLocal, RutaGit, Script, and ParametrosEjemplo fields SHALL have a "Copy" button.
+RutaLocal, RutaGit, Script, and ParametrosEjecucion fields SHALL have a "Copy" button.
 Rule: PRES-UI-007 — Sortable Lists
 Environments, Notes, Documents, and FixDatas SHALL be sortable via drag-and-drop (update `Orden`).
 Rule: PRES-UI-008 — Expandable Sections

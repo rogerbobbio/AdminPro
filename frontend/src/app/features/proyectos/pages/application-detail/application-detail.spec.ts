@@ -170,7 +170,7 @@ describe('ApplicationDetail', () => {
           spTranship: null,
           spReportViewer: null,
           notas: null,
-          parametrosEjemplo: null,
+          parametrosEjecucion: null,
           activo: true,
         },
       ],

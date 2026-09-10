@@ -11,4 +11,4 @@ public record CreateReporteCommand(
     string? SpTranship,
     string? SpReportViewer,
     string? Notas,
-    string? ParametrosEjemplo) : ICommand<int>;
+    string? ParametrosEjecucion) : ICommand<int>;

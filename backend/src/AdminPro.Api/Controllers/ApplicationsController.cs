@@ -63,7 +63,7 @@ public class ApplicationsController(ISender sender) : ApiController(sender)
             request.SpTranship,
             request.SpReportViewer,
             request.Notas,
-            request.ParametrosEjemplo);
+            request.ParametrosEjecucion);
         var id = await Sender.Send(command, ct);
         return CreatedAtAction(nameof(GetById), new { id = appId }, id);
     }
@@ -76,7 +76,7 @@ public class ApplicationsController(ISender sender) : ApiController(sender)
         string? SpTranship,
         string? SpReportViewer,
         string? Notas,
-        string? ParametrosEjemplo);
+        string? ParametrosEjecucion);
 
     [HttpPost("{appId}/notas")]
     public async Task<ActionResult<int>> CreateNota(int appId, CreateNotaRequest request, CancellationToken ct)

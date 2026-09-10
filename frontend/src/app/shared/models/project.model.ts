@@ -89,7 +89,7 @@ export interface Reporte {
   spTranship: string | null;
   spReportViewer: string | null;
   notas: string | null;
-  parametrosEjemplo: string | null;
+  parametrosEjecucion: string | null;
   activo: boolean;
 }
 
@@ -176,7 +176,7 @@ export interface CreateReporteCommand {
   spTranship?: string | null;
   spReportViewer?: string | null;
   notas?: string | null;
-  parametrosEjemplo?: string | null;
+  parametrosEjecucion?: string | null;
 }
 
 export interface UpdateReporteCommand {
@@ -188,7 +188,7 @@ export interface UpdateReporteCommand {
   spTranship?: string | null;
   spReportViewer?: string | null;
   notas?: string | null;
-  parametrosEjemplo?: string | null;
+  parametrosEjecucion?: string | null;
 }
 
 export interface CreateNotaCommand {

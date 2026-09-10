@@ -16,6 +16,7 @@ public class ReporteConfiguration : IEntityTypeConfiguration<Reporte>
         builder.Property(r => r.ReportPath).HasMaxLength(200);
         builder.Property(r => r.SpTranship).HasMaxLength(200);
         builder.Property(r => r.SpReportViewer).HasMaxLength(200);
+        builder.Property(r => r.ParametrosEjecucion).HasMaxLength(500);
 
         builder.HasOne(r => r.Aplicacion)
             .WithMany(a => a.Reportes)

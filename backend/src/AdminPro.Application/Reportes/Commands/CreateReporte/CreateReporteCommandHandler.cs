@@ -30,7 +30,7 @@ public class CreateReporteCommandHandler(AppDbContext dbContext) : IRequestHandl
             SpTranship = request.SpTranship,
             SpReportViewer = request.SpReportViewer,
             Notas = request.Notas,
-            ParametrosEjemplo = request.ParametrosEjemplo,
+            ParametrosEjecucion = request.ParametrosEjecucion,
             Activo = true,
             CreatedAt = now,
             UpdatedAt = now,

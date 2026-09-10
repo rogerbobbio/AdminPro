@@ -105,6 +105,8 @@
           <tr>
             <th>Código</th>
             <th>Nombre</th>
+            <th>SP TRANSHIP</th>
+            <th>SP Report Viewer</th>
             <th></th>
           </tr>
         </thead>
@@ -113,6 +115,8 @@
             <tr>
               <td>{{ reporte.reportCode }}</td>
               <td>{{ reporte.reportName }}</td>
+              <td>{{ reporte.spTranship }}</td>
+              <td>{{ reporte.spReportViewer }}</td>
               <td class="text-end">
                 <button type="button" class="btn btn-sm btn-outline-secondary" data-testid="btn-editar-reporte" (click)="openEditReporteModal(reporte)">
                   <i class="bi bi-pencil"></i>
@@ -310,6 +314,18 @@
         <div class="mb-3">
           <label class="form-label">Ruta</label>
           <input type="text" class="form-control" formControlName="reportPath" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Store Procedure TRANSHIP</label>
+          <input type="text" class="form-control" formControlName="spTranship" data-testid="modal-input-sp-tranship" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Store Procedure Report Viewer</label>
+          <input type="text" class="form-control" formControlName="spReportViewer" data-testid="modal-input-sp-report-viewer" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Parámetros de ejecución</label>
+          <textarea class="form-control" formControlName="parametrosEjecucion" rows="2" data-testid="modal-input-parametros-ejecucion"></textarea>
         </div>
         <div class="mb-3">
           <label class="form-label">Notas</label>

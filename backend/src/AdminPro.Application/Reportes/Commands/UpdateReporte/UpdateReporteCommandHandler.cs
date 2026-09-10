@@ -21,7 +21,7 @@ public class UpdateReporteCommandHandler(AppDbContext dbContext) : IRequestHandl
         reporte.SpTranship = request.SpTranship;
         reporte.SpReportViewer = request.SpReportViewer;
         reporte.Notas = request.Notas;
-        reporte.ParametrosEjemplo = request.ParametrosEjemplo;
+        reporte.ParametrosEjecucion = request.ParametrosEjecucion;
 
         await dbContext.SaveChangesAsync(cancellationToken);
     }

@@ -209,6 +209,81 @@
     <div class="section">
       <div class="section-head">
         <div class="section-head-left">
+          <div class="sec-ico"><i class="bi bi-bar-chart"></i></div>
+          <h3>Reportes <span class="count-badge">{{ reportesArray.length }}</span></h3>
+        </div>
+      </div>
+      <div class="section-body">
+        @if (reportesArray.length > 0) {
+          <div [formArray]="reportesArray" class="reporte-form-list">
+            @for (reporte of reportesArray.controls; track reporte; let i = $index) {
+              <div class="reporte-form-row" [formGroup]="reporte">
+                <div class="reporte-form-fields">
+                  <div class="grid-2">
+                    <div class="field">
+                      <label>Código <span class="req">*</span></label>
+                      <input
+                        class="form-control"
+                        formControlName="reportCode"
+                        placeholder="VFL"
+                        [class.is-invalid]="reporte.controls.reportCode.invalid && reporte.controls.reportCode.touched"
+                      />
+                      @if (reporte.controls.reportCode.invalid && reporte.controls.reportCode.touched) {
+                        <div class="env-error">El código es obligatorio.</div>
+                      }
+                    </div>
+                    <div class="field">
+                      <label>Nombre <span class="req">*</span></label>
+                      <input
+                        class="form-control"
+                        formControlName="reportName"
+                        placeholder="Volumen de Carga"
+                        [class.is-invalid]="reporte.controls.reportName.invalid && reporte.controls.reportName.touched"
+                      />
+                      @if (reporte.controls.reportName.invalid && reporte.controls.reportName.touched) {
+                        <div class="env-error">El nombre es obligatorio.</div>
+                      }
+                    </div>
+                    <div class="field">
+                      <label>Región</label>
+                      <input class="form-control" formControlName="regionId" placeholder="DLA" />
+                    </div>
+                    <div class="field">
+                      <label>Ruta</label>
+                      <input class="form-control" formControlName="reportPath" placeholder="/volume-for-load" />
+                    </div>
+                    <div class="field">
+                      <label>Store Procedure TRANSHIP</label>
+                      <input class="form-control" formControlName="spTranship" />
+                    </div>
+                    <div class="field">
+                      <label>Store Procedure Report Viewer</label>
+                      <input class="form-control" formControlName="spReportViewer" />
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label>Parámetros de ejecución</label>
+                    <textarea class="form-control" formControlName="parametrosEjecucion" rows="2"></textarea>
+                  </div>
+                  <div class="field">
+                    <label>Notas</label>
+                    <textarea class="form-control" formControlName="notas" rows="2"></textarea>
+                  </div>
+                </div>
+                <div class="mini-btn" (click)="removeReporte(i)"><i class="bi bi-x-lg"></i></div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="empty">Aún no agregaste reportes. Podés sumarlos ahora o más adelante.</div>
+        }
+        <div class="add-btn" (click)="addReporte()"><i class="bi bi-plus-lg"></i> Agregar reporte</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-head-left">
           <div class="sec-ico"><i class="bi bi-sticky"></i></div>
           <h3>Notas <span class="count-badge">{{ notasArray.length }}</span></h3>
         </div>
@@ -230,6 +305,114 @@
           <div class="empty">Aún no agregaste notas. Podés sumarlas ahora o más adelante.</div>
         }
         <div class="add-btn" (click)="addNota()"><i class="bi bi-plus-lg"></i> Agregar nota</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="sec-ico"><i class="bi bi-file-earmark-text"></i></div>
+          <h3>Documentos <span class="count-badge">{{ documentosArray.length }}</span></h3>
+        </div>
+      </div>
+      <div class="section-body">
+        @if (documentosArray.length > 0) {
+          <div [formArray]="documentosArray" class="documento-form-list">
+            @for (documento of documentosArray.controls; track documento; let i = $index) {
+              <div class="documento-form-row" [formGroup]="documento">
+                <div class="documento-form-fields">
+                  <div class="grid-2">
+                    <div class="field">
+                      <label>Nombre <span class="req">*</span></label>
+                      <input
+                        class="form-control"
+                        formControlName="nombreArchivo"
+                        placeholder="Manual de despliegue"
+                        [class.is-invalid]="documento.controls.nombreArchivo.invalid && documento.controls.nombreArchivo.touched"
+                      />
+                      @if (documento.controls.nombreArchivo.invalid && documento.controls.nombreArchivo.touched) {
+                        <div class="env-error">El nombre es obligatorio.</div>
+                      }
+                    </div>
+                    <div class="field">
+                      <label>URL OneDrive <span class="req">*</span></label>
+                      <input
+                        class="form-control"
+                        formControlName="urlOneDrive"
+                        placeholder="https://onedrive.com/..."
+                        [class.is-invalid]="documento.controls.urlOneDrive.invalid && documento.controls.urlOneDrive.touched"
+                      />
+                      @if (documento.controls.urlOneDrive.invalid && documento.controls.urlOneDrive.touched) {
+                        <div class="env-error">La URL es obligatoria.</div>
+                      }
+                    </div>
+                    <div class="field">
+                      <label>Tipo</label>
+                      <select class="form-control" formControlName="tipo">
+                        @for (tipo of tiposDocumento; track tipo) {
+                          <option [value]="tipo">{{ tipo }}</option>
+                        }
+                      </select>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label>Descripción</label>
+                    <textarea class="form-control" formControlName="descripcion" rows="2"></textarea>
+                  </div>
+                </div>
+                <div class="mini-btn" (click)="removeDocumento(i)"><i class="bi bi-x-lg"></i></div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="empty">Aún no agregaste documentos. Podés sumarlos ahora o más adelante.</div>
+        }
+        <div class="add-btn" (click)="addDocumento()"><i class="bi bi-plus-lg"></i> Agregar documento</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="sec-ico"><i class="bi bi-tools"></i></div>
+          <h3>FixDatas <span class="count-badge">{{ fixDatasArray.length }}</span></h3>
+        </div>
+      </div>
+      <div class="section-body">
+        @if (fixDatasArray.length > 0) {
+          <div [formArray]="fixDatasArray" class="fixdata-form-list">
+            @for (fixData of fixDatasArray.controls; track fixData; let i = $index) {
+              <div class="fixdata-form-row" [formGroup]="fixData">
+                <div class="fixdata-form-fields">
+                  <div class="field">
+                    <label>Nombre <span class="req">*</span></label>
+                    <input
+                      class="form-control"
+                      formControlName="nombre"
+                      placeholder="Fix stock negativo"
+                      [class.is-invalid]="fixData.controls.nombre.invalid && fixData.controls.nombre.touched"
+                    />
+                    @if (fixData.controls.nombre.invalid && fixData.controls.nombre.touched) {
+                      <div class="env-error">El nombre es obligatorio.</div>
+                    }
+                  </div>
+                  <div class="field">
+                    <label>Descripción</label>
+                    <textarea class="form-control" formControlName="descripcion" rows="2"></textarea>
+                  </div>
+                  <div class="field">
+                    <label>Script</label>
+                    <textarea class="form-control mono" formControlName="script" rows="3"></textarea>
+                  </div>
+                </div>
+                <div class="mini-btn" (click)="removeFixData(i)"><i class="bi bi-x-lg"></i></div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="empty">Aún no agregaste fix datas. Podés sumarlas ahora o más adelante.</div>
+        }
+        <div class="add-btn" (click)="addFixData()"><i class="bi bi-plus-lg"></i> Agregar fix data</div>
       </div>
     </div>
 

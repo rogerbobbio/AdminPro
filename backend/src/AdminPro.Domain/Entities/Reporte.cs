@@ -13,7 +13,7 @@ public class Reporte : IAuditableEntity
     public string? SpTranship { get; set; }
     public string? SpReportViewer { get; set; }
     public string? Notas { get; set; }
-    public string? ParametrosEjemplo { get; set; }
+    public string? ParametrosEjecucion { get; set; }
     public bool Activo { get; set; } = true;
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }

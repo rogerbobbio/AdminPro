@@ -24,7 +24,7 @@ public class GetApplicationByIdQueryHandler(AppDbContext dbContext) : IRequestHa
         var reportes = await dbContext.Reportes
             .Where(r => r.AplicacionId == request.Id)
             .OrderBy(r => r.ReportCode)
-            .Select(r => new ReporteDto(r.Id, r.ReportCode, r.ReportName, r.RegionId, r.ReportPath, r.SpTranship, r.SpReportViewer, r.Notas, r.ParametrosEjemplo, r.Activo))
+            .Select(r => new ReporteDto(r.Id, r.ReportCode, r.ReportName, r.RegionId, r.ReportPath, r.SpTranship, r.SpReportViewer, r.Notas, r.ParametrosEjecucion, r.Activo))
             .ToListAsync(cancellationToken);
 
         var notas = await dbContext.Notas

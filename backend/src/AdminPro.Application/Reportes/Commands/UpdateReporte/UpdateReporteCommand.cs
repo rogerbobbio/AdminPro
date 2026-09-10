@@ -11,4 +11,4 @@ public record UpdateReporteCommand(
     string? SpTranship,
     string? SpReportViewer,
     string? Notas,
-    string? ParametrosEjemplo) : ICommand;
+    string? ParametrosEjecucion) : ICommand;
