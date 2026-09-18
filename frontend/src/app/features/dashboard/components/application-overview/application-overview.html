@@ -1,0 +1,117 @@
+@if (application().ambientes.length > 0) {
+  <div class="card mb-3">
+    <div class="card-head">
+      <h3>Ambientes ({{ application().ambientes.length }})</h3>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>URL</th>
+          <th>Tipo</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (ambiente of application().ambientes; track ambiente.id) {
+          <tr>
+            <td>{{ ambiente.nombre }}</td>
+            <td>
+              @if (ambiente.url) {
+                <a [href]="ambiente.url" target="_blank">{{ ambiente.url }}</a>
+              }
+            </td>
+            <td><span class="badge">{{ ambiente.esWebApi ? 'API' : 'Web' }}</span></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+@if (application().reportes.length > 0) {
+  <div class="card mb-3">
+    <div class="card-head">
+      <h3>Reportes ({{ application().reportes.length }})</h3>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>SP TRANSHIP</th>
+          <th>SP Report Viewer</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (reporte of application().reportes; track reporte.id) {
+          <tr>
+            <td>{{ reporte.reportCode }}</td>
+            <td>{{ reporte.reportName }}</td>
+            <td>{{ reporte.spTranship }}</td>
+            <td>{{ reporte.spReportViewer }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+@if (application().notas.length > 0) {
+  <div class="card mb-3">
+    <div class="card-head">
+      <h3>Notas ({{ application().notas.length }})</h3>
+    </div>
+    <div class="nota-list">
+      @for (nota of application().notas; track nota.id) {
+        <div class="nota-row">
+          <div class="nota-titulo">{{ nota.titulo }}</div>
+          <p class="nota-descripcion">{{ nota.descripcion }}</p>
+        </div>
+      }
+    </div>
+  </div>
+}
+
+@if (application().documentos.length > 0) {
+  <div class="card mb-3">
+    <div class="card-head">
+      <h3>Documentos ({{ application().documentos.length }})</h3>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Tipo</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (documento of application().documentos; track documento.id) {
+          <tr>
+            <td>{{ documento.nombreArchivo }}</td>
+            <td>{{ documento.tipo }}</td>
+            <td class="text-end"><a [href]="documento.urlOneDrive" target="_blank">Abrir</a></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+@if (application().fixDatas.length > 0) {
+  <div class="card">
+    <div class="card-head">
+      <h3>FixDatas ({{ application().fixDatas.length }})</h3>
+    </div>
+    <div class="nota-list">
+      @for (fixData of application().fixDatas; track fixData.id) {
+        <div class="nota-row">
+          <div class="nota-titulo">{{ fixData.nombre }}</div>
+          @if (fixData.descripcion) {
+            <p class="nota-descripcion">{{ fixData.descripcion }}</p>
+          }
+        </div>
+      }
+    </div>
+  </div>
+}

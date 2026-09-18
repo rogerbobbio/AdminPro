@@ -12,7 +12,8 @@ describe('RecentApplicationsTable', () => {
     expect(text.toLowerCase()).toContain('no hay aplicaciones');
   });
 
-  it('renders a row per recent application', () => {
+  it('renders a row per recent application with a relative updated time', () => {
+    const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
     const apps: RecentApplication[] = [
       {
         id: 1,
@@ -20,7 +21,7 @@ describe('RecentApplicationsTable', () => {
         projectName: 'DOLE',
         tecnologiaFront: 'Angular 6',
         tecnologiaBack: '.NET 6',
-        status: 'Activo',
+        updatedAt: twoHoursAgo,
       },
     ];
 
@@ -32,5 +33,6 @@ describe('RecentApplicationsTable', () => {
     expect(rows.length).toBe(1);
     expect(rows[0].textContent).toContain('EIR');
     expect(rows[0].textContent).toContain('DOLE');
+    expect(rows[0].textContent).toContain('hace 2 horas');
   });
 });

@@ -31,13 +31,7 @@ public class GetDashboardSummaryQueryHandlerTests
 
         result.TotalProjects.Should().Be(0);
         result.TotalApplications.Should().Be(0);
-        result.TotalAmbientes.Should().Be(0);
-        result.TotalServiciosVinculados.Should().Be(0);
-        result.ApplicationsCreatedLast7Days.Should().HaveCount(7).And.OnlyContain(x => x == 0);
         result.RecentApplications.Should().BeEmpty();
-        result.StatusBreakdown.Activo.Should().Be(0);
-        result.StatusBreakdown.EnProgreso.Should().Be(0);
-        result.StatusBreakdown.Pendiente.Should().Be(0);
     }
 
     [Fact]
@@ -50,9 +44,9 @@ public class GetDashboardSummaryQueryHandlerTests
         await db.SaveChangesAsync();
 
         db.Applications.AddRange(
-            new AppEntity { ProyectoId = project.Id, Nombre = "CRM", Activo = true, CreatedAt = DateTime.UtcNow },
-            new AppEntity { ProyectoId = project.Id, Nombre = "ERP", Activo = true, CreatedAt = DateTime.UtcNow },
-            new AppEntity { ProyectoId = project.Id, Nombre = "Legacy", Activo = false, CreatedAt = DateTime.UtcNow });
+            new AppEntity { ProyectoId = project.Id, Nombre = "CRM", Activo = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+            new AppEntity { ProyectoId = project.Id, Nombre = "ERP", Activo = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+            new AppEntity { ProyectoId = project.Id, Nombre = "Legacy", Activo = false, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow });
         await db.SaveChangesAsync();
 
         var handler = new GetDashboardSummaryQueryHandler(db);
@@ -63,46 +57,24 @@ public class GetDashboardSummaryQueryHandlerTests
     }
 
     [Fact]
-    public async Task Handle_WeeklySeries_HasSevenEntriesOldestFirst_WithTodayReflectingCreatedApp()
+    public async Task Handle_RecentApplications_ReturnsAtMostFive_OrderedByUpdatedAtDescending()
     {
-        using var db = CreateInMemoryContext(nameof(Handle_WeeklySeries_HasSevenEntriesOldestFirst_WithTodayReflectingCreatedApp));
-        var project = new Project { Nombre = "Acme", Activo = true };
-        db.Projects.Add(project);
-        await db.SaveChangesAsync();
-
-        db.Applications.Add(new AppEntity
-        {
-            ProyectoId = project.Id,
-            Nombre = "CRM",
-            Activo = true,
-            CreatedAt = DateTime.UtcNow,
-        });
-        await db.SaveChangesAsync();
-
-        var handler = new GetDashboardSummaryQueryHandler(db);
-        var result = await handler.Handle(new GetDashboardSummaryQuery(), CancellationToken.None);
-
-        result.ApplicationsCreatedLast7Days.Should().HaveCount(7);
-        result.ApplicationsCreatedLast7Days[^1].Should().BeGreaterThanOrEqualTo(1);
-    }
-
-    [Fact]
-    public async Task Handle_RecentApplications_ReturnsAtMostFive_OrderedByCreatedAtDescending()
-    {
-        using var db = CreateInMemoryContext(nameof(Handle_RecentApplications_ReturnsAtMostFive_OrderedByCreatedAtDescending));
+        using var db = CreateInMemoryContext(nameof(Handle_RecentApplications_ReturnsAtMostFive_OrderedByUpdatedAtDescending));
         var project = new Project { Nombre = "Acme", Activo = true };
         db.Projects.Add(project);
         await db.SaveChangesAsync();
 
         for (var i = 0; i < 7; i++)
         {
+            var timestamp = DateTime.UtcNow.AddMinutes(i);
             db.Applications.Add(new AppEntity
             {
                 ProyectoId = project.Id,
                 Nombre = $"App{i}",
                 TecnologiaFront = "Angular 18",
                 Activo = true,
-                CreatedAt = DateTime.UtcNow.AddMinutes(i),
+                CreatedAt = timestamp,
+                UpdatedAt = timestamp,
             });
         }
 
@@ -117,24 +89,36 @@ public class GetDashboardSummaryQueryHandlerTests
     }
 
     [Fact]
-    public async Task Handle_StatusBreakdown_AllActiveApplicationsCountAsActivo()
+    public async Task Handle_RecentApplications_ReflectsUpdatedAtNotCreatedAt()
     {
-        using var db = CreateInMemoryContext(nameof(Handle_StatusBreakdown_AllActiveApplicationsCountAsActivo));
+        using var db = CreateInMemoryContext(nameof(Handle_RecentApplications_ReflectsUpdatedAtNotCreatedAt));
         var project = new Project { Nombre = "Acme", Activo = true };
         db.Projects.Add(project);
         await db.SaveChangesAsync();
 
-        db.Applications.AddRange(
-            new AppEntity { ProyectoId = project.Id, Nombre = "CRM", Activo = true, CreatedAt = DateTime.UtcNow },
-            new AppEntity { ProyectoId = project.Id, Nombre = "ERP", Activo = true, CreatedAt = DateTime.UtcNow },
-            new AppEntity { ProyectoId = project.Id, Nombre = "Legacy", Activo = true, CreatedAt = DateTime.UtcNow });
+        var createdFirstButUpdatedLast = new AppEntity
+        {
+            ProyectoId = project.Id,
+            Nombre = "Created First",
+            Activo = true,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow.AddMinutes(10),
+        };
+        var createdSecondButNeverUpdated = new AppEntity
+        {
+            ProyectoId = project.Id,
+            Nombre = "Created Second",
+            Activo = true,
+            CreatedAt = DateTime.UtcNow.AddMinutes(1),
+            UpdatedAt = DateTime.UtcNow.AddMinutes(1),
+        };
+        db.Applications.AddRange(createdFirstButUpdatedLast, createdSecondButNeverUpdated);
         await db.SaveChangesAsync();
 
         var handler = new GetDashboardSummaryQueryHandler(db);
         var result = await handler.Handle(new GetDashboardSummaryQuery(), CancellationToken.None);
 
-        result.StatusBreakdown.Activo.Should().Be(3);
-        result.StatusBreakdown.EnProgreso.Should().Be(0);
-        result.StatusBreakdown.Pendiente.Should().Be(0);
+        result.RecentApplications[0].Nombre.Should().Be("Created First");
+        result.RecentApplications[0].UpdatedAt.Should().Be(createdFirstButUpdatedLast.UpdatedAt);
     }
 }

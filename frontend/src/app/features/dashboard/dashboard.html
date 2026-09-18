@@ -2,60 +2,106 @@
   <div class="page-head">
     <div>
       <h1>Dashboard</h1>
-      <p>Administra proyectos, aplicaciones y servicios del catálogo DOLE.</p>
+      <p>Administra proyectos, aplicaciones y servicios</p>
     </div>
     <div class="head-actions">
+      @if (selectedProjectId(); as projectId) {
+        <a class="btn btn-outline-secondary rounded-pill" [routerLink]="['/proyectos/aplicaciones/nuevo']" [queryParams]="{ proyectoId: projectId }">
+          <i class="bi bi-plus-lg"></i> Nueva Aplicación
+        </a>
+      } @else {
+        <span class="btn btn-outline-secondary rounded-pill disabled" aria-disabled="true">
+          <i class="bi bi-plus-lg"></i> Nueva Aplicación
+        </span>
+      }
       <a class="btn btn-primary rounded-pill" routerLink="/proyectos/nuevo">
         <i class="bi bi-plus-lg"></i> Nuevo Proyecto
       </a>
     </div>
   </div>
 
-  @if (dashboardService.error(); as error) {
-    <p class="text-danger">{{ error }}</p>
-  } @else if (dashboardService.summary(); as summary) {
-    <app-stat-cards [summary]="summary" />
-  } @else {
-    <p class="text-secondary">Cargando dashboard...</p>
-  }
-
-  <div class="row2">
-    <div class="card">
-      <div class="card-head">
-        <h3>Aplicaciones creadas</h3>
-        <span class="link-btn">Ver todo</span>
+  <div class="card filter-card mb-3">
+    <div class="filter-top">
+      <div class="filter-left">
+        <div class="filter-field">
+          <label for="dashboard-project-select">Proyecto</label>
+          <select
+            id="dashboard-project-select"
+            class="form-select"
+            data-testid="dashboard-project-select"
+            [value]="selectedProjectId() ?? ''"
+            (change)="onProjectChange($any($event.target).value)"
+          >
+            <option value="">Elegí un proyecto</option>
+            @for (project of projectService.projects(); track project.id) {
+              <option [value]="project.id">{{ project.nombre }}</option>
+            }
+          </select>
+        </div>
+        @if (selectedProjectId()) {
+          <div class="filter-field">
+            <label for="dashboard-application-select">Aplicación</label>
+            <select
+              id="dashboard-application-select"
+              class="form-select"
+              data-testid="dashboard-application-select"
+              [value]="selectedApplicationId() ?? ''"
+              (change)="onApplicationChange($any($event.target).value)"
+            >
+              <option value="">Todas</option>
+              @for (app of projectService.selectedProject()?.applications ?? []; track app.id) {
+                <option [value]="app.id">{{ app.nombre }}</option>
+              }
+            </select>
+          </div>
+        }
       </div>
-      <app-weekly-chart [values]="dashboardService.summary()?.applicationsCreatedLast7Days ?? [0, 0, 0, 0, 0, 0, 0]" />
+      @if (selectedApplicationId() && applicationService.selectedApplication(); as application) {
+        <div class="filter-app-info">
+          <h2>{{ application.nombre }}</h2>
+          @if (application.tecnologiaFront) {
+            <span class="stack-pill">{{ application.tecnologiaFront }}</span>
+          }
+          @if (application.tecnologiaBack) {
+            <span class="stack-pill">{{ application.tecnologiaBack }}</span>
+          }
+          <a class="link-btn" [routerLink]="['/proyectos/aplicaciones', application.id]">Ir al detalle completo</a>
+        </div>
+      }
     </div>
-
-    <div class="card">
-      <div class="card-head"><h3>Recordatorio</h3></div>
-      <app-reminder-card />
-    </div>
-
-    <div class="card">
-      <div class="card-head">
-        <h3>Módulos</h3>
-        <div class="chip-add"><i class="bi bi-plus"></i></div>
-      </div>
-      <app-module-list [modulos]="moduloService.modulos()" />
-    </div>
+    @if (selectedProjectId()) {
+      <button type="button" class="reset-link" data-testid="btn-clear-project" (click)="onClearProject()">
+        <i class="bi bi-chevron-left"></i> Ver todos los proyectos
+      </button>
+    }
   </div>
 
-  <div class="row3">
+  @if (!selectedProjectId()) {
+    @if (dashboardService.error(); as error) {
+      <p class="text-danger">{{ error }}</p>
+    } @else if (dashboardService.summary(); as summary) {
+      <app-stat-cards [summary]="summary" />
+    } @else {
+      <p class="text-secondary">Cargando dashboard...</p>
+    }
+
     <div class="card table-wrap">
       <div class="card-head">
-        <h3>Aplicaciones recientes</h3>
-        <span class="link-btn">Ver todas</span>
+        <h3>Aplicaciones modificadas recientemente</h3>
       </div>
       <app-recent-applications-table [applications]="dashboardService.summary()?.recentApplications ?? []" />
     </div>
-
-    <div class="card">
-      <div class="card-head"><h3>Estado de Aplicaciones</h3></div>
-      <app-status-donut
-        [breakdown]="dashboardService.summary()?.statusBreakdown ?? { activo: 0, enProgreso: 0, pendiente: 0 }"
-      />
-    </div>
-  </div>
+  } @else if (selectedApplicationId()) {
+    @if (applicationService.selectedApplication(); as application) {
+      <app-application-overview [application]="application" />
+    } @else {
+      <p class="text-secondary">Cargando aplicación...</p>
+    }
+  } @else {
+    @if (projectService.selectedProject(); as project) {
+      <app-project-overview [project]="project" />
+    } @else {
+      <p class="text-secondary">Cargando proyecto...</p>
+    }
+  }
 </app-shell>

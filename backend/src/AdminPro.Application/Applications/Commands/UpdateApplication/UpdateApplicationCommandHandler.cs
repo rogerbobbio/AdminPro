@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AdminPro.Application.Common.Exceptions;
@@ -26,6 +27,7 @@ public class UpdateApplicationCommandHandler(AppDbContext dbContext) : IRequestH
         application.ComoSeLevanta = request.ComoSeLevanta;
         application.NotasCompilacion = request.NotasCompilacion;
         application.Orden = request.Orden;
+        application.UpdatedAt = DateTime.UtcNow;
 
         await dbContext.SaveChangesAsync(cancellationToken);
     }

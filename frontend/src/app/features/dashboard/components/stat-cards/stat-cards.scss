@@ -1,11 +1,12 @@
 .stat-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 18px;
   margin-bottom: 20px;
 }
 
 .stat-card {
+  width: 260px;
   background: var(--ap-surface);
   border-radius: var(--bs-border-radius-xl);
   padding: 20px 20px 18px;

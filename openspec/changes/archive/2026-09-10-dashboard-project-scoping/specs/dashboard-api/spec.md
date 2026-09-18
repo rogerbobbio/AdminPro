@@ -1,23 +1,4 @@
-## Purpose
-
-Defines the minimal backend read endpoints that power the Dashboard: the module navigation list and the aggregate summary shown on the Dashboard's stat cards and recent-applications table. Established by the `frontend-dashboard` change; trimmed by `dashboard-project-scoping`.
-
-## Requirements
-
-### Requirement: List active modules
-`GET /api/modulos` SHALL return active `Modulo` rows ordered by `Orden` ascending, per rule APP-QRY-001 and `docs/business-rules.md` §3.11 (Dashboard Rules).
-
-#### Scenario: Only active modules returned, in order
-- **GIVEN** three `Modulo` rows exist with `Orden` 0, 1, 2, and the row with `Orden` 1 has `Activo = false`
-- **WHEN** `GET /api/modulos` is called
-- **THEN** the response contains only the rows with `Orden` 0 and 2, in that order
-
-### Requirement: Seed default modules
-The database SHALL be seeded via EF Core migration with the two implemented modules — `Gestión de Proyectos` (`RutaBase: proyectos`, `Orden: 0`) and `Catálogo de Servicios` (`RutaBase: servicios`, `Orden: 1`) — both `Activo = true`, matching rule MOD-004. `Presupuesto` is NOT seeded as a `Modulo` row; it remains a static "coming soon" UI element only.
-
-#### Scenario: Fresh database has the two seeded modules
-- **WHEN** `dotnet ef database update` runs against a new `AdminPro` database
-- **THEN** `GET /api/modulos` returns exactly two modules: "Gestión de Proyectos" and "Catálogo de Servicios"
+## MODIFIED Requirements
 
 ### Requirement: Dashboard summary
 `GET /api/dashboard/summary` SHALL return a single `DashboardSummaryDto` aggregating: total active `Project` count, total active `Application` count, and up to 5 active `Application` rows most recently modified (name, project name, stack, `UpdatedAt`). The prior 7-day creation series, ambientes/servicios-vinculados totals, and status breakdown are removed (nothing computes or consumes a real "application status" concept).

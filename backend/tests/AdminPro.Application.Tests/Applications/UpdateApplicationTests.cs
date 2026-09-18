@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AdminPro.Application.Applications.Commands.UpdateApplication;
@@ -69,9 +70,10 @@ public class UpdateApplicationTests
         db.Projects.Add(project);
         await db.SaveChangesAsync();
 
-        var crm = new AppEntity { ProyectoId = project.Id, Nombre = "CRM", Activo = true };
+        var crm = new AppEntity { ProyectoId = project.Id, Nombre = "CRM", Activo = true, UpdatedAt = DateTime.UtcNow.AddDays(-1) };
         db.Applications.Add(crm);
         await db.SaveChangesAsync();
+        var updatedAtBeforeEdit = crm.UpdatedAt;
 
         var handler = new UpdateApplicationCommandHandler(db);
         await handler.Handle(
@@ -82,6 +84,7 @@ public class UpdateApplicationTests
         updated!.Nombre.Should().Be("CRM Updated");
         updated.Descripcion.Should().Be("New description");
         updated.Orden.Should().Be(2);
+        updated.UpdatedAt.Should().BeAfter(updatedAtBeforeEdit);
     }
 
     [Fact]

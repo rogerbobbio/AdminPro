@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace AdminPro.Application.Dashboard.Queries.GetDashboardSummary;
@@ -5,11 +6,7 @@ namespace AdminPro.Application.Dashboard.Queries.GetDashboardSummary;
 public record DashboardSummaryDto(
     int TotalProjects,
     int TotalApplications,
-    int TotalAmbientes,
-    int TotalServiciosVinculados,
-    IReadOnlyList<int> ApplicationsCreatedLast7Days,
-    IReadOnlyList<RecentApplicationDto> RecentApplications,
-    ApplicationStatusBreakdownDto StatusBreakdown);
+    IReadOnlyList<RecentApplicationDto> RecentApplications);
 
 public record RecentApplicationDto(
     int Id,
@@ -17,6 +14,4 @@ public record RecentApplicationDto(
     string ProjectName,
     string? TecnologiaFront,
     string? TecnologiaBack,
-    string Status);
-
-public record ApplicationStatusBreakdownDto(int Activo, int EnProgreso, int Pendiente);
+    DateTime UpdatedAt);

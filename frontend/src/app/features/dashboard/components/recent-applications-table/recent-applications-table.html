@@ -6,7 +6,7 @@
       <tr>
         <th>Aplicación</th>
         <th>Stack</th>
-        <th>Estado</th>
+        <th>Actualizado</th>
       </tr>
     </thead>
     <tbody>
@@ -24,7 +24,7 @@
               <span class="stack-pill">{{ app.tecnologiaBack }}</span>
             }
           </td>
-          <td><span class="status activo">{{ app.status }}</span></td>
+          <td class="updated">{{ relativeTime(app.updatedAt) }}</td>
         </tr>
       }
     </tbody>

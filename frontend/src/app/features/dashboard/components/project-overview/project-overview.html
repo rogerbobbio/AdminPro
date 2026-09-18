@@ -1,0 +1,47 @@
+@if (project().basesDeDatos.length > 0) {
+  <div class="card mb-3">
+    <div class="card-head">
+      <h3>Bases de Datos ({{ project().basesDeDatos.length }})</h3>
+      <a class="link-btn" [routerLink]="['/proyectos', project().id]">Ver proyecto completo</a>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Ambiente</th>
+          <th>Servidor</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (db of project().basesDeDatos; track db.id) {
+          <tr>
+            <td>{{ db.nombre }}</td>
+            <td>{{ db.ambiente }}</td>
+            <td>{{ db.servidor }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+@if (project().applications.length > 0) {
+  <div class="card">
+    <div class="card-head">
+      <h3>Aplicaciones ({{ project().applications.length }})</h3>
+    </div>
+    <div class="app-grid">
+      @for (app of project().applications; track app.id) {
+        <a class="app-card" [routerLink]="['/proyectos/aplicaciones', app.id]">
+          <div class="app-name">{{ app.nombre }}</div>
+          @if (app.tecnologiaFront) {
+            <span class="stack-pill">{{ app.tecnologiaFront }}</span>
+          }
+          @if (app.tecnologiaBack) {
+            <span class="stack-pill">{{ app.tecnologiaBack }}</span>
+          }
+        </a>
+      }
+    </div>
+  </div>
+}

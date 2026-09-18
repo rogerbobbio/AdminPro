@@ -22,11 +22,7 @@ describe('DashboardService', () => {
     const mockSummary: DashboardSummary = {
       totalProjects: 0,
       totalApplications: 0,
-      totalAmbientes: 0,
-      totalServiciosVinculados: 0,
-      applicationsCreatedLast7Days: [0, 0, 0, 0, 0, 0, 0],
       recentApplications: [],
-      statusBreakdown: { activo: 0, enProgreso: 0, pendiente: 0 },
     };
 
     expect(service.loading()).toBe(false);

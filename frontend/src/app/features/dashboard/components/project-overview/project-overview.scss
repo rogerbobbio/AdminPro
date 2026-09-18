@@ -1,0 +1,85 @@
+:host {
+  display: block;
+}
+
+.card {
+  background: var(--ap-surface);
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius-xl);
+  padding: 20px;
+  box-shadow: var(--bs-box-shadow-lg);
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+
+  h3 {
+    font-size: 15.5px;
+    margin: 0;
+    font-weight: 800;
+  }
+
+  .link-btn {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ap-g-700);
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  font-size: 11.5px;
+  color: var(--ap-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0 8px 10px;
+  font-weight: 700;
+}
+
+td {
+  padding: 10px 8px;
+  border-top: 1px solid var(--bs-border-color);
+  font-size: 13.5px;
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.app-card {
+  display: block;
+  background: var(--bs-body-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius-lg);
+  padding: 14px 16px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.app-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.stack-pill {
+  display: inline-block;
+  background: var(--ap-surface);
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius-pill);
+  padding: 3px 9px;
+  font-size: 11.5px;
+  margin-right: 4px;
+  color: var(--ap-ink-soft);
+  font-weight: 600;
+}

@@ -6,11 +6,7 @@ import { DashboardSummary } from '../../../../shared/models/dashboard-summary.mo
 const emptySummary: DashboardSummary = {
   totalProjects: 0,
   totalApplications: 0,
-  totalAmbientes: 0,
-  totalServiciosVinculados: 0,
-  applicationsCreatedLast7Days: [0, 0, 0, 0, 0, 0, 0],
   recentApplications: [],
-  statusBreakdown: { activo: 0, enProgreso: 0, pendiente: 0 },
 };
 
 describe('StatCards', () => {
@@ -29,7 +25,7 @@ describe('StatCards', () => {
       (fixture.nativeElement as HTMLElement).querySelectorAll('.stat-num'),
     ).map((el) => el.textContent?.trim());
 
-    expect(values).toEqual(['0', '0', '0', '0']);
+    expect(values).toEqual(['0', '0']);
   });
 
   it('renders real counts from the summary', () => {
@@ -38,16 +34,12 @@ describe('StatCards', () => {
       ...emptySummary,
       totalProjects: 12,
       totalApplications: 28,
-      totalAmbientes: 54,
-      totalServiciosVinculados: 9,
     });
     fixture.detectChanges();
 
     const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
     expect(text).toContain('12');
     expect(text).toContain('28');
-    expect(text).toContain('54');
-    expect(text).toContain('9');
   });
 
   it('links each arrow to its destination screen', () => {
@@ -59,6 +51,6 @@ describe('StatCards', () => {
       (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLAnchorElement>('.stat-arrow'),
     ).map((a) => a.getAttribute('href'));
 
-    expect(arrows).toEqual(['/proyectos', '/proyectos', '/proyectos', '/servicios']);
+    expect(arrows).toEqual(['/proyectos', '/proyectos']);
   });
 });

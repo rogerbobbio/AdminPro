@@ -58,16 +58,8 @@ $theme-colors-map: (
 
   --ap-accent-amber-bg: #fcefdd;
   --ap-accent-amber-text: #e8a33d;
-  --ap-accent-blue-bg: #e7eefc;
-  --ap-accent-blue-text: #3b62d6;
   --ap-accent-purple-bg: #efe7fc;
   --ap-accent-purple-text: #7b4fd6;
-
-  --ap-status-progreso-bg: #fcefdd;
-  --ap-status-progreso-text: #b8791f;
-  --ap-status-pendiente-bg: #f1f1f1;
-  --ap-status-pendiente-text: #6b6b6b;
-  --ap-neutral-dot: #e9edeb;
 }
 
 // Dark palette: same tokens re-pointed at a dark-friendly scale. The attribute
@@ -93,16 +85,8 @@ $theme-colors-map: (
 
   --ap-accent-amber-bg: rgba(232, 163, 61, 0.16);
   --ap-accent-amber-text: #f0b768;
-  --ap-accent-blue-bg: rgba(59, 98, 214, 0.18);
-  --ap-accent-blue-text: #7fa0f5;
   --ap-accent-purple-bg: rgba(123, 79, 214, 0.18);
   --ap-accent-purple-text: #b79cf2;
-
-  --ap-status-progreso-bg: rgba(232, 163, 61, 0.16);
-  --ap-status-progreso-text: #f0b768;
-  --ap-status-pendiente-bg: rgba(255, 255, 255, 0.06);
-  --ap-status-pendiente-text: #9aa9a1;
-  --ap-neutral-dot: #33443b;
 }
 
 body {
