@@ -22,20 +22,6 @@
       <p>Registra la aplicación, su stack y cómo se levanta.</p>
     </div>
   </div>
-  <div class="actions">
-    <button type="button" class="btn btn-outline-secondary rounded-pill" data-testid="btn-cancelar" (click)="cancel()">
-      Cancelar
-    </button>
-    <button
-      type="submit"
-      form="application-form"
-      class="btn btn-primary rounded-pill"
-      data-testid="btn-guardar"
-      [disabled]="form.invalid"
-    >
-      <i class="bi bi-check2"></i> Guardar
-    </button>
-  </div>
 </div>
 
 @if (submitError(); as error) {
@@ -447,6 +433,20 @@
     </div>
     <div class="rail-foot">
       Al crear la aplicación se registra bajo este proyecto junto con los ambientes que hayas cargado.
+    </div>
+    <div class="rail-actions">
+      <button
+        type="submit"
+        form="application-form"
+        class="btn btn-primary rounded-pill w-100"
+        data-testid="btn-guardar"
+        [disabled]="form.invalid"
+      >
+        <i class="bi bi-check2"></i> Guardar
+      </button>
+      <button type="button" class="btn btn-outline-secondary rounded-pill w-100" data-testid="btn-cancelar" (click)="cancel()">
+        Cancelar
+      </button>
     </div>
   </aside>
 </div>

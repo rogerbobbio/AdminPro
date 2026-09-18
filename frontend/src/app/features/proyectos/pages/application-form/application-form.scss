@@ -63,12 +63,6 @@
   margin: 0;
 }
 
-.actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
 .split {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
@@ -483,4 +477,11 @@
   font-size: 11.5px;
   color: var(--ap-ink-soft);
   line-height: 1.5;
+}
+
+.rail-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
 }
